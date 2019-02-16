@@ -216,7 +216,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Children</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -227,7 +227,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Blood Donation</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -238,7 +238,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Technology</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -249,7 +249,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Education</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -261,7 +261,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Animal Welfare</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -272,7 +272,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Sports</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -283,7 +283,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Enviroment</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -294,7 +294,7 @@
               <div class="card-body">
                 <h4 class="card-title text-center">Health</h4>
                 <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>
-                <a href="#" class="btn btn-primary float-right">View</a>
+                <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom" title="View this category">View</a>
               </div>
             </div>
           </div>
@@ -380,6 +380,11 @@
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
 </body>
 
 </html>
