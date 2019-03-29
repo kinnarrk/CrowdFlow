@@ -14,9 +14,9 @@ var roleSchema = new Schema({
 //User schema
 var userSchema = new Schema({
     roleId : {type: Schema.Types.ObjectId, ref: 'Role', required: true},
-    fullName : {type: String, required: true, index: {unique: true }},
-    email : {type: String, required: true},
-    password : {},
+    fullName : {type: String, required: true},
+    email : {type: String, required: true, index: {unique: true }},
+    password : {type: String, required: true},
     image : {type: String},
     country : {type: String},
     city : {type: String},
@@ -29,16 +29,17 @@ var userSchema = new Schema({
     isGuest : {type: Boolean, default: false},
     isDeleted : {type: Boolean, default: false}
  });
- var User = mongoose.model('User', userSchema);
- module.exports = User;
-
  //For comparing hashed passwords
- UserSchema.methods.comparePassword = function(candidatePassword, cb) {
+ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
         if (err) return cb(err);
         cb(null, isMatch);
     });
-};
+ };
+ var User = mongoose.model('User', userSchema);
+ module.exports = User;
+
+ 
 
 //Category schema
 var categorySchema = new Schema({
