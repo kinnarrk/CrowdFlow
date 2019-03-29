@@ -13,6 +13,7 @@ var app = express();
 // setup our express application
 // ================================================================
 app.use('/webapp', express.static(process.cwd() + '/'));
+app.use('/view',express.static(__dirname + '/view'));
 app.set('view engine', 'ejs');
 // ================================================================
 // setup routes

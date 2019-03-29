@@ -4,9 +4,57 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <! — The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -> -->
-  <title>Demonstration of EJS templating in NodeJS Application</title>
+  <title>Crowd Flow : Home</title>
   <!-- <! — STYLESHEETS -> -->
   <!-- <! — CSS (load bootstrap from a CDN) -> -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- <link rel="stylesheet" href="/public/style.css"> -->
+  <style>
+    body {
+        position: relative;
+    }
+
+    #carousel-example {
+        padding-top: 70px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .container-fluid {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 5px;
+    }
+
+    /* equal card height */
+    .row-equal>div[class*='col-'] {
+        display: flex;
+        flex: 1 0 auto;
+    }
+
+    .row-equal .card {
+        width: 100%;
+    }
+
+    /* ensure equal card height inside carousel */
+    .carousel-inner>.row-equal.active,
+    .carousel-inner>.row-equal.next,
+    .carousel-inner>.row-equal.prev {
+        display: flex;
+    }
+
+    /* prevent flicker during transition */
+    .carousel-inner>.row-equal.active.left,
+    .carousel-inner>.row-equal.active.right {
+        opacity: 0.5;
+        display: flex;
+    }
+
+
+    /* control image height */
+    .card-img-top-250 {
+        max-height: 250px;
+        overflow: hidden;
+    }
+</style>
 </head>
