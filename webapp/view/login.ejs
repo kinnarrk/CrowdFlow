@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+
+    <div class="fluid-container">
+        <div class="row p-0 m-0">
+            <div class="col-md-8 p-0 m-0">
+                <img src="../view/images/login.jpg" class="img-fluid">
+            </div>
+            <div class="col-md-4 text-center align-self-center">
+                <div class="container p-5">
+                    <div class="row mb-3">
+                        <h4 class="text-center m-auto">Sign in</h4>
+                    </div>
+                    <form name="login" action="/users/login" method="POST">
+                        <div class="text-left">
+                        </div>
+                        <div class="pl-3 pr-3">
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-envelope"></span>
+                                        </span>
+                                    </div>
+                                    <input type="email" name="email" class="form-control" placeholder="E-mail">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-lock"></span>
+                                        </span>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                </div>
+                            </div>
+                        </div>
+                        <em class="text-muted">or sign in using:</em>
+                        <div class="social mt-1">
+                            <a id="facebook" href="/users/facebook">
+                                <div class="social-media facebook">
+                                    <span class="fab fa-facebook"></span>
+                                </div>
+                            </a>
+                            <a href="/users/google">
+                                <div class="social-media google">
+                                    <span class="fab fa-google"></span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mt-3 mb-3">
+                            <button class="btn-login col-md-12">
+                                LOGIN
+                            </button>
+                        </div>
+                    </form>
+                    <span class="text-muted">
+                        Don't have an account? Click
+                        <a href="/users/register" id="linkCriarConta">here</a> to create one
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+</body>
+
+</html>
