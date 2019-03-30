@@ -43,7 +43,7 @@ var userSchema = new Schema({
 
 //Category schema
 var categorySchema = new Schema({
-    categoryName : {type: String, required: true},
+    categoryName : {type: String, required: true, index: {unique: true }},
     categoryImage : {type: String, required: true},
     categoryDescription : {type: String},
     createdBy : {type: Schema.Types.ObjectId, ref: 'User', required: true},
