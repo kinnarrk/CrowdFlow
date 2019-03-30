@@ -15,7 +15,6 @@ app.use(bodyParser.json());
 // setup our express application
 // ================================================================
 // app.use('/webapp', express.static(process.cwd() + '/'));
-app.use('/view',express.static(__dirname + '/view'));
 app.use('/', routes);
 app.set('view engine', 'ejs');
 // ================================================================
