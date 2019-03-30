@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/CrowdFlow',
+// mongodb+srv://admin:Pandavas12345@cluster0-3rsdu.mongodb.net/test?retryWrites=true
+
+mongoose.connect('mongodb+srv://admin:Pandavas12345@cluster0-3rsdu.mongodb.net/CrowdFlow?retryWrites=true',
     {useNewUrlParser: true}, 
     (err)=>{
         if(!err)
