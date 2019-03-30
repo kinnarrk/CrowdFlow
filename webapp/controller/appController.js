@@ -12,5 +12,11 @@ router.get('/',(req, res) =>{
     res.render('../view/index');
 });
 
+router.get('/users/login', (req, res) => {
+    res.render('../view/login');
+});
 
+router.get('/users/register', (req, res) => {
+    res.render('../view/register');
+});
 module.exports = router;
