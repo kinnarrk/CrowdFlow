@@ -15,6 +15,7 @@ var app = express();
 app.use('/webapp', express.static(process.cwd() + '/'));
 app.use('/view',express.static(__dirname + '/view'));
 app.set('view engine', 'ejs');
+
 // ================================================================
 // setup routes
 // ================================================================
@@ -23,5 +24,5 @@ routes(app);
 // start our server
 // ================================================================
 app.listen(port, function() {
- console.log('Server listening on port ' + port + 'â€¦');
+ console.log('Server listening on port ' + port + '…');
 });
