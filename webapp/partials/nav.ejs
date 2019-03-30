@@ -1,7 +1,7 @@
 <!-- views/partials/nav.ejs -->
 
 
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+ <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -22,4 +22,49 @@
       </li>
     </ul>
 </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-inverse fixed-top">
+  <div class="container-fluid">
+      <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">Crowd Flow</a>
+      </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                  <a class="nav-link" href="#trending">Trending Now<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#browse">Browse Fundraisers<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#HowItWorks">How To Get Started</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#featured">Featured In</a>
+              </li>
+
+          </ul>
+          <form class="navbar-form navbar-left">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                  <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                          <i class="fas fa-search"></i>
+                      </button>
+                  </div>
+              </div>
+
+          </form>
+          <ul class="navbar-nav">
+              <li class="nav-item navbar-right"><a class="nav-link" href="#featured">Sign in</a></li>
+              <a href="StartAFundraiser.html" class="btn btn-outline-secondary">Start a Fundraiser</button></a>
+          </ul>
+      </div>
+  </div>
 </nav>
