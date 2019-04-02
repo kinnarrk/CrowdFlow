@@ -16,14 +16,14 @@ router.get('/register', (req, res) => {
 //Register Handle
 router.post('/register', (req, res) => {
     const {
-        name,
+        fullName,
         email,
         password,
-        mobile
+        phone
     } = req.body;
     errors = [];
 
-    if (!name || !email || !password || !mobile) {
+    if (!fullName || !email || !password || !phone) {
         errors.push({
             msg: 'Please enter all fields'
         });
@@ -38,10 +38,10 @@ router.post('/register', (req, res) => {
     if (errors.length > 0) {
         res.render('../view/register', {
             errors,
-            name,
+            fullName,
             email,
             password,
-            mobile
+            phone
         });
     } else {
         User.findOne({
@@ -53,17 +53,19 @@ router.post('/register', (req, res) => {
                 });
                 res.render('../view/register', {
                     errors,
-                    name,
+                    fullName,
                     email,
                     password,
-                    mobile
+                    phone
                 });
             } else {
+
                 const newUser = new User({
-                    name,
-                    email,
-                    password,
-                    mobile
+                    roleId: "5ca27d4f2de1350846b32b7e",
+                    fullName: fullName,
+                    email: email,
+                    password: password,
+                    phone: phone
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
@@ -81,7 +83,7 @@ router.post('/register', (req, res) => {
                             })
                             .catch(err => console.log(err));
                     });
-                }); 
+                });
             }
         });
     }
