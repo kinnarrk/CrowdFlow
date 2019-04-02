@@ -9,7 +9,7 @@ var roleSchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Role = mongoose.model('Role', roleSchema);
- module.exports = Role;
+//  module.exports = Role;
 
 //User schema
 var userSchema = new Schema({
@@ -37,13 +37,13 @@ var userSchema = new Schema({
     });
  };
  var User = mongoose.model('User', userSchema);
- module.exports = User;
+//  module.exports = User;
 
  
 
 //Category schema
 var categorySchema = new Schema({
-    categoryName : {type: String, required: true},
+    categoryName : {type: String, required: true, index: {unique: true }},
     categoryImage : {type: String, required: true},
     categoryDescription : {type: String},
     createdBy : {type: Schema.Types.ObjectId, ref: 'User', required: true},
@@ -53,7 +53,7 @@ var categorySchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Category = mongoose.model('Category', categorySchema);
- module.exports = Category;
+//  module.exports = Category;
 
 //Fundraiser schema
 var fundraiserSchema = new Schema({
@@ -76,7 +76,7 @@ var fundraiserSchema = new Schema({
     story : {type: String}
  });
  var Fundraiser = mongoose.model('Fundraiser', fundraiserSchema);
- module.exports = Fundraiser;
+//  module.exports = Fundraiser;
 
 //Comment schema
 var commentSchema = new Schema({
@@ -89,7 +89,7 @@ var commentSchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Comment = mongoose.model('Comment', commentSchema);
- module.exports = Comment;
+//  module.exports = Comment;
 
 //Beneficiary schema
 var beneficiarySchema = new Schema({
@@ -108,7 +108,7 @@ var beneficiarySchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Beneficiary = mongoose.model('Beneficiary', beneficiarySchema);
- module.exports = Beneficiary;
+//  module.exports = Beneficiary;
 
 //Transaction schema
 var transactionSchema = new Schema({
@@ -123,7 +123,7 @@ var transactionSchema = new Schema({
     transactionDate : {type: Date, required: true, default: Date.now}
  });
  var Transaction = mongoose.model('Transaction', transactionSchema);
- module.exports = Transaction;
+//  module.exports = Transaction;
 
 //Donation schema
 var donationSchema = new Schema({
@@ -138,7 +138,7 @@ var donationSchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Donation = mongoose.model('Donation', donationSchema);
- module.exports = Donation;
+//  module.exports = Donation;
 
 //Withdrawal schema
 var withdrawalSchema = new Schema({
@@ -152,4 +152,17 @@ var withdrawalSchema = new Schema({
     isDeleted : {type: Boolean, default: false}
  });
  var Withdrawal = mongoose.model('Withdrawal', withdrawalSchema);
- module.exports = Withdrawal;
+//  module.exports = Withdrawal;
+
+
+ module.exports = {
+    Role: Role,
+    User: User,
+    Category: Category,
+    Fundraiser: Fundraiser,
+    Comment: Comment,
+    Beneficiary: Beneficiary,
+    Transaction: Transaction,
+    Donation: Donation,
+    Withdrawal: Withdrawal
+};

@@ -1,7 +1,9 @@
 const express = require('express');
 var router = express.Router();
+const bcrypt = require('bcrypt');
 const passport = require('passport');
-require('../model/commonModel');
+const model = require('../model/commonModel');
+const User = model.User;
 
 router.get('/login', (req, res) => {
     res.render('../view/login');
@@ -70,10 +72,10 @@ router.post('/register', (req, res) => {
                         newUser.password = hash;
                         newUser.save()
                             .then(user => {
-                                req.flash(
-                                    'success_msg',
-                                    'You are now registered and can log in'
-                                );
+                                // req.flash(
+                                //     'success_msg',
+                                //     'You are now registered and can log in'
+                                // );
                                 errors = [];
                                 res.redirect('/users/login');
                             })
