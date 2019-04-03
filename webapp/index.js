@@ -8,7 +8,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const app = express();
-// const cors = require('cors');
+ const cors = require('cors');
 
 const mongoose = require('./config/database.js');
 
@@ -33,7 +33,7 @@ app.use(express.urlencoded({
 //Setup Routes
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
-
+app.use('/fundraiser', require('./controller/fundraiser_controller'));
 //Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
