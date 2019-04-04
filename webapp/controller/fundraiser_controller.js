@@ -6,6 +6,9 @@ const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
 
 // var {User} = require('../model/user.js');
+router.get('/cause', (req, res) => {
+    res.render('../view/chooseCauseFundraiser');
+});
 
 router.get('/:id',(req, res) =>{
     fundraiser.findById({"_id":req.params.id},(err,event)=>{
@@ -34,10 +37,6 @@ router.post('/:id/comment',(req, res) =>{
 
 
             newComment.save();
-
-
-
-
             
             res.render('../view/view_fundraiser',{event:event});
         }
