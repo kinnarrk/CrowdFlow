@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Register Page</title>
+    <link rel="stylesheet" href="../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+    <div class="fluid-container">
+        <div class="row p-0 m-0">
+            <div class="col-md-8 p-0 m-0">
+                <img src="../view/images/login.jpg" class="img-fluid">
+            </div>
+            <div class="col-md-4 text-center align-self-center">
+                <div class="container p-5">
+                    <div class="row mb-3">
+                        <h4 class="text-center m-auto">Create an Account</h4>
+                    </div>
+
+                    <form name="register" action="/users/register" method="POST">
+                        <div class="text-left">
+                            <% include ../partials/messages %>
+                        </div>
+                        <div class="pr-3 pl-3">
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-user"></span>
+                                        </span>
+                                    </div>
+                                    <input type="text" name="fullName" class="form-control" placeholder="Name"
+                                        value="<%= typeof fullName != 'undefined' ? fullName : '' %>">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-envelope"></span>
+                                        </span>
+                                    </div>
+                                    <input type="email" name="email" class="form-control" placeholder="E-mail"
+                                        value="<%= typeof email != 'undefined' ? email : '' %>">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-lock"></span>
+                                        </span>
+                                    </div>
+                                    <input type="password" name="password" class="form-control" placeholder="Password"
+                                        value="<%= typeof password != 'undefined' ? password : '' %>">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-light">
+                                            <span class="fas fa-mobile-alt"></span>
+                                        </span>
+                                    </div>
+                                    <input type="number" name="phone" class="form-control" placeholder="Phone No"
+                                        value="<%= typeof phone != 'undefined' ? phone : '' %>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 mb-3">
+                            <button class="btn-login col-md-12">
+                                REGISTER
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+</body>
+
+</html>
