@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Choose Your Cause</title>
+    <link rel="stylesheet" href="../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+
+    <div class="fluid-container">
+        <div class="container">
+            <div class="row">
+                <h1>Start a Fundraiser</h1>
+            </div>
+            <form name="login" action="/fundraiser" method="POST">
+                <div class="pl-3 pr-3">
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Title">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="category">Category</label>
+                            <select class="custom-select my-1 mr-sm-2 col-12" id="category">
+                                <option selected>Choose...</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="amount">Amount</label>
+                            <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="description">Short Description</label>
+                            <input type="text" name="description" id="description" class="form-control"
+                                placeholder="Description">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="description">Phone No</label>
+                            <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone No">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="city">City</label>
+                            <input type="text" name="city" id="city" class="form-control" placeholder="City">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <button type="submit" class="btn btn-primary my-1">Submit for Approval</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+</body>
+
+</html>

@@ -10,10 +10,6 @@ const User = model.User;
 const Role = model.Role;
 
 router.get('/login', (req, res) => {
-    if(req.user) {
-        res.redirect('/');
-        return;
-    }
     res.render('../view/login');
 });
 
@@ -127,7 +123,7 @@ router.post('/register', (req, res) => {
 //Login
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: req.session.returnTo || '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
@@ -141,7 +137,7 @@ router.get('/facebook',
 
 router.get('/facebook/callback', (req, res, next) => {
     passport.authenticate('facebook', {
-        successRedirect: '/',
+        successRedirect: req.session.returnTo || '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
@@ -158,7 +154,7 @@ router.get('/google',
 
 router.get('/google/callback', (req, res, next) => {
     passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: req.session.returnTo || '/',
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);

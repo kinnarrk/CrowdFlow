@@ -4,10 +4,24 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
+const Cause = model.Cause;
+const {ensureAuthenticated } = require('../config/auth');
 
 // var {User} = require('../model/user.js');
 router.get('/cause', (req, res) => {
-    res.render('../view/chooseCauseFundraiser');
+    Cause.find({}, (err, arr) => {
+        if(err) {
+            res.redirect('/cause');
+            return;
+        }
+        res.render('../view/fundraiser_cause', {cause : arr});
+    });
+
+    
+});
+
+router.get('/start/:id', (req, res) => {
+    res.render('../view/start_fundraiser');
 });
 
 router.get('/:id',(req, res) =>{
