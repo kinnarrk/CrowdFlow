@@ -13,6 +13,8 @@ const app = express();
 
 const mongoose = require('./config/database.js');
 
+
+
 app.use(bodyParser.json());
 
 // Passport Config
@@ -58,6 +60,8 @@ app.use(function (req, res, next) {
     res.locals.user = req.user;
     next();
 });
+
+
 
 //Setup Routes
 app.use('/', require('./controller/appController'));

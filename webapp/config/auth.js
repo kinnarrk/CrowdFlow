@@ -1,12 +1,13 @@
 module.exports = {
-    ensureAuthenticated: function(req, res, next) {
-      console.log("REQ="+req.isAuthenticated());
+    ensureAuthenticated: (req, res, next) => {
+      // console.log("REQa="+req.isAuthenticated());
+      // console.log("USERa="+res.locals.user);
+      req.session.returnTo = req.originalUrl;
+      console.log("RETURN URL="+req.originalUrl);
       if (req.isAuthenticated()) {
-        console.log("USER="+req.user);
         return next();
       }
       //req.flash('error_msg', 'Please log in to view that resource');
-      res.locals.user = undefined;
-      next();
+      res.redirect('/users/login');
     }
   };
