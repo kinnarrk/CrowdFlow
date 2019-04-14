@@ -6,7 +6,7 @@ var validator = require('validator');
 var passwordValidator = require('password-validator');
 
 // var {User} = require('../model/user.js');
-var User = require('../model/commonModel');
+var model = require('../model/commonModel');
 
 router.get('/',(req, res) =>{
     res.render('../view/index');
