@@ -1,4 +1,4 @@
-'use strict';
+use strict';
 // ================================================================
 // get all the tools we need
 // ================================================================
@@ -16,8 +16,6 @@ const mongoose = require('./config/database.js');
 
 
 app.use(bodyParser.json());
-
-
 
 // Passport Config
 require('./config/passport')(passport);
@@ -38,14 +36,6 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-
-//Setup Routes
-app.use('/', require('./controller/appController'));
-app.use('/users', require('./controller/userController'));
-app.use('/category', require('./controller/categoryController'));
-app.use('/editFundraiser', require('./controller/editFundraiserController'));
-
-
 //Express session
 app.use(
     session({
@@ -54,7 +44,6 @@ app.use(
         saveUninitialized: false
     })
 );
-
 
 //Passport middleware
 app.use(passport.initialize());
