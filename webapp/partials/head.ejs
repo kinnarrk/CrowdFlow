@@ -1,62 +1,42 @@
 <!-- <! — views/partials/head.ejs -> -->
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <! — The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -> -->
-  <title>Crowd Flow : Home</title>
-  <!-- <! — STYLESHEETS -> -->
-  <!-- <! — CSS (load bootstrap from a CDN) -> -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- <link rel="stylesheet" href="/public/style.css"> -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <! — The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -> -->
+    <title>Crowd Flow : Home</title>
+    <!-- <! — STYLESHEETS -> -->
+    <!-- <! — CSS (load bootstrap from a CDN) -> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/public/style.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
         integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <style>
-    body {
-        position: relative;
-    }
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Permanent+Marker" rel="stylesheet">
+    <style>
+        .navbar .navbar-header .navbar-brand {
+            padding : 0;
+            font-size : 30px;
+            font-family: 'Permanent Marker', cursive;
+            font-weight: bold;
+            color: #1E8449;
+        }
 
-    #carousel-example {
-        padding-top: 70px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+        .navbar-nav .nav-item .nav-link{
+            font-size: 15px;
+            font-weight: bold;
+            color : #000000;
+        }
+        body {
+            font-family: 'Noto Sans', sans-serif;
+        }
 
-    .container-fluid {
-        padding-left: 0px;
-        padding-right: 0px;
-        padding-bottom: 5px;
-    }
+        .container-fluid {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
 
-    /* equal card height */
-    .row-equal>div[class*='col-'] {
-        display: flex;
-        flex: 1 0 auto;
-    }
-
-    .row-equal .card {
-        width: 100%;
-    }
-
-    /* ensure equal card height inside carousel */
-    .carousel-inner>.row-equal.active,
-    .carousel-inner>.row-equal.next,
-    .carousel-inner>.row-equal.prev {
-        display: flex;
-    }
-
-    /* prevent flicker during transition */
-    .carousel-inner>.row-equal.active.left,
-    .carousel-inner>.row-equal.active.right {
-        opacity: 0.5;
-        display: flex;
-    }
-
-
-    /* control image height */
-    .card-img-top-250 {
-        max-height: 250px;
-        overflow: hidden;
-    }
-</style>
+    </style>
 </head>
