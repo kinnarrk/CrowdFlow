@@ -38,14 +38,14 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-<<<<<<< HEAD
+
 //Setup Routes
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
 app.use('/category', require('./controller/categoryController'));
 app.use('/editFundraiser', require('./controller/editFundraiserController'));
 
-=======
+
 //Express session
 app.use(
     session({
@@ -54,7 +54,7 @@ app.use(
         saveUninitialized: false
     })
 );
->>>>>>> a9f06f7d32fc6e597124e2065352a6131eb1f995
+
 
 //Passport middleware
 app.use(passport.initialize());
