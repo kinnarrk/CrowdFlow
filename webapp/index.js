@@ -14,6 +14,8 @@ const mongoose = require('./config/database.js');
 
 app.use(bodyParser.json());
 
+
+
 // Passport Config
 require('./config/passport')(passport);
 
@@ -33,6 +35,9 @@ app.use(express.urlencoded({
 //Setup Routes
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
+app.use('/category', require('./controller/categoryController'));
+app.use('/editFundraiser', require('./controller/editFundraiserController'));
+
 
 //Passport middleware
 app.use(passport.initialize());
