@@ -25,7 +25,7 @@ router.get('/cause', (req, res) => {
     // res.render('../view/chooseCauseFundraiser');
 });
 
-router.get('/view_fundraiser/:id',(req, res) =>{
+/*router.get('/view_fundraiser/:id',(req, res) =>{
     fundraiser.findById({"_id":req.params.id},(err,event)=>{
         console.log(event);
         if(err){
@@ -35,15 +35,15 @@ router.get('/view_fundraiser/:id',(req, res) =>{
             res.render('../view/view_fundraiser',{event:event});
         }
     });
-});
+});*/
 
 router.get('/start/:id', (req, res) => {
     res.render('../view/start_fundraiser');
 });
 
 // following code edited by Vivek on 15th april
-
-router.get('/:id', (req, res) => {
+// keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
+router.get('/view_fundraiser/:id', (req, res) => {
     fundraiser.findById({ "_id": req.params.id }, (err, event) => {
         console.log(event);
         image1 = "../view/images/fundraiser_1.jpg";// event.image.replace(/\\/g, "/");
@@ -150,14 +150,13 @@ router.get('/browse_fundraiser/:categoryId?', (req, res) => {
             
             // { $project: { donations: { $objectToArray: "$donations" } } }
             
-            { $sort:{createdDate: -1} },
-            { $group : {
-                "_id": "$_id",
-                // "title": "$title",
-                "doc":{"$first":"$$ROOT"},
-                "donations": { "$push": "$donations" },                
-                "totalDoantions": { "$sum": "$donations.amount" }
-            }}
+            { $sort:{createdDate: -1} }
+            // { $group : {
+            //     "_id": "$_id",
+            //     "doc":{"$first":"$$ROOT"},
+            //     "donations": { "$push": "$donations" },                
+            //     "totalDoantions": { "$sum": "$donations.amount" }
+            // }}
             // { "$project": {
             //     "_id": "$categoryId",
             //     "total": 1,
