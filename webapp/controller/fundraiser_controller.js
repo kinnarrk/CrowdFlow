@@ -2,6 +2,7 @@ const express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+var mongoose = require('mongoose');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
 const Cause = model.Cause;
