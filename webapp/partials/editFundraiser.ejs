@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Choose Your Cause</title>
+    <link rel="stylesheet" href="../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+
+    <div class="fluid-container">
+        <div class="container">
+            <div class="row mt-5">
+                <h1>Start a Fundraiser</h1>
+            </div>
+            <% if(typeof edit != 'undefined') { %>
+            <% edit.forEach(function(x) { %>
+            <form name="login" method="POST" action="/editFundraiser/edit/<%= x._id %>">
+                <div class="pl-3 pr-3">
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="title">Title</label>
+                            <input name="title" class="form-control" placeholder="Title" value=<%= x.title%>>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="category">Category</label>
+                            <select class="custom-select my-1 mr-sm-2 col-12">
+                                <option selected>Choose...</option>
+                                <option value=<%= x.categoryId%>>One</option>
+                                <option value=<%= x.categoryId%>>Two</option>
+                                <option value=<%= x.categoryId%>>Three</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="amount">Amount</label>
+                            <input name="amount" class="form-control" placeholder="Amount" value=<%= x.amount%>>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="description">Short Description</label>
+                            <input name="description" class="form-control" value=<%= x.description%>>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="amount">Phone Number</label>
+                            <input name="phone" class="form-control" placeholder="Phone Number" value=<%= x.phone%>>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="city">City</label>
+                            <input name="city" class="form-control" placeholder="City" value=<%= x.city%>>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <button type="submit" class="btn btn-primary my-1">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <% }); %>
+            <% } %>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+</body>
+
+</html>

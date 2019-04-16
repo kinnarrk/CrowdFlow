@@ -71,7 +71,8 @@ app.use(function (req, res, next) {
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
 app.use('/fundraiser', require('./controller/fundraiser_controller'));
-
+app.use('/category', require('./controller/categoryController'));
+app.use('/editFundraiser', require('./controller/editFundraiserController'));
 // start our server
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
