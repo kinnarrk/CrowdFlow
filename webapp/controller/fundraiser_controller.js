@@ -39,7 +39,7 @@ router.post('/submit-for-approval', (req, res) => {
     console.log("fund="+fund);
     fund.save().then((data) => {
         console.log("data="+data);
-        fundraiserImage.mv("./view/images/fundraisers/"+data._id+".png", function(err) {
+        fundraiserImage.mv("./view/images/fundraisers/" + data._id + ".png", function(err) {
             if (err)
               return res.status(500).send(err);
             res.send({'message': req.body, 'mes': 'File uploaded!'});
