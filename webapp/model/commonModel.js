@@ -16,11 +16,11 @@ var userSchema = new Schema({
     roleId : {type: Schema.Types.ObjectId, ref: 'Role', required: true},
     fullName : {type: String, required: true},
     email : {type: String, required: true, index: {unique: true }},
-    password : {type: String, required: true},
+    password : {type: String},
     image : {type: String},
     country : {type: String},
     city : {type: String},
-    phone : {type: String, required: true},
+    phone : {type: String},
     dob : {type: Date},
     ssn : {type: Number},
     facebook : {type: String},
@@ -62,6 +62,29 @@ var causeSchema = new Schema({
 });
 var Cause = mongoose.model('Cause', causeSchema);
 
+//Donation schema
+var donationSchema = new Schema({
+    userId : {type: Schema.Types.ObjectId, ref: 'User', required: true},
+    // fundraiserId : {type: Schema.Types.ObjectId, ref: 'Fundraiser', required: true},
+    // transactionId : {type: Schema.Types.ObjectId, ref: 'Transaction'},   //since transaction fields added to this schema, the field is not required anymore
+    amount : {type: Number, required: true},
+    createdDate : {type: Date, required: true, default: Date.now},
+    isRefund : {type: Boolean, default: false},
+    refundBy : {type: Schema.Types.ObjectId, ref: 'User'},
+    refundDate : {type: Date},
+    isDeleted : {type: Boolean, default: false},
+    //Transaction details (earlier- transactionSchema)
+    transactionId : {type: String, required: true}, //transaction id received from payment gateway 
+    paymentMode : {type: String, required: true},
+    bank : {type: String, required: true},
+    invoiceId : {type: String, required: true},
+    taxName : {type: String, required: true},
+    taxRate : {type: Number, required: true},
+    taxAmount : {type: Number, required: true}
+ });
+ var Donation = mongoose.model('Donation', donationSchema);
+//  module.exports = Donation;
+
 //Fundraiser schema
 var fundraiserSchema = new Schema({
     categoryId : {type: Schema.Types.ObjectId, ref: 'Category', required: true},
@@ -80,7 +103,8 @@ var fundraiserSchema = new Schema({
     isDeleted : {type: Boolean, default: false},
     phone : {type: String, required: true},
     city : {type: String},
-    story : {type: String}
+    story : {type: String},
+    donations : [donationSchema]   //added on 15/4 for easier retrieval
  });
  var Fundraiser = mongoose.model('Fundraiser', fundraiserSchema);
 //  module.exports = Fundraiser;
@@ -131,21 +155,6 @@ var transactionSchema = new Schema({
  });
  var Transaction = mongoose.model('Transaction', transactionSchema);
 //  module.exports = Transaction;
-
-//Donation schema
-var donationSchema = new Schema({
-    userId : {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    fundraiserId : {type: Schema.Types.ObjectId, ref: 'Fundraiser', required: true},
-    transactionId : {type: Schema.Types.ObjectId, ref: 'Transaction'},
-    amount : {type: Number, required: true},
-    createdDate : {type: Date, required: true, default: Date.now},
-    isRefund : {type: Boolean, default: false},
-    refundBy : {type: Schema.Types.ObjectId, ref: 'User', required: true},
-    refundDate : {type: Date},
-    isDeleted : {type: Boolean, default: false}
- });
- var Donation = mongoose.model('Donation', donationSchema);
-//  module.exports = Donation;
 
 //Withdrawal schema
 var withdrawalSchema = new Schema({
