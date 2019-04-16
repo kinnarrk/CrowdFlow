@@ -52,12 +52,12 @@
     border: none;
 }
 
-.social-media.facebook {
+.social-media .facebook {
     border-color: #3b5998;
     color: #3b5998;
 }
 
-.social-media.facebook:hover {
+.social-media .facebook:hover {
     background-color: #3b5998;
     color: white;
 }
@@ -74,4 +74,9 @@
 
 .card:hover {
     box-shadow : -1px 9px 40px -12px rgba(0,0,0,0.75); 
+}
+
+.card .card-body a {
+    color : black;
+    text-decoration: none;
 }

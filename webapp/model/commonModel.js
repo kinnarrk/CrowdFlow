@@ -55,6 +55,13 @@ var categorySchema = new Schema({
  var Category = mongoose.model('Category', categorySchema);
 //  module.exports = Category;
 
+//Cause Schema
+var causeSchema = new Schema({
+    name : {type: String, required: true},
+    description : {type: String}
+});
+var Cause = mongoose.model('Cause', causeSchema);
+
 //Donation schema
 var donationSchema = new Schema({
     userId : {type: Schema.Types.ObjectId, ref: 'User', required: true},
@@ -168,6 +175,7 @@ var withdrawalSchema = new Schema({
     Role: Role,
     User: User,
     Category: Category,
+    Cause :  Cause,
     Fundraiser: Fundraiser,
     Comment: Comment,
     Beneficiary: Beneficiary,
