@@ -5,7 +5,8 @@ const passport = require('passport');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
 const Cause = model.Cause;
-const {ensureAuthenticated } = require('../config/auth');
+const Category = model.Category;
+const { ensureAuthenticated } = require('../config/auth');
 
 // var {User} = require('../model/user.js');
 router.get('/cause', (req, res) => {
@@ -16,12 +17,36 @@ router.get('/cause', (req, res) => {
         }
         res.render('../view/fundraiser_cause', {cause : arr});
     });
+});
 
+router.get('/start/:causeId', ensureAuthenticated, (req, res) => {
+    Category.find({}, (err, result) => {
+        if(err) {
+            res.render({'message' : 'ERROR'});
+            return;
+        }
+        const categories = result;
+        res.render('../view/start_fundraiser', {categories: categories, causeId : req.params.causeId, createdBy: req.user._id});
+    })
     
 });
 
-router.get('/start/:id', (req, res) => {
-    res.render('../view/start_fundraiser');
+router.post('/submit-for-approval', (req, res) => {
+    let fundraiserImage = req.files.image;
+
+    console.log("catid="+req.body.categoryId);
+    let fund = new fundraiser(req.body);
+    console.log("fund="+fund);
+    fund.save().then((data) => {
+        console.log("data="+data);
+        fundraiserImage.mv("./view/images/fundraisers/"+data._id+".png", function(err) {
+            if (err)
+              return res.status(500).send(err);
+            res.send({'message': req.body, 'mes': 'File uploaded!'});
+          });
+    }).catch({
+
+    });
 });
 
 router.get('/:id',(req, res) =>{
@@ -36,6 +61,7 @@ router.get('/:id',(req, res) =>{
     })
     
 });
+
 router.post('/:id/comment',(req, res) =>{
     fundraiser.findById({"_id":req.params.id},(err,event)=>{
         console.log(event);
