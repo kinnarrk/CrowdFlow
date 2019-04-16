@@ -5,15 +5,10 @@ const passport = require('passport');
 var mongoose = require('mongoose');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
-const category = model.Category;
-const Donation = model.Donation;
 const Cause = model.Cause;
-const {ensureAuthenticated } = require('../config/auth');
+const Category = model.Category;
+const { ensureAuthenticated } = require('../config/auth');
 
-// following lines added by Vivek on 15 april
-const Comment = model.Comment;
-var commentList = [];
-//
 // var {User} = require('../model/user.js');
 router.get('/cause', (req, res) => {
     Cause.find({}, (err, arr) => {
@@ -23,10 +18,39 @@ router.get('/cause', (req, res) => {
         }
         res.render('../view/fundraiser_cause', {cause : arr});
     });
-    // res.render('../view/chooseCauseFundraiser');
 });
 
-/*router.get('/view_fundraiser/:id',(req, res) =>{
+router.get('/start/:causeId', ensureAuthenticated, (req, res) => {
+    Category.find({}, (err, result) => {
+        if(err) {
+            res.render({'message' : 'ERROR'});
+            return;
+        }
+        const categories = result;
+        res.render('../view/start_fundraiser', {categories: categories, causeId : req.params.causeId, createdBy: req.user._id});
+    })
+    
+});
+
+router.post('/submit-for-approval', (req, res) => {
+    let fundraiserImage = req.files.image;
+
+    console.log("catid="+req.body.categoryId);
+    let fund = new fundraiser(req.body);
+    console.log("fund="+fund);
+    fund.save().then((data) => {
+        console.log("data="+data);
+        fundraiserImage.mv("./view/images/fundraisers/" + data._id + ".png", function(err) {
+            if (err)
+              return res.status(500).send(err);
+            res.send({'message': req.body, 'mes': 'File uploaded!'});
+          });
+    }).catch({
+
+    });
+});
+
+router.get('/:id',(req, res) =>{
     fundraiser.findById({"_id":req.params.id},(err,event)=>{
         console.log(event);
         if(err){
@@ -35,11 +59,30 @@ router.get('/cause', (req, res) => {
         else{
             res.render('../view/view_fundraiser',{event:event});
         }
-    });
-});*/
+    })
+    
+});
 
-router.get('/start/:id', (req, res) => {
-    res.render('../view/start_fundraiser');
+router.post('/:id/comment',(req, res) =>{
+    fundraiser.findById({"_id":req.params.id},(err,event)=>{
+        console.log(event);
+        if(err){
+            res.render({'messages':err});
+        }
+        else{
+
+            const newComment = new Comment({
+                comment:req.body.comment
+            });
+            console.log(req.body.comment);
+
+
+            newComment.save();
+            
+            res.render('../view/view_fundraiser',{event:event});
+        }
+    })
+    
 });
 
 // following code edited by Vivek on 15th april
@@ -204,5 +247,7 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         });
     });
 });
+
+
 
 module.exports = router;
