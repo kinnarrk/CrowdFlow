@@ -10,6 +10,7 @@ const {ensureAuthenticated } = require('../config/auth');
 var categories;
 var causes;
 const Category = model.Category;
+const Donation = model.Donation;
 
 
 router.use(function (req, res, next) {
@@ -19,7 +20,7 @@ router.use(function (req, res, next) {
         }
         causes = arr;
     });
-    category.find({isDeleted: false}, (err, arr) => {
+    Category.find({isDeleted: false}, (err, arr) => {
         if(err) {
             console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
         }
@@ -246,7 +247,7 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         // console.log('fundraiser: ' + fr);
         var donation = new Donation({
             userId: "5cb4c825f1cd812f9c316c4a",
-            amount: 4000,
+            amount: 5000,
             createdDate: Date.now,
             transactionId: "12345667879",
             paymentMode: "Card",
