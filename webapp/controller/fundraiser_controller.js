@@ -6,8 +6,27 @@ var mongoose = require('mongoose');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
 const Cause = model.Cause;
+const {ensureAuthenticated } = require('../config/auth');
+var categories;
+var causes;
 const Category = model.Category;
-const { ensureAuthenticated } = require('../config/auth');
+
+
+router.use(function (req, res, next) {
+    Cause.find({}, (err, arr) => {
+        if(err) {
+            console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+        }
+        causes = arr;
+    });
+    category.find({isDeleted: false}, (err, arr) => {
+        if(err) {
+            console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+        }
+        categories = arr;
+    });
+    next();
+  });
 
 // var {User} = require('../model/user.js');
 router.get('/cause', (req, res) => {
@@ -182,7 +201,7 @@ router.get('/browse_fundraiser/:categoryId?', (req, res) => {
                 console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
             }
             // console.log("fundraisers: " + JSON.stringify(docs));                
-            res.render('../view/browse_fundraiser', {fundraisers: docs});
+            res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
         });
     } else {
         // below line is for reference: if just join, condition and sort is needed then use below. But using aggregate is a better approach.
@@ -212,12 +231,15 @@ router.get('/browse_fundraiser/:categoryId?', (req, res) => {
             if(err){
                 console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
             }
-            // console.log("fundraisers with category id: " + JSON.stringify(docs));
-            res.render('../view/browse_fundraiser', {fundraisers: docs});
+            // var frs = JSON.stringify(docs);
+            // console.log("fundraisers with category id: " + JSON.stringify(docs));            
+            res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
         });
     }
 });
 
+
+//just a test funciton to add donations.
 router.get('/add_donation/:fundraiserId', (req, res) => {
     // console.log("fundraiserId:"+ req.params.fundraiserId +":");
     fundraiser.findOne({ _id: req.params.fundraiserId }, function(err, fr) {
@@ -247,7 +269,5 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         });
     });
 });
-
-
 
 module.exports = router;
