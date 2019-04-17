@@ -18,6 +18,7 @@
                 <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel-example" data-slide-to="1"></li>
                 <li data-target="#carousel-example" data-slide-to="2"></li>
+                <li data-target="#carousel-example" data-slide-to="3"></li>
             </ol>
 
             <div class="carousel-inner" role="listbox">
@@ -279,7 +280,7 @@
         </div> -->
     </div>
 
-    <div id="browse" class="container-fluid bg-light">
+    <!-- <div id="browse" class="container-fluid">
         <div class="container p-1">
             <div class="row mt-3">
                 <h1 class="text-center w-100">Browse Fundraisers</h1>
@@ -394,7 +395,37 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div class="container p-1">
+            <div class="row mt-5">
+                <h1 class="text-center w-100">Browse Fundraisers</h1>
+                <h6 class="text-center w-100">Be it for a personal need, social cause or a creative idea - you can count
+                    on us for
+                    the project that you want to raise funds for.</h6>
+            </div>
+            <% if(typeof sample1 != 'undefined') { %>
+            <div class="row ml-5 mr-5">
+                <% sample1.forEach(function(category) { %>
+                <div class="col-lg-3 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" src="<%= category.categoryImage %>" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title text-center"><%= category.categoryName %></h4>
+                            <p class="card-text text-center"><%= category.categoryDescription%></p>
+                            <!-- <p class="card-text"><%= category.createdDate %></p> -->
+                            <!-- <p class="card-text"><%= category.createdBy %></p> -->
+                            <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom"
+                                title="View this category">View</a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <% } %>
+        </div>
+
+
 
     <div id="HowItWorks" class="container">
         <div class="row mt-5">
