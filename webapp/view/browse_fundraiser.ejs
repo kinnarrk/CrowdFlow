@@ -54,7 +54,16 @@
 
       <!-- Post Content Column -->
       <div class="col-md-8">
-
+        Fundraisers:
+        <% fundraisers.forEach(function(fr){ %>
+          FundRaiser:
+          <%= fr._id.id %>
+          <br><br><br>
+        <% }); %>
+        <br><br>
+        Categories: <%= categories %>
+        <br><br>
+        Causes: <%= causes %>
       </div>
 
       
