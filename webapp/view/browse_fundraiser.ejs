@@ -2,7 +2,7 @@
 <html lang="en">
     <% include ../partials/head %>
 
-    <link href="../../../view/css/style.css" rel="stylesheet">
+    <link href="../../view/css/style.css" rel="stylesheet">
 <body>
 
   <!-- Navigation -->
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Post Content Column -->
-      <div class="col-md-9 pt-3">
+      <div class="col-md-9 pt-3" style="margin-bottom:80px;">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
           <!-- Navbar content -->          
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -44,29 +44,54 @@
           </div>
         </nav>
         <br>
+        <div class="row">
         <% fundraisers.forEach(function(fr){ %>
           <!-- <%= fr._id.id %> -->
-          <div class="col-6">
+          <div class="col-md-4">
             <div class="card card-custom bg-white border-white border-0">
-              <div class="card-custom-img" style="background-image: url(http://res.cloudinary.com/d3/image/upload/c_scale,q_auto:good,w_1110/trianglify-v1-cs85g_cc5d2i.jpg);"></div>
+              <div class="card-custom-img" style="background-image: url(../../view/images/fundraisers/<%=fr.doc.image%>);"></div>
               <div class="card-custom-avatar">
-                <img class="img-fluid" src="http://res.cloudinary.com/d3/image/upload/c_pad,g_center,h_200,q_auto:eco,w_200/bootstrap-logo_u3c8dx.jpg" alt="Avatar" />
+                <% if(fr.doc.createdBy.image == null || fr.doc.createdBy.image == undefined) {%>
+                  <img class="img-fluid" src="../../view/images/user_placeholder.png" alt="Avatar" />
+                <% } else { %>
+                  <img class="img-fluid" src="../../view/images/users/<%= fr.doc.createdBy.image%>" alt="Avatar" />
+                <% } %>
               </div>
               <div class="card-body" style="overflow-y: auto">
-                <h4 class="card-title">Card title</h4>
-                <p class="card-text">Card has minimum height set but will expand if more space is needed for card body content. You can use Bootstrap <a href="https://getbootstrap.com/docs/4.0/components/card/#card-decks" target="_blank">card-decks</a> to align multiple cards nicely in a row.</p>
+                <a href="./<%= fr.doc.category._id%>"><span class="badge badge-dark"><%=fr.doc.category.categoryName%></span></a>
+                <h4 class="card-title"><%=fr.doc.title%></h4>
+                <p class="card-text">By: <%=fr.doc.createdBy.fullName%></p>
+                <p class="card-text"><%=fr.doc.description%></p>
+                <%
+                  var percentage = ((fr.totalDoantions) * 100 / fr.doc.amount).toFixed(0);
+                  if(percentage > 100)
+                    percentage = 100;
+                %>
+                <div class="d-flex justify-content-between">
+                    <div><b>$<%=fr.totalDoantions%></b> raised</div>
+                    <div><%=percentage%>%</div>
+               </div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <%=percentage%>%" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100"></div>          
+                </div>
+                <% if(Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) > 0) { %>
+                  <%= Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) %> days left
+                <% } else {%>
+                  Fundraiser ended
+                <% } %>
               </div>
               <div class="card-footer" style="background: inherit; border-color: inherit;">
-                <a href="#" class="btn btn-primary">Option</a>
-                <a href="#" class="btn btn-outline-primary">Other option</a>
+                <a href="../fundraiser/fundraiserPage/<%=fr.doc._id%>" class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-outline-primary">Other option</a>                
               </div>
             </div>
           </div>
         <% }); %>
       </div>
-
+        
+      </div>
       
-
+      
     </div>
     <!-- /.row -->
 
@@ -84,5 +109,3 @@
 </body>
 
 </html>
-
-  

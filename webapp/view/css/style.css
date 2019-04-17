@@ -132,3 +132,6 @@ label.error {
     height: 100px;
   }
   
+  .card-footer{
+      padding-top: 0;
+  }
