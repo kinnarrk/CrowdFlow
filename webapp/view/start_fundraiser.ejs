@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Choose Your Cause</title>
-    <link rel="stylesheet" href="../view/css/style.css" />
+    <title>Start a fundraiser</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../view/css/style.css" />
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
 <% include ../partials/head %>
 
@@ -13,10 +15,13 @@
     <div class="fluid-container">
         <div class="container">
             <div class="row">
-                <h1>Start a Fundraiser</h1>
+                <h1 class="text-center">Start a Fundraiser</h1>
             </div>
-            <form name="login" action="/fundraiser" method="POST">
-                <div class="pl-3 pr-3">
+            <form name="fundraiser" id="fundraiser" method="POST" action="/fundraiser/submit-for-approval"
+                encType="multipart/form-data">
+                <div class="">
+                    <input type="hidden" name="createdBy" id="userId" value="<%= createdBy%>" class="form-control">
+                    <input type="hidden" name="causeId" value="<%= causeId%>" id="cause" class="form-control">
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
                             <label class="my-1 mr-2" for="title">Title</label>
@@ -27,11 +32,11 @@
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
                             <label class="my-1 mr-2" for="category">Category</label>
-                            <select class="custom-select my-1 mr-sm-2 col-12" id="category">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select class="custom-select my-1 mr-sm-2 col-12" id="category" name="categoryId">
+                                <option selected disabled>Choose category...</option>
+                                <% categories.forEach((category) => { %>
+                                <option value="<%- category._id %>"><%= category.categoryName %></option>
+                                <% }); %>
                             </select>
                         </div>
                     </div>
@@ -39,15 +44,29 @@
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
                             <label class="my-1 mr-2" for="amount">Amount</label>
-                            <input type="text" name="amount" id="amount" class="form-control" placeholder="Amount">
+                            <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="image">Image</label>
+                            <input name="image" id="image" type="file" accept="image/*" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
                             <label class="my-1 mr-2" for="description">Short Description</label>
                             <input type="text" name="description" id="description" class="form-control"
                                 placeholder="Description">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <label class="my-1 mr-2" for="description">Target Date</label>
+                            <input type="date" name="targetDate" id="targetDate" class="form-control"
+                                placeholder="Target Date">
                         </div>
                     </div>
 
@@ -67,7 +86,15 @@
 
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
-                            <button type="submit" class="btn btn-primary my-1">Submit for Approval</button>
+                            <label class="my-1 mr-2" for="story">Your Story</label>
+                            <textarea name="story"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-6 form-group mb-3">
+                            <button type="submit" id="submit-for-approval" class="btn btn-primary my-1">Submit for
+                                Approval</button>
                         </div>
                     </div>
                 </div>
@@ -75,7 +102,62 @@
         </div>
     </div>
     <% include ../partials/footer %>
-    <% include ../partials/scripts %>
+    <script src="../../node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+        CKEDITOR.replace('story');
+        $(function () {
+
+            $('.js-example-basic-single').select2();
+
+            $("#fundraiser").validate({
+                rules: {
+                    title: {
+                        required: true,
+                        minlength: 5
+                    },
+                    categoryId: "required",
+                    amount: {
+                        required: true,
+                        min: 300
+                    },
+                    image: "required",
+                    description: {
+                        required: true,
+                        minlength: 10
+                    },
+                    targetDate: "required",
+                    phone: {
+                        required: true,
+                        rangelength: [10, 10]
+                    },
+                    city: "required"
+                },
+                messages: {
+                    title: {
+                        required: 'Please enter title',
+                        minlength: 'Title must consist at least 5 characters'
+                    },
+                    categoryId: 'Please select category',
+                    amount: {
+                        required: 'Please enter fundraiser Amount',
+                        min: 'Amount must be greater than 300'
+                    },
+                    image: 'Please select image for fundraiser',
+                    description: {
+                        required: 'Please enter short Description',
+                        minlength: 'Short description must consist at least 10 characters'
+                    },
+                    targetDate: 'Please enter Target Date',
+                    phone: {
+                        required: 'Please enter mobile Number',
+                        rangelength: 'Mobile number is invalid'
+                    },
+                    city: 'Please enter City name'
+                }
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 </body>
 
 </html>

@@ -1,13 +1,31 @@
 const express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
-const passport = require('passport');
+var mongoose = require('mongoose');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
-const category = model.Category;
-const Donation = model.Donation;
 const Cause = model.Cause;
 const {ensureAuthenticated } = require('../config/auth');
+var categories;
+var causes;
+const Category = model.Category;
+const Donation = model.Donation;
+
+
+router.use(function (req, res, next) {
+    Cause.find({}, (err, arr) => {
+        if(err) {
+            console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+        }
+        causes = arr;
+    });
+    Category.find({isDeleted: false}, (err, arr) => {
+        if(err) {
+            console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+        }
+        categories = arr;
+    });
+    next();
+  });
 
 // following lines added by Vivek on 15 april
 const Comment = model.Comment;
@@ -29,15 +47,40 @@ router.get('/cause', (req, res) => {
         }
         res.render('../view/fundraiser_cause', {cause : arr});
     });
-    // res.render('../view/chooseCauseFundraiser');
 });
 
-router.get('/view_fundraiser/:id',(req, res) =>{
+router.get('/start/:causeId', ensureAuthenticated, (req, res) => {
+    Category.find({}, (err, result) => {
+        if(err) {
+            res.render({'message' : 'ERROR'});
+            return;
+        }
+        const categories = result;
+        res.render('../view/start_fundraiser', {categories: categories, causeId : req.params.causeId, createdBy: req.user._id});
+    })
+    
+});
 
+router.post('/submit-for-approval', (req, res) => {
+    let fundraiserImage = req.files.image;
 
-   
+    let fileParts = fundraiserImage.name.split('.');
+    let fund = new fundraiser(req.body);
+    fund.save().then((data) => {
+        fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function(err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            data.image = data._id + '.' + fileParts[1];
+            data.save();
+            res.render('../view/fundraiser_success');
+          });
+    }).catch({
 
+    });
+});
 
+router.get('/:id',(req, res) =>{
     fundraiser.findById({"_id":req.params.id},(err,event)=>{
         console.log(event);
         if(err){
@@ -46,16 +89,41 @@ router.get('/view_fundraiser/:id',(req, res) =>{
         else{
             res.render('../view/view_fundraiser',{event:event});
         }
-    });
+    })
+    
 });
 
-router.get('/start/:id', (req, res) => {
-    res.render('../view/start_fundraiser');
+router.post('/:id/comment',(req, res) =>{
+    fundraiser.findById({"_id":req.params.id},(err,event)=>{
+        console.log(event);
+        if(err){
+            res.render({'messages':err});
+        }
+        else{
+
+            const newComment = new Comment({
+                comment:req.body.comment
+            });
+            console.log(req.body.comment);
+
+
+            newComment.save();
+            
+            res.render('../view/view_fundraiser',{event:event});
+        }
+    })
+    
 });
 
 // following code edited by Vivek on 15th april
-
-router.get('/fundraiser_page/:id', (req, res) => {
+// keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
+router.get('/view_fundraiser/:id', (req, res) => {
+    // fundraiser.findById({ "_id": req.params.id }, (err, event) => {
+    //     console.log(event);
+    //     image1 = "../view/images/fundraiser_1.jpg";// event.image.replace(/\\/g, "/");
+    //     console.log(image1);
+    //     if (err) {
+    //         res.render({ 'messages': err });
 
     
 
@@ -184,116 +252,6 @@ router.post('/fundraiser_comment/:id/comment', (req, res) => {
         res.redirect('/fundraiser/fundraiser_page/' + req.params.id);
     })
         .catch(err => console.log(err));
-});
-
-router.get('/browse_fundraiser/:categoryId?', (req, res) => {
-    console.log("param category:" + req.params.categoryId + ":");
-    if(req.params.categoryId == undefined){
-        
-        
-        // donation.aggregate([{
-        //         $match: {},
-        //     },
-        //     {sort:{createdDate: -1}},
-        //     { $group : {
-        //         _id : null,
-        //         total : {
-        //             $sum : "$amount"
-        //         }
-        //     }}
-        // ]).populate('fundraiserId').populate('categoryId').exec(function (err, docs){
-        // });
-
-        // var pipeline = [
-        //     { "$unwind": "$donations" },
-        //     {
-        //         "$group": {
-        //             // "_id": "$_id",
-        //             // "products": { "$push": "$products" },
-        //             // "userPurchased": { "$first": "$userPurchased" },
-        //             "totalDoantions": { "$sum": "$donations.amount" }
-        //         }
-        //     }
-        // ]
-
-        fundraiser.aggregate([
-            { '$lookup': { from: 'categories', localField: 'categoryId', foreignField: '_id', as: 'category'} }, 
-            { '$unwind': '$category' },
-            { "$unwind": "$donations" },
-            // {$match: {},},
-            
-            // { $project: { donations: { $objectToArray: "$donations" } } }
-            
-            { $sort:{createdDate: -1} },
-            { $group : {
-                "_id": "$_id",
-                // "title": "$title",
-                "doc":{"$first":"$$ROOT"},
-                "donations": { "$push": "$donations" },                
-                "totalDoantions": { "$sum": "$donations.amount" }
-            }}
-            // { "$project": {
-            //     "_id": "$categoryId",
-            //     "total": 1,
-            //     "lineItems": 1
-            //   }}
-        ]).exec(function (err, docs){
-            // console.log("fundraisers w/o populate: " + JSON.stringify(docs));
-            // fundraiser.populate(docs, {path: "categoryId"}, function (err, result){
-                if(err){
-                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
-                }
-                console.log("fundraisers: " + JSON.stringify(docs));                
-                res.render('../view/browse_fundraiser', {fundraisers: docs});
-            // });
-            
-        });
-        // fundraiser.find({}, null, {sort:{createdDate: -1}}).populate('categoryId').exec(function (err, docs){
-        //     if(err){
-        //         console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
-        //     }
-        //     console.log("fundraisers: " + docs);
-        //     res.render('../view/browse_fundraiser', {fundraisers: docs});
-        // });
-    } else {
-        fundraiser.find({categoryId: req.params.categoryId}, null, {sort:{createdDate: -1}}).populate('categoryId').exec(function (err, docs) {
-            if(err){
-                console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
-            }
-            console.log("fundraisers with id: " + docs);
-            res.render('../view/browse_fundraiser', {fundraisers: docs});
-        });
-    }
-});
-
-router.get('/add_donation/:fundraiserId', (req, res) => {
-    // console.log("fundraiserId:"+ req.params.fundraiserId +":");
-    fundraiser.findOne({ _id: req.params.fundraiserId }, function(err, fr) {
-        // console.log('fundraiser: ' + fr);
-        var donation = new Donation({
-            userId: "5cb4c825f1cd812f9c316c4a",
-            amount: 4000,
-            createdDate: Date.now,
-            transactionId: "12345667879",
-            paymentMode: "Card",
-            bank: "BofA",
-            invoiceId: "INV0000001",
-            taxName: "Sales Tax",
-            taxRate: "8",
-            taxAmount: "90"
-        });
-        fr.donations.push(donation);
-        fr.save((err, doc) => {
-            if(!err) {
-                console.log('Donation added');
-                res.send("Success");
-            }
-            else {           
-                console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
-                res.send("Fail");
-            }
-        });
-    });
 });
 
 module.exports = router;
