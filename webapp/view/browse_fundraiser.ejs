@@ -2,7 +2,7 @@
 <html lang="en">
     <% include ../partials/head %>
 
-
+    <link href="../../view/css/style.css" rel="stylesheet">
 <body>
 
   <!-- Navigation -->
@@ -14,60 +14,84 @@
     <div class="row">
 
       <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
+      <div class="col-md-3">
 
         <!-- Search Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Search</h5>
+        <div class="card my-3">
+          <h5 class="card-header">Categories</h5>
           <div class="card-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
+            <div class="list-group">
+              <% categories.forEach(function(cat){ %>
+              <a href="./<%= cat.id%>" class="list-group-item list-group-item-action"><%= cat.categoryName%></a>
+              <% }); %>
             </div>
-          </div>
-        </div>
-
-        <!-- Categories Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Top Donors</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                
-              </div>
-              
-            </div>
-          </div>
-        </div>
-
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Side Widget</h5>
-          <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
           </div>
         </div>
 
       </div>
 
       <!-- Post Content Column -->
-      <div class="col-md-8">
-        Fundraisers:
+      <div class="col-md-9 pt-3" style="margin-bottom:80px;">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+          <!-- Navbar content -->          
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link pr-3" href="./">All</a>
+              <% causes.forEach(function(cau){ %>
+              <a class="nav-item nav-link pr-3" href="./<%= cau.id%>"><%= cau.name%></a>
+              <% }); %>              
+            </div>
+          </div>
+        </nav>
+        <br>
+        <div class="row">
         <% fundraisers.forEach(function(fr){ %>
-          FundRaiser:
-          <%= fr._id.id %>
-          <br><br><br>
+          <!-- <%= fr._id.id %> -->
+          <div class="col-md-4">
+            <div class="card card-custom bg-white border-white border-0">
+              <div class="card-custom-img" style="background-image: url(../../view/images/fundraisers/<%=fr.doc.image%>);"></div>
+              <div class="card-custom-avatar">
+                <% if(fr.doc.createdBy.image == null || fr.doc.createdBy.image == undefined) {%>
+                  <img class="img-fluid" src="../../view/images/user_placeholder.png" alt="Avatar" />
+                <% } else { %>
+                  <img class="img-fluid" src="../../view/images/users/<%= fr.doc.createdBy.image%>" alt="Avatar" />
+                <% } %>
+              </div>
+              <div class="card-body" style="overflow-y: auto">
+                <a href="./<%= fr.doc.category._id%>"><span class="badge badge-dark"><%=fr.doc.category.categoryName%></span></a>
+                <h4 class="card-title"><%=fr.doc.title%></h4>
+                <p class="card-text">By: <%=fr.doc.createdBy.fullName%></p>
+                <p class="card-text"><%=fr.doc.description%></p>
+                <%
+                  var percentage = ((fr.totalDoantions) * 100 / fr.doc.amount).toFixed(0);
+                  if(percentage > 100)
+                    percentage = 100;
+                %>
+                <div class="d-flex justify-content-between">
+                    <div><b>$<%=fr.totalDoantions%></b> raised</div>
+                    <div><%=percentage%>%</div>
+               </div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <%=percentage%>%" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100"></div>          
+                </div>
+                <% if(Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) > 0) { %>
+                  <%= Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) %> days left
+                <% } else {%>
+                  Fundraiser ended
+                <% } %>
+              </div>
+              <div class="card-footer" style="background: inherit; border-color: inherit;">
+                <a href="../fundraiser/fundraiserPage/<%=fr.doc._id%>" class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-outline-primary">Other option</a>                
+              </div>
+            </div>
+          </div>
         <% }); %>
-        <br><br>
-        Categories: <%= categories %>
-        <br><br>
-        Causes: <%= causes %>
       </div>
-
+        
+      </div>
       
-
+      
     </div>
     <!-- /.row -->
 
@@ -85,5 +109,3 @@
 </body>
 
 </html>
-
-  
