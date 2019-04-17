@@ -1,4 +1,4 @@
-use strict';
+'use strict';
 // ================================================================
 // get all the tools we need
 // ================================================================
@@ -9,6 +9,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
+const fileUpload = require('express-fileupload');
+
 // const cors = require('cors');
 
 const mongoose = require('./config/database.js');
@@ -16,6 +18,7 @@ const mongoose = require('./config/database.js');
 
 
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 // Passport Config
 require('./config/passport')(passport);
@@ -30,6 +33,7 @@ require('./config/google')(passport);
 //EJS
 app.use('/view',express.static(__dirname + '/view'));
 app.set('view engine', 'ejs');
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 //Bodyparser
 app.use(express.urlencoded({

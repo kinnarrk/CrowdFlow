@@ -19,18 +19,20 @@
             </div>
             <div class="row">
                 <div class="row mt-3 mb-3">
-                <% cause.forEach((cause) => { %>
-                    
-                            <div class="col-lg-3">
-                                <div class="card">
-                                    <img class="card-img-top" height=250px src="../view/images/Crativity.jpg" alt="Card image">
-                                    <div class="card-body">
-                                        <a href="/fundraiser/start/"+ <%= new String(cause._id) %> class="stretched-link"><h4 class="card-title text-center"><%= cause.name%></h4></a>
-                                        <p class="card-text"><%= cause.description%></p>
-                                    </div>
-                                </div>
+                    <% cause.forEach((cause) => { %>
+
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <img class="card-img-top" height=250px src="../view/images/Crativity.jpg" alt="Card image">
+                            <div class="card-body">
+                                <a href="/fundraiser/start/<%- cause._id %>" class="stretched-link">
+                                    <h4 class="card-title text-center"><%= cause.name%></h4>
+                                </a>
+                                <p class="card-text"><%= cause.description%></p>
                             </div>
-                <% }) %>
+                        </div>
+                    </div>
+                    <% }) %>
                 </div>
             </div>
 

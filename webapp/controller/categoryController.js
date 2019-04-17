@@ -1,7 +1,5 @@
 const express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
-const passport = require('passport');
 const model = require('../model/commonModel');
 const category = model.Category;
 const User = model.User;
