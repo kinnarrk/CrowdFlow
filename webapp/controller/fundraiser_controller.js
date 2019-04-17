@@ -249,7 +249,7 @@ router.post('/fundraiser_comment/:id/comment', (req, res) => {
         // );
         errors = [];
 
-        res.redirect('/fundraiser/fundraiser_page/' + req.params.id);
+        res.redirect('/fundraiser/view_fundraiser/' + req.params.id);
     })
         .catch(err => console.log(err));
 });
