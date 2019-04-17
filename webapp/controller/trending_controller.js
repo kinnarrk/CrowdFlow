@@ -4,7 +4,7 @@ const model = require('../model/commonModel');
 const { ShareLink } = require('social-media-sharing');
 const fundraiserdb = model.Fundraiser;
 const category = model.Category;
-const Donation = model.Donation;
+const Donation;
 var mongoose = require('mongoose');
 donationArray = [];
 
@@ -127,7 +127,7 @@ function getSum(total, num) {
     return total + Math.round(num);
 }
 
-// will use futther sorting method
+// will use future sorting method(will be used later)
 function donation() {
     Donation.aggregate([
         {
