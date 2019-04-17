@@ -8,7 +8,7 @@ var categories;
 var causes;
 const Category = model.Category;
 const Donation = model.Donation;
-
+const objectID = require('mongodb').ObjectID;
 
 router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
@@ -57,39 +57,44 @@ router.get('/:categoryId?', (req, res) => {
             res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
         });
     } else {
-        // below line is for reference: if just join, condition and sort is needed then use below. But using aggregate is a better approach.
-        // fundraiser.find({categoryId: req.params.categoryId}, null, {sort:{createdDate: -1}}).populate('categoryId').exec(function (err, docs) {
-        
-        fundraiser.aggregate([
 
-            //Typecast is needed for ObjectId when using within aggregate - known issue
-            //For more info on this issue: https://github.com/Automattic/mongoose/issues/1399
-            { $match: {categoryId: mongoose.Types.ObjectId(req.params.categoryId)}},
+        if(objectID.isValid(req.params.categoryId)){
+            // below line is for reference: if just join, condition and sort is needed then use below. But using aggregate is a better approach.
+            // fundraiser.find({categoryId: req.params.categoryId}, null, {sort:{createdDate: -1}}).populate('categoryId').exec(function (err, docs) {
             
-            { '$lookup': { from: 'categories', localField: 'categoryId', foreignField: '_id', as: 'category'} }, 
-            { '$unwind': '$category' }, //We may need category info like name and description so pushing it to the resule
-            { '$lookup': { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'createdBy'} },
-            { '$unwind': '$createdBy' },
-            { "$unwind": {
-                "path": "$donations",
-                "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
-            }},
-            { $group : {
-                // "_id": "$_id", //rather use below
-                "_id": {id:"$_id", categoryId:"$categoryId", createdDate: "$createdDate" }, //rather than only id we may need other fields for sort
-                "doc":{"$first":"$$ROOT"},  //pushing the entire document so that we can use all the fields
-                "donations": { "$push": "$donations" },     //pushing the donations array if donations info is needed              
-                "totalDoantions": { "$sum": "$donations.amount" }   //the main reason why this grouping was used: sum of the donations for each fundraisers
-            }},            
-            { $sort:{"_id.createdDate": -1} }   //sorting the result in descending order with respect to createdDate. _id.createdDate because in group we have pushed created date in group result in id field
-        ]).exec(function (err, docs){    
-            if(err){
-                console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
-            }
-            // var frs = JSON.stringify(docs);
-            // console.log("fundraisers with category id: " + JSON.stringify(docs));            
-            res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
-        });
+            fundraiser.aggregate([
+
+                //Typecast is needed for ObjectId when using within aggregate - known issue
+                //For more info on this issue: https://github.com/Automattic/mongoose/issues/1399
+                { $match: {categoryId: mongoose.Types.ObjectId(req.params.categoryId)}},
+                
+                { '$lookup': { from: 'categories', localField: 'categoryId', foreignField: '_id', as: 'category'} }, 
+                { '$unwind': '$category' }, //We may need category info like name and description so pushing it to the resule
+                { '$lookup': { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'createdBy'} },
+                { '$unwind': '$createdBy' },
+                { "$unwind": {
+                    "path": "$donations",
+                    "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                }},
+                { $group : {
+                    // "_id": "$_id", //rather use below
+                    "_id": {id:"$_id", categoryId:"$categoryId", createdDate: "$createdDate" }, //rather than only id we may need other fields for sort
+                    "doc":{"$first":"$$ROOT"},  //pushing the entire document so that we can use all the fields
+                    "donations": { "$push": "$donations" },     //pushing the donations array if donations info is needed              
+                    "totalDoantions": { "$sum": "$donations.amount" }   //the main reason why this grouping was used: sum of the donations for each fundraisers
+                }},            
+                { $sort:{"_id.createdDate": -1} }   //sorting the result in descending order with respect to createdDate. _id.createdDate because in group we have pushed created date in group result in id field
+            ]).exec(function (err, docs){    
+                if(err){
+                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                }
+                // var frs = JSON.stringify(docs);
+                // console.log("fundraisers with category id: " + JSON.stringify(docs));            
+                res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
+            });
+        } else {
+            res.render('../view/browse_fundraiser', {fundraisers: [], categories: categories, causes: causes});
+        }
     }
 });
 
