@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
-    bcrypt = require('bcrypt'),
+    bcrypt = require('bcryptjs'),
     SALT_WORK_FACTOR = 10;
 
 //Role schema
@@ -88,7 +88,7 @@ var donationSchema = new Schema({
 //Fundraiser schema
 var fundraiserSchema = new Schema({
     categoryId : {type: Schema.Types.ObjectId, ref: 'Category', required: true},
-    title : {type: String, required: true, index: {unique: true }},
+    title : {type: String, required: true},
     amount : {type: Number, required: true},
     image : {type: String},
     video : {type: String},

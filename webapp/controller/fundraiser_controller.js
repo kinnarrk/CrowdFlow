@@ -1,7 +1,5 @@
 const express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
-const passport = require('passport');
 var mongoose = require('mongoose');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
@@ -54,15 +52,16 @@ router.get('/start/:causeId', ensureAuthenticated, (req, res) => {
 router.post('/submit-for-approval', (req, res) => {
     let fundraiserImage = req.files.image;
 
-    console.log("catid="+req.body.categoryId);
+    let fileParts = fundraiserImage.name.split('.');
     let fund = new fundraiser(req.body);
-    console.log("fund="+fund);
     fund.save().then((data) => {
-        console.log("data="+data);
-        fundraiserImage.mv("./view/images/fundraisers/" + data._id + ".png", function(err) {
-            if (err)
-              return res.status(500).send(err);
-            res.send({'message': req.body, 'mes': 'File uploaded!'});
+        fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function(err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            data.image = data._id + '.' + fileParts[1];
+            data.save();
+            res.render('../view/fundraiser_success');
           });
     }).catch({
 
