@@ -94,7 +94,8 @@ router.post('/register', (req, res) => {
                             fullName: fullName,
                             email: email,
                             password: password,
-                            phone: phone
+                            phone: phone,
+                            image: 'user.png'
                         });
     
                         bcrypt.genSalt(10, (err, salt) => {
@@ -158,6 +159,33 @@ router.get('/google/callback', (req, res, next) => {
         failureRedirect: '/users/login',
         failureFlash: true
     })(req, res, next);
+});
+
+router.get('/profile', (req, res) => {
+    res.render('../view/profile');
+});
+
+router.post('/update/:id', (req, res) => {
+    User.updateOne({ _id: req.params.id }, req.body, (err, arr) => {
+        res.redirect('/users/profile');
+    });
+});
+
+router.post('/update-profile-pic/:id', (req, res) => {
+    let profileImage = req.files.profile-image;
+    console.log(JSON.stringify(profileImage));
+
+    let fileParts = fundraiserImage.name.split('.');
+
+    User.updateOne({ _id: req.params.id }, 
+        { image: req.params.id + '.png' }, (err, arr) => {
+            profileImage.mv("./view/images/users/" + req.params.id + fileParts[1], function (err1) {
+                if (err1) {
+                    return res.status(500).send(err1);
+                }
+                res.redirect('/users/profile');
+            });
+    });
 });
 
 //Logout

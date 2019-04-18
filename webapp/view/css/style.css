@@ -86,3 +86,13 @@ label.error {
     font-style: italic;
     font-size : 14px;
 }
+
+.form-row span {
+    color: gray;
+}
+
+#profile-pic {
+    height: 200px;
+    width: 200px;
+    border-radius : 100px;
+}
