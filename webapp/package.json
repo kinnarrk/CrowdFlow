@@ -29,6 +29,7 @@
     "passport-local": "^1.0.0",
     "password-validator": "^4.1.1",
     "select2-bootstrap-theme": "0.1.0-beta.10",
+    "social-media-sharing": "1.0.2",
     "validator": "^10.11.0"
   }
 }

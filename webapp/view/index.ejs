@@ -18,6 +18,7 @@
                 <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel-example" data-slide-to="1"></li>
                 <li data-target="#carousel-example" data-slide-to="2"></li>
+                <li data-target="#carousel-example" data-slide-to="3"></li>
             </ol>
 
             <div class="carousel-inner" role="listbox">
@@ -56,102 +57,7 @@
         </div>
 
 
-        <div id="trending" class="container mb-5">
-            <div class="row mt-5">
-                <h1 class="text-center w-100">Trending Fundraisers</h1>
-                <h6 class="text-center w-100">View the fundraisers that are most active right now!!!</h6>
-            </div>
-            <!-- <section class="carousel slide carousel-fade" data-ride="carousel" id="postsCarousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#postsCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#postsCarousel" data-slide-to="1"></li>
-                    <li data-target="#postsCarousel" data-slide-to="2"></li>
-                </ol> -->
-                <!-- <div class="container p-t-0 m-t-2 carousel-inner"> -->
-                    <!-- <div class="row row-equal carousel-item active m-t-0"> -->
-                        <div class="row">
-                                <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-img-top card-img-top-250">
-                                                <img class="card-img-top" height=250px src="../view/images/SnehaSchool.jpg"
-                                                    alt="Card image cap">
-            
-                                            </div>
-                                            <div class="card-body">
-                                                <span class="badge badge-danger">Education</span>
-                                                <h4 class="card-title">Help Sneha Save her School</h4>
-                                                <p class="card-text">by <a href="">Sachin Tendulkar</a></p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up
-                                                    the
-                                                    bulk of the
-                                                    card's content.</p>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success progress-bar-striped active"
-                                                        role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width : 70%">
-                                                        70%
-                                                    </div>
-                                                </div>
-                                                <span class="pull-right"">12 days left</span>
-                                                      <!-- <a href=" #" class="btn btn-primary">Go somewhere</a> -->
-                                            </div>
-            
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-img-top card-img-top-250">
-                                                <img class="card-img-top" height=250px src="../view/images/HearAttack.jpg"
-                                                    alt="Card image cap">
-                                            </div>
-                                            <div class="card-body">
-                                                <span class="badge badge-danger">Health</span>
-                                                <h4 class="card-title">Help my Grandfather survive a Heart Attack</h4>
-                                                <p class="card-text">by <a href="#">Rahul Dravid</a></p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up
-                                                    the
-                                                    bulk of the
-                                                    card's content.</p>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success progress-bar-striped active"
-                                                        role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width : 70%">
-                                                        70%
-                                                    </div>
-                                                </div>
-                                                <span class="pull-right">12 days left</span>
-                                                <!-- <a href=" #" class="btn btn-primary">Go somewhere</a> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="card">
-                                            <div class="card-img-top card-img-top-250">
-                                                <img class="card-img-top" height=250px src="../view/images/Woman.jpg"
-                                                    alt="Card image cap">
-                                            </div>
-                                            <div class="card-body">
-                                                <span class="badge badge-danger">Technology</span>
-                                                <h4 class="card-title">The journey of a Woman in 'Tech'</h4>
-                                                <p class="card-text">by <a href="#">Smrriti Irani</a></p>
-                                                <p class="card-text">Some quick example text to build on the card title and make up
-                                                    the
-                                                    bulk of the
-                                                    card's content.</p>
-                                                <div class="progress">
-                                                    <div class="progress-bar progress-bar-success progress-bar-striped active"
-                                                        role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"
-                                                        style="width : 70%">
-                                                        70%
-                                                    </div>
-                                                </div>
-                                                <span class="pull-right">12 days left</span>
-                                                <!-- <a href=" #" class="btn btn-primary">Go somewhere</a> -->
-                                            </div>
-            
-                                        </div>
-                                    </div>
-                        </div>
+     <% include ../view/trending %>
 
                     <!-- </div> -->
                     <!-- <div class="row row-equal carousel-item m-t-0">
@@ -279,7 +185,7 @@
         </div> -->
     </div>
 
-    <div id="browse" class="container-fluid bg-light">
+    <!-- <div id="browse" class="container-fluid">
         <div class="container p-1">
             <div class="row mt-3">
                 <h1 class="text-center w-100">Browse Fundraisers</h1>
@@ -394,7 +300,37 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+    <div class="container p-1">
+            <div class="row mt-5">
+                <h1 class="text-center w-100">Browse Fundraisers</h1>
+                <h6 class="text-center w-100">Be it for a personal need, social cause or a creative idea - you can count
+                    on us for
+                    the project that you want to raise funds for.</h6>
+            </div>
+            <% if(typeof sample1 != 'undefined') { %>
+            <div class="row ml-5 mr-5">
+                <% sample1.forEach(function(category) { %>
+                <div class="col-lg-3 mt-3">
+                    <div class="card">
+                        <img class="card-img-top" src="<%= category.categoryImage %>" alt="Card image">
+                        <div class="card-body">
+                            <h4 class="card-title text-center"><%= category.categoryName %></h4>
+                            <p class="card-text text-center"><%= category.categoryDescription%></p>
+                            <!-- <p class="card-text"><%= category.createdDate %></p> -->
+                            <!-- <p class="card-text"><%= category.createdBy %></p> -->
+                            <a href="#" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom"
+                                title="View this category">View</a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+            <% } %>
+        </div>
+
+
 
     <div id="HowItWorks" class="container">
         <div class="row mt-5">
