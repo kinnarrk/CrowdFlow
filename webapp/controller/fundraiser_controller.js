@@ -130,10 +130,10 @@ router.get('/view_fundraiser/:id', (req, res) => {
     fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]').populate('donations.userId').exec(function(err,event){
         if(err){res.send(err)}
         image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
-            console.log("-----------------------");
-            console.log(event);
-            console.log("-----------------------");
-            console.log(event.donations[0].userId.fullName);
+            // console.log("-----------------------");
+            // console.log(event);
+            // console.log("-----------------------");
+            // console.log(event.donations[0].userId.fullName);
             var currentamount = 0;
             var progress = 0;
 
