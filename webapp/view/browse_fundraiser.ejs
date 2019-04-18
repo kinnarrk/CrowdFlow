@@ -59,7 +59,7 @@
               </div>
               <div class="card-body" style="overflow-y: auto">
                 <a href="/browseFundraiser/<%= fr.doc.category._id%>"><span class="badge badge-<%= fr.doc.category.colorClass%>"><%=fr.doc.category.categoryName%></span></a>
-                <h4 class="card-title"><%=fr.doc.title%></h4>
+                <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>"><h4 class="card-title"><%=fr.doc.title%></h4></a>
                 <p class="card-text">By: <%=fr.doc.createdBy.fullName%></p>
                 <p class="card-text"><%=fr.doc.description%></p>
                 <%
