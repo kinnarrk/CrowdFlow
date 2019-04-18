@@ -64,7 +64,7 @@ router.get('/:id', ensureAuthenticated, (req, res) =>{
         }
         // var frs = JSON.stringify(docs);
         console.log("fundraisers for manage with fr id: " + JSON.stringify(docs));            
-        res.render('../view/manage_fundraiser/dashboard', {Fundraiser: docs});
+        res.render('../view/manage_fundraiser/dashboard', {fundraiser: docs});
     });
 });
 
