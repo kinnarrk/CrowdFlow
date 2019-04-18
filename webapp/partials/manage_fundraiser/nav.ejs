@@ -1,12 +1,79 @@
 <!-- Sidebar Holder -->
 <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
+            <h3>CROWDFLOW</h3>
         </div>
 
         <ul class="list-unstyled components">
-            <p>Dummy Heading</p>
+            <p class="font-weight-bold"><%= fundraiser%></p>
+
             <li class="active">
+                <a href="#">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-edit"></i>
+                    Edit Fundraiser
+                </a>
+            </li>
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-chart-line"></i>
+                    Activity
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="#">Comments</a>
+                    </li>
+                    <li>
+                        <a href="#">Messages</a>
+                    </li>
+                    <li>
+                        <a href="#">Donor Information</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-share-alt"></i>
+                    Share Fundraiser
+                </a>
+            </li>
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-money-bill"></i>
+                    Withdraw Funds
+                </a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a href="#">Request Withdrawal</a>
+                    </li>
+                    <li>
+                        <a href="#">Past Withdrawal</a>
+                    </li>
+                    <li>
+                        <a href="#">Beneficiary</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    Setting
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-paper-plane"></i>
+                    Contact
+                </a>
+            </li>
+
+            <!-- <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
@@ -40,7 +107,7 @@
             </li>
             <li>
                 <a href="#">Contact</a>
-            </li>
+            </li> -->
         </ul>
 
         <ul class="list-unstyled CTAs">
