@@ -2,6 +2,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const model = require('../model/commonModel');
 const User = model.User;
 const Role = model.Role;
+const download = require('image-downloader');
 
 module.exports = function (passport) {
     passport.use(new GoogleStrategy({
@@ -13,7 +14,8 @@ module.exports = function (passport) {
             console.log("PROFILE="+JSON.stringify(profile));
             const fullName = profile.displayName;
             const email = profile.emails[0].value;
-
+            const image = profile.photos[0].value;
+            
             User.findOne({
                 email: email
             }).then(user => {
@@ -27,7 +29,24 @@ module.exports = function (passport) {
                             email : email
                         });
                         newUser.save().then(nUser => {
-                                return done(null, nUser);
+                            const options = {
+                                url: image,
+                                dest: './view/images/users/' + nUser._id + '.png'
+                            }
+
+                            download.image(options)
+                                .then(({
+                                    filename,
+                                    image
+                                }) => {
+                                    console.log('File saved to', filename)
+                                    nUser.image = nUser._id + '.png';
+                                    nUser.save();
+                                    return done(null, nUser);
+                                })
+                                .catch((err) => {
+                                    console.error(err)
+                                });
                             })
                             .catch(err => console.log(err));
                     });
