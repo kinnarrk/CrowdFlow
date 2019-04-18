@@ -22,7 +22,7 @@
           <div class="card-body">
             <div class="list-group">
               <% categories.forEach(function(cat){ %>
-              <a href="./<%= cat.id%>" class="list-group-item list-group-item-action"><%= cat.categoryName%></a>
+              <a href="/browseFundraiser/<%= cat.id%>" class="list-group-item list-group-item-action"><%= cat.categoryName%></a>
               <% }); %>
             </div>
           </div>
@@ -36,9 +36,9 @@
           <!-- Navbar content -->          
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link pr-3" href="./">All</a>
+                <a class="nav-item nav-link pr-3" href="/browseFundraiser">All</a>
               <% causes.forEach(function(cau){ %>
-              <a class="nav-item nav-link pr-3" href="./<%= cau.id%>"><%= cau.name%></a>
+              <a class="nav-item nav-link pr-3" href="/browseFundraiser/<%= cau.id%>"><%= cau.name%></a>
               <% }); %>              
             </div>
           </div>
@@ -49,17 +49,17 @@
           <!-- <%= fr._id.id %> -->
           <div class="col-md-4">
             <div class="card card-custom bg-white border-white border-0">
-              <div class="card-custom-img" style="background-image: url(../../view/images/fundraisers/<%=fr.doc.image%>);"></div>
+              <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.doc.image%>);"></div>
               <div class="card-custom-avatar">
                 <% if(fr.doc.createdBy.image == null || fr.doc.createdBy.image == undefined) {%>
-                  <img class="img-fluid" src="../../view/images/user_placeholder.png" alt="Avatar" />
+                  <img class="img-fluid" src="/view/images/user_placeholder.png" alt="Avatar" />
                 <% } else { %>
-                  <img class="img-fluid" src="../../view/images/users/<%= fr.doc.createdBy.image%>" alt="Avatar" />
+                  <img class="img-fluid" src="/view/images/users/<%= fr.doc.createdBy.image%>" alt="Avatar" />
                 <% } %>
               </div>
               <div class="card-body" style="overflow-y: auto">
-                <a href="./<%= fr.doc.category._id%>"><span class="badge badge-dark"><%=fr.doc.category.categoryName%></span></a>
-                <h4 class="card-title"><%=fr.doc.title%></h4>
+                <a href="/browseFundraiser/<%= fr.doc.category._id%>"><span class="badge badge-<%= fr.doc.category.colorClass%>"><%=fr.doc.category.categoryName%></span></a>
+                <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>"><h4 class="card-title"><%=fr.doc.title%></h4></a>
                 <p class="card-text">By: <%=fr.doc.createdBy.fullName%></p>
                 <p class="card-text"><%=fr.doc.description%></p>
                 <%
@@ -73,7 +73,7 @@
                </div>
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <%=percentage%>%" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100"></div>          
-                </div>
+                </div> 
                 <% if(Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) > 0) { %>
                   <%= Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) %> days left
                 <% } else {%>
@@ -81,7 +81,7 @@
                 <% } %>
               </div>
               <div class="card-footer" style="background: inherit; border-color: inherit;">
-                <a href="/fundraiser/fundraiserPage/<%=fr.doc._id%>" class="btn btn-primary">View</a>
+                <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>" class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
               </div>
             </div>

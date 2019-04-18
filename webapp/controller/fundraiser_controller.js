@@ -117,7 +117,7 @@ router.post('/:id/comment',(req, res) =>{
 
 // following code edited by Vivek on 15th april
 // keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
-router.get('/fundraiserPage/:id', (req, res) => {
+router.get('/view_fundraiser/:id', (req, res) => {
     // fundraiser.findById({ "_id": req.params.id }, (err, event) => {
     //     console.log(event);
     //     image1 = "../view/images/fundraiser_1.jpg";// event.image.replace(/\\/g, "/");

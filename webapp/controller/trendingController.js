@@ -9,14 +9,12 @@ const category = model.Category;
 const User = model.User
 donationArray = []; // donationArray to compute all the required fields
 
-router.get('/trending', (req, res) => {
+router.get('/', (req, res) => {
     // current working is sort is based on the number of donations.  
-
     // ---- Sorting Method 1 ------
     // queey based on number of donations greater than n // here n is 1
     // writing the mongo query
-    // var mysort_one = { donations: {$gt: {$size: 3  } }};
-    
+    // var mysort_one = { donations: {$gt: {$size: 3  } }};   
     // ----- Sorting method 2  ------
    // sorting wrt to amount
     // writing the mongo query
@@ -56,22 +54,22 @@ router.get('/trending', (req, res) => {
 fundraiserdb.aggregate(mysort).limit(limitcount)
     .then(function(sample){
        // console.log(sample);
-        sample1 = [];
+        trendingFundRaisers = [];
        // console.log(sample);
         category1 = [];
         users = [];
         let total; 
             for(var i =0 ; i < sample.length; i++) {
              //   console.log("------"+sample[i]);
-                sample1.push(sample[i].doc);
+             trendingFundRaisers.push(sample[i].doc);
                 //donation._id = sample1[i]._id;
-                console.log(sample1);
-                category.findById({"_id":sample1[i].categoryId}).then(function(cat){ 
+                console.log(trendingFundRaisers);
+                category.findById({"_id":trendingFundRaisers[i].categoryId}).then(function(cat){ 
                     category1.push(cat);
                 }).catch(err => {
                     console.log(err);
                 });   
-                User.findById({"_id":sample1[i].createdBy}).then(function(user){
+                User.findById({"_id":trendingFundRaisers[i].createdBy}).then(function(user){
                     users.push(user);
                 }).catch(err=> {
                     console.log(err);
@@ -93,21 +91,21 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
     },
       {
             $group : {
-                _id: "$description",
+                _id: "$_id",
                         count: { $sum: "$donations.amount" },
-                        "doc":{"$first":"$$ROOT"}, /// considering the root
+                        "doc":{"$first":"$$ROOT"},
+                        totalDonations : {$sum :1} // get the number of Donations
+                         /// considering the root
             }
         }
     ]).then(d=> {
         for(var i =0; i < d.length; i++) {
             let total = d[i].count;
-            let numberofDaysLeft = getDaysLeft(d[i].doc.targetDate);
-                console.log(d[i].count);
-               
+            let numberofDaysLeft = getDaysLeft(d[i].doc.targetDate);               
                  donationObject = {
                     totalDonations : total , // finding the total sum of donations for specific fundraiser
                     fid : d[i].doc._id,  // finding the fundraiser id 
-                    numberofDonations : d[i]._id.length, // finding the number of donations
+                    numberofDonations : d[i].totalDonations, // finding the number of donations
                     daysLeft : numberofDaysLeft // finding the number of days left;
                 }
                 console.log(donationArray);
@@ -116,7 +114,11 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
         });
        // console.log(donationArray);
      //  console.log(users);
-        res.render('../view/index', {sample1});
+     console.log("iamhere")
+     setTimeout(() => {
+        res.render('../view/index');
+     }, 100);
+        
 });
 // change to sharing controller [lines 105 to 123]
 router.get('/share/twitter', function(req, res) {
@@ -146,7 +148,6 @@ function getSum(total, num) {
     return total + Math.round(num);
 }
 
-// will use future sorting method(will be used later)
 function donation() {
     Donation.aggregate([
         {

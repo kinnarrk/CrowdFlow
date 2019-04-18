@@ -75,6 +75,7 @@ app.use('/category', require('./controller/categoryController'));
 app.use('/editFundraiser', require('./controller/editFundraiserController'));
 app.use('/browseFundraiser', require('./controller/browseFundraiserController'));
 app.use('/beneficiary', require('./controller/beneficiaryController'));
+app.use('/trending', require('./controller/trendingController'));
 // start our server
 const port = process.env.PORT || 3000;
 app.listen(port, function() {
