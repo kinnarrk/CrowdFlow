@@ -8,7 +8,6 @@ const Beneficiary=model.Beneficiary;
 const User=model.User;
 
 
-
 // router.post('/beneficiary',(req,res) =>
 // {
 //     let beneficiary = new Beneficiary(
