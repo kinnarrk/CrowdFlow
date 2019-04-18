@@ -114,10 +114,12 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
         });
        // console.log(donationArray);
      //  console.log(users);
-     console.log("iamhere")
-     setTimeout(() => {
+    // console.log("iamhere")
+
+
+      setTimeout(() => {
         res.render('../view/index');
-     }, 100);
+     }, 50);
         
 });
 // change to sharing controller [lines 105 to 123]

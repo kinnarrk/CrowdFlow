@@ -6,6 +6,7 @@ var model = require('../model/commonModel');
 
 router.get('/' ,(req, res) =>{
     console.log("logotu="+req.session.returnTo);
+    
     res.render('../view/index');
 });
 
