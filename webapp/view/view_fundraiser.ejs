@@ -9,29 +9,26 @@
   <% include ../partials/nav %>
 
   <!-- Page Content -->
-  <div class ="container text-center">
-      <h1 class="mt-4"><%= event.title %></h1>
-      <p class="lead">
-          by
-          <a href="#"><%= event.createdBy.fullName %></a>
-        </p>
-  </div>
-  <div class="container" style="padding:50px;">
+  <!-- <div class="container text-center">
+   
+  </div> -->
+  <div class="container" >
 
     <div class="row">
 
-      <!-- Post Content Column -->
+      <!-- Fundraiser  Content Column -->
       <div class="col-lg-8">
 
 
         <!-- Title -->
-        
-
-        <!-- Author -->
-        <!-- <p class="lead">
+        <h1 class="mt-4"><%= event.title %></h1>
+        <p class="lead">
           by
           <a href="#"><%= event.createdBy.fullName %></a>
-        </p> -->
+        </p>
+
+
+       
 
         <hr>
 
@@ -41,21 +38,16 @@
         <!-- <hr> -->
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="<%= event.categoryId.categoryImage %>" alt="<%= event.categoryId.categoryImage %> %>">
+        <img class="img-fluid rounded" src="/view/images/fundraisers/<%= event.image %>" alt="<%= event.image %> ">
 
         <hr>
 
         <!-- Post Content -->
         <p class="lead">
-          
-            <%- event.story %>
-          
-          <!-- <blockquote class="blockquote">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-            <footer class="blockquote-footer">Someone famous in
-              <cite title="Source Title">Source Title</cite>
-            </footer>
-          </blockquote> -->
+
+          <%- event.story %>
+
+
 
 
           <hr>
@@ -75,31 +67,65 @@
           </div>
 
           <!-- Single Comment -->
-          <ul class="list-unstyled">
-          <% for(var i =0 ; i<comments_list.length; i++) { %>
 
-             
-                  <li class="media mb-4">
-                    <img src="http://placehold.it/50x50" class="mr-3" alt="...">
-                    <div class="media-body">
-                      <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
-                      <%= comments_list[i].comment %>
+
+          <ul class="list-unstyled">
+            <% for(var i =0 ; i<comments_list.length; i++) { %>
+
+
+                <div class="card">
+                    <div class="card-body">
+
+
+                        <li class="media mb-4">
+
+                            <div class="col-12 col-sm-6 col-md-3 px-0 float-left">
+              
+                              <% if(comments_list[i].createdBy.image == null || comments_list[i].createdBy.image == undefined) {%>
+                              <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                                alt="Avatar" />
+                              <% } else { %>
+                              <img class="rounded-circle mx-auto d-block img-fluid"
+                                src="/view/images/users/<%= comments_list[i].createdBy.image%>" alt="Avatar" />
+                              <% } %>
+              
+              
+                              <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+                            </div>
+              
+              
+              
+              
+                            <!-- <div class="col-12 col-sm-6 col-md-3 px-0">
+                                        <img src="/view/images/users/<%= comments_list[i].createdBy.image %>" height="30" width= "30" alt="" class="rounded-circle mx-auto d-block img-fluid">
+                                    </div> -->
+                            <div class="media-body">
+                              <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
+                              <%= comments_list[i].comment %>
+                            </div>
+                          </li>
+              
+
+
+                      
                     </div>
-                  </li>
+                </div>
+
+
             
 
 
 
 
 
-          
 
-          <% } %>
-        </ul>
-        <form action ="/fundraiser/view_fundraiser/<%= event._id %>" method="GET">
+
+            <% } %>
+          </ul>
+          <!-- <form action="/fundraiser/view_fundraiser/<%= event._id %>" method="GET">
             <button type="submit" class="btn btn-primary">Show more comments</button>
-        </form>
-       
+          </form> -->
+
 
 
       </div>
@@ -109,20 +135,20 @@
 
         <!-- Search Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Fundraiser Progress</h5>
+          <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
           <div class="card-body">
             <div class="col-lg-10" style="height:90px;">
-                <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
-               <% include  ../view/share %>
-                <br>
+              <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
+              <% include  ../view/share %>
+              <br>
               <h2><i class="fas fa-dollar-sign"></i> <%= currentamount%> </h2>
 
               <p class="">raised of <b>&nbsp<i class="fas fa-dollar-sign"></i> <%= event.amount%></b> goal</p>
 
             </div>
 
-             <br>
-             <br>
+            <br>
+            <br>
 
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: <%= progress%>%"
@@ -133,52 +159,118 @@
         </div>
 
         <!-- Categories Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Top Donors</h5>
+        <div class="card my-4 text-center">
+          <h5 class="card-header">Donations</h5>
           <div class="card-body">
             <div class="row">
               <div class="col-lg-10">
                 <% for(var j=0; j<event.donations.length;j++) { %>
 
 
-                <div class="float-left"><img class="d-flex mr-3 rounded-circle" src="http://placehold.it/30x30" alt="">
-                </div>
-                <div class="float-left">
-                  <%=  event.donations[j].userId.fullName%>
+                <div class="row w-12">
+                  <div class="col-12 col-sm-6 col-md-3 px-0 float-left">
+
+                    <% if(event.donations[j].userId.image == null ||event.donations[j].userId.image == undefined) {%>
+                    <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                      alt="Avatar" />
+                    <% } else { %>
+                    <img class="rounded-circle mx-auto d-block img-fluid"
+                      src="/view/images/users/<%= event.donations[j].userId.image%>" alt="Avatar" />
+                    <% } %>
+
+
+                    <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+                  </div>
+                  <div class="float-left">
+                    <%=  event.donations[j].userId.fullName%>
+
+
+                  </div>
+
+                  <div class="float-right">
+                    <%=  event.donations[j].amount %>
+                  </div>
+                  <br>
+                  <br>
+
+
+
+
+
+                  <% } %>
 
 
                 </div>
-
-                <div class="float-right">
-                  <%=  event.donations[j].amount %>
-                </div>
-                <br>
-                <br>
-
-
-
-
-
-                <% } %>
-
 
               </div>
-
             </div>
           </div>
         </div>
-
         <!-- Side Widget -->
-        <div class="card my-4">
+        <!-- <div class="card my-4">
           <h5 class="card-header">Side Widget</h5>
           <div class="card-body">
             You can put anything you want inside of these side widgets. They are easy to use, and feature the new
             Bootstrap 4 card containers!
-          </div>
-        </div>
+          </div>-->
+
+
+
 
       </div>
+      <div class="card my-4">
 
+
+        <ul class="list-group pull-down" id="contact-list">
+          <li class="list-group-item">
+            <div class="row w-12">
+              <div class="col-12 col-sm-6 col-md-3 px-0">
+
+                <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
+                <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                  alt="Avatar" />
+                <% } else { %>
+                <img class="rounded-circle mx-auto d-block img-fluid"
+                  src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar" />
+                <% } %>
+
+
+                <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+              </div>
+              <div class="col-12 col-sm-6 col-md-9 text-center text-sm-left">
+
+                <span class="text-muted small">Campaigner</span>
+                <br>
+
+
+                <span class="text-muted small"><%= event.createdBy.fullName%></span>
+                <br>
+
+                <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title=""
+                  data-original-title="<%= event.createdBy.phone%>"></span>
+                <span class="text-muted small"><%= event.createdBy.phone%></span>
+                <br>
+                <span class="fa fa-envelope fa-fw text-muted" data-toggle="tooltip" data-original-title=""
+                  title=""></span>
+                <span class="text-muted small text-truncate"><%= event.createdBy.email%></span>
+                <br>
+                <span class="fas fa-user-check fa-fw text-muted" data-toggle="tooltip" data-original-title=""
+                  title=""></span>
+                <span class="text-muted small text-truncate">Verified</span>
+
+              </div>
+
+
+            </div>
+
+          </li>
+
+
+        </ul>
+
+
+
+      </div>
     </div>
     <!-- /.row -->
 

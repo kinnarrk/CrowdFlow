@@ -36,8 +36,8 @@ const Comment = model.Comment;
 var commentList = [];
 // following lines added by Vivek on 16 april
 const User = model.User;
-var userList = [];
-var count = 1;
+//var userList = []; vivek
+//var count = 1;  vivek
 
 //
 
@@ -166,11 +166,11 @@ router.get('/view_fundraiser/:id', (req, res) => {
            
             progress = (currentamount/event.amount)*100;
 
-            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(count).exec(function (err, comments_list) {
+            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(15).exec(function (err, comments_list) {
                              console.log(comments_list);
                              console.log("------------------------");
-    console.log(count);
-    count += 1;
+    //console.log(count);
+   // count += 1;
     
                             
             
