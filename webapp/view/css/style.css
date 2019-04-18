@@ -135,3 +135,17 @@ label.error {
   .card-footer{
       padding-top: 0;
   }
+
+  .twitter-share, .facebook-share {
+    background: #fff;
+    cursor: pointer;
+    display: inline-block;
+    padding: 1em 2em;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background: #fff;
+  }
+
+  .twitter-share, .facebook-share :hover{
+    background: black;
+  }
