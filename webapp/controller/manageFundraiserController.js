@@ -25,7 +25,7 @@ router.use(function (req, res, next) {
     next();
   });
 
-router.get('/manage_fundraiser', ensureAuthenticated, (req, res) =>{
+router.get('/', ensureAuthenticated, (req, res) =>{
     console.log("Going to manage fundraiser dashboard");
     res.render('../view/manage_fundraiser/dashboard');
 });
