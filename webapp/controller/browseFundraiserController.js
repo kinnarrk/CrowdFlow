@@ -98,7 +98,6 @@ router.get('/:categoryId?', (req, res) => {
     }
 });
 
-
 //just a test funciton to add donations.
 router.get('/add_donation/:fundraiserId', (req, res) => {
     // console.log("fundraiserId:"+ req.params.fundraiserId +":");

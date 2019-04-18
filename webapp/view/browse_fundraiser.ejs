@@ -73,7 +73,7 @@
                </div>
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <%=percentage%>%" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100"></div>          
-                </div>
+                </div> 
                 <% if(Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) > 0) { %>
                   <%= Math.round((new Date(fr.doc.targetDate)-new Date())/(1000*60*60*24)) %> days left
                 <% } else {%>
