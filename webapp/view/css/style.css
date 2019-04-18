@@ -87,6 +87,15 @@ label.error {
     font-size : 14px;
 }
 
+.form-row span {
+    color: gray;
+}
+
+#profile-pic {
+    height: 200px;
+    width: 200px;
+    border-radius : 100px;
+}
 .card-custom {
     overflow: hidden;
     min-height: 450px;

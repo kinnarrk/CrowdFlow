@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Start a fundraiser</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-10 mt-3 mb-3">
+                <h1><%= user.fullName %></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="text-center">
+                    <form name="profile" action="/users/update-profile-pic/<%= user._id %>" method="POST"
+                        encType="multipart/form-data">
+                        <img id="profile-pic" src="../../view/images/users/<%= user.image %>"
+                            class="avatar img-circle img-thumbnail mb-3" alt="avatar">
+                        <input type="file" name="profile-image" class="text-center center-block file-upload">
+                        <button type="submit" class="btn-primary mt-3 col-md-12 p-2">
+                            UPLOAD
+                        </button>
+                    </form>
+                </div>
+                </hr><br>
+
+                <ul class="list-group  mb-3">
+                    <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                    <li class="list-group-item text-right">
+                        <span class="float-left"><strong>Fundraisers</strong></span>
+                        <span class="float-right">125</span>
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="float-left"><strong>Donations</strong></span>
+                        <span class="float-right">15</span>
+                    </li>
+                    <li class="list-group-item text-right">
+                        <span class="float-left"><strong>Comments</strong></span>
+                        <span class="float-right">25</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-9">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                            role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            role="tab" aria-controls="nav-profile" aria-selected="false">Fundraisers</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            role="tab" aria-controls="nav-contact" aria-selected="false">Donations</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                            role="tab" aria-controls="nav-contact" aria-selected="false">Comments</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                        <div class="row">
+                            <h3 class="p-3">Personal Information</h3>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <form name="update" action="/users/update/<%= user._id %>" method="POST">
+                                    <div class="text-left">
+                                        <% include ../partials/messages %>
+                                    </div>
+                                    <div class="pr-3 pl-3">
+                                        <div class="row">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <span class="fas fa-user"></span>
+                                                    </span>
+                                                </div>
+                                                <input type="text" name="fullName" class="form-control"
+                                                    placeholder="Name" value="<%= user.fullName %>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <span class="fas fa-envelope"></span>
+                                                    </span>
+                                                </div>
+                                                <input type="email" name="email" class="form-control"
+                                                    placeholder="E-mail" value="<%= user.email %>">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text bg-light">
+                                                        <span class="fas fa-mobile-alt"></span>
+                                                    </span>
+                                                </div>
+                                                <input type="number" name="phone" class="form-control"
+                                                    placeholder="Phone No" value="<%= user.phone %>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        <button class="btn-primary p-2 col-6">
+                                            SAVE
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h3 class="p-3">Update Password</h3>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <form name="password" id="password" action="/users/update/<%= user._id %>"
+                                    method="POST">
+                                    <div class="text-left">
+                                        <% include ../partials/messages %>
+                                    </div>
+                                    <div class="pr-3 pl-3">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light">
+                                                            <span class="fas fa-lock"></span>
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" name="password" class="form-control"
+                                                        placeholder="New Password">
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-light">
+                                                            <span class="fas fa-lock"></span>
+                                                        </span>
+                                                    </div>
+                                                    <input type="password" name="cpassword" class="form-control"
+                                                        placeholder="Confirm Password"">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class=" mt-1">
+                                                    <button class="btn-primary p-2 col-3">
+                                                        UPDATE PASSWORD
+                                                    </button>
+                                                </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/footer %>
+    <script>
+        var readURL = function (input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+        }
+
+
+        $(".file-upload").on('change', function () {
+            readURL(this);
+        });
+    </script>
+</body>
