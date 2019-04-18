@@ -2,8 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Choose Your Cause</title>
-    <link rel="stylesheet" href="../view/css/style.css" />
+    <title>Edit a fundraiser</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../view/css/style.css" />
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
 <% include ../partials/head %>
 
@@ -11,83 +13,220 @@
     <% include ../partials/nav %>
 
     <div class="fluid-container">
-        <div class="container">
-            <div class="row mt-5">
-                <h1>Start a Fundraiser</h1>
-            </div>
-            <% if(typeof edit != 'undefined') { %>
-            <% edit.forEach(function(x) { %>
-            <form name="login" method="POST" action="/editFundraiser/edit/<%= x._id %>">
-                <div class="pl-3 pr-3">
+        <div class="jumbotron p-3">
+            <h1 class="container text-left">Edit a Fundraiser</h1>
+        </div>
+    </div>
+    <% if(typeof edit != 'undefined') { %>
+    <% edit.forEach(function(x) { %>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <form name="fundraiser" id="fundraiser" method="POST" action="/editFundraiser/edit/<%= x._id %>"
+                    encType="multipart/form-data">
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
-                            <label class="my-1 mr-2" for="title">Title</label>
-                            <input name="title" class="form-control" placeholder="Title" value=<%= x.title%>>
+                        <div class="col-12 mb-3 text-justify">
+                            <h4>Basics</h4>
+                            <span><small>Make a good first impression: introduce your fundraiser objectives and
+                                    entice
+                                    people to
+                                    learn more. This basic information will represent your fundraiser on your
+                                    fundraiser
+                                    page,
+                                    on your fundraiser card, and in searches.</small></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3">
+                            <label class="my-1 mr-2 font-weight-bold" for="title">Fundraiser Title</label>
+                            <br>
+                            <span><small>What is the title of your Fundraiser?</small></span>
+                            <input name="title" class="form-control" placeholder="Title" value="<%= x.title%>">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
-                            <label class="my-1 mr-2" for="category">Category</label>
-
-                            <!--  -->
-                            <select name ="categoryId" class="custom-select my-1 mr-sm-2 col-12">
-                                <% if( sample1 != undefined) { %>
-                                <% sample1.forEach(function(a){ %>
-                                <option value="<%- a._id%>" <% if(x.categoryId.toString() == a._id.toString()) { %> selected <% } %>>
+                        <div class="col-12 form-group mb-3 text-justify">
+                            <label class="my-1 mr-2 font-weight-bold" for="category">Category</label>
+                            <br>
+                            <span><small>To help backers find your fundraiser, select a category that best
+                                    represents
+                                    your fundraiser.</small></span>
+                            <select name="categoryId" class="custom-select my-1 mr-sm-2 col-12">
+                                <% if( categories != undefined) { %>
+                                <% categories.forEach(function(a){ %>
+                                <option value="<%- a._id%>" <% if(x.categoryId.toString() == a._id.toString()) { %>
+                                    selected <% } %>>
                                     <%= a.categoryName%>
                                 </option>
                                 <% }); %>
                                 <% } %>
-
-
-
-
                             </select>
                         </div>
                     </div>
 
-                    <div class=" form-row">
-                        <div class="col-6 form-group mb-3">
-                            <label class="my-1 mr-2" for="amount">Amount</label>
-                            <input name="amount" class="form-control" placeholder="Amount" value=<%= x.amount%>>
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3 text-justify">
+                            <label class="my-1 mr-2 font-weight-bold" for="amount">Fundraiser Amount</label>
+                            <br>
+                            <span><small>Enter the fundraiser amount that is needed for the fundraiser. Amount
+                                    must be
+                                    greater than $300.</small></span>
+                            <input name="amount" class="form-control" placeholder="Amount" value="<%= x.amount%>">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
+                        <div class="col-12 form-group mb-3">
+                            <label class="my-1 mr-2 font-weight-bold" for="image">Fundraiser Image</label>
+                            <br>
+                            <span><small>Upload a square image that represents your fundraiser.</small></span>
+                            <br>
+                            <input name="image" id="image" type="file" accept="image/*" class="file"
+                                data-preview-file-type="text" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3 text-justify font-weight-bold">
                             <label class="my-1 mr-2" for="description">Short Description</label>
-                            <input name="description" class="form-control" value=<%= x.description%>>
+                            <br>
+                            <span><small>Enter up to five keywords that best describe your fundraiser. These
+                                    tags will
+                                    help with organization and discoverability.</small></span>
+                            <input type="textarea" name="description" class="form-control" value="<%= x.description%>">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
-                            <label class="my-1 mr-2" for="amount">Phone Number</label>
-                            <input name="phone" class="form-control" placeholder="Phone Number" value=<%= x.phone%>>
+                        <div class="col-12 form-group mb-3 font-weight-bold">
+                            <label class="my-1 mr-2" for="description">Target Date</label>
+                            <br>
+                            <span><small>How many days will you be running your fundraiser for?
+                            </small></span>
+                            <input type="date" name="targetDate" id="targetDate" class="form-control" 
+                            value = "<%= moment(x.targetDate).format('YYYY-MM-DD')%>">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
+                        <div class="col-12 form-group mb-3 text-justify font-weight-bold">
+                            <label class="my-1 mr-2" for="description">Campaigner Phone No</label>
+                            <br>
+                            <span><small>Enter the phone number of campaigner. It will help donators to contact
+                                    the beneficiary.</small></span>
+                            <input name="phone" class="form-control" placeholder="Phone Number" value="<%= x.phone%>">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3 font-weight-bold">
                             <label class="my-1 mr-2" for="city">City</label>
-                            <input name="city" class="form-control" placeholder="City" value=<%= x.city%>>
+                            <br>
+                            <span><small>Enter the name of the city where the fundraiser is
+                                    raising.</small></span>
+                            <input name="city" class="form-control" placeholder="City" value="<%= x.city%>">
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="col-6 form-group mb-3">
-                            <button type="submit" class="btn btn-primary my-1">Save</button>
+                        <div class="col-12 mb-3 text-justify">
+                            <h4>Story</h4>
+                            <span><small>Tell potential contributors more about your campaign. Provide details
+                                    that will
+                                    motivate people to contribute. A good pitch is compelling, informative, and
+                                    easy to
+                                    digest.</small></span>
                         </div>
                     </div>
-                </div>
-            </form>
-            <% }); %>
-            <% } %>
+
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3">
+                            <textarea name="story"><%= x.story%></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-12 form-group mb-3">
+                            <button type="submit" id="submit-for-approval" class="btn btn-primary my-1">Submit
+                                for
+                                Approval</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-6">
+                <img class="img-fluid" src="../../view/images/start-fundraiser.png">
+            </div>
         </div>
     </div>
+    <% }); %>
+    <% } %>
+
     <% include ../partials/footer %>
-    <% include ../partials/scripts %>
+
+
+
+    <script src="../../node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+        CKEDITOR.replace('story');
+        $(function () {
+
+            $('.js-example-basic-single').select2();
+
+            $("#fundraiser").validate({
+                rules: {
+                    title: {
+                        required: true,
+                        minlength: 5
+                    },
+                    categoryId: "required",
+                    amount: {
+                        required: true,
+                        min: 300
+                    },
+                    image: "required",
+                    description: {
+                        required: true,
+                        minlength: 10
+                    },
+                    targetDate: "required",
+                    phone: {
+                        required: true,
+                        rangelength: [10, 10]
+                    },
+                    city: "required",
+                    story: "required"
+                },
+                messages: {
+                    title: {
+                        required: 'Please enter title',
+                        minlength: 'Title must consist at least 5 characters'
+                    },
+                    categoryId: 'Please select category',
+                    amount: {
+                        required: 'Please enter fundraiser Amount',
+                        min: 'Amount must be greater than 300'
+                    },
+                    image: 'Please select image for fundraiser',
+                    description: {
+                        required: 'Please enter short Description',
+                        minlength: 'Short description must consist at least 10 characters'
+                    },
+                    targetDate: 'Please enter Target Date',
+                    phone: {
+                        required: 'Please enter mobile Number',
+                        rangelength: 'Mobile number is invalid'
+                    },
+                    city: 'Please enter City name',
+                    story: 'Plese enter Story for the fundraiser'
+                }
+            });
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 </body>
 
 </html>
