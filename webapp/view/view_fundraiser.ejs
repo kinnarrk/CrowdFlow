@@ -112,7 +112,8 @@
           <h5 class="card-header">Fundraiser Progress</h5>
           <div class="card-body">
             <div class="col-lg-10" style="height:90px;">
-                <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button>
+                <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
+               <% include  ../view/share %>
                 <br>
               <h2><i class="fas fa-dollar-sign"></i> <%= currentamount%> </h2>
 
@@ -187,6 +188,7 @@
   <!-- Footer -->
   <% include ../partials/footer %>
   <% include ../partials/scripts %>
+  <% include ../partials/share_scripts %>
 
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
