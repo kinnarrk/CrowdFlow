@@ -3,7 +3,9 @@
 
 <head>
     <title>Beneficiary</title>
-    <link rel="stylesheet" href="../view/css/style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../view/css/style.css" />
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
 <% include ../partials/head %>
 
@@ -14,7 +16,7 @@
             <div class="row mt-5">
                 <h1>Beneficiary</h1>
             </div>
-            <form method="POST" action="/beneficiary/beneficiary/">
+            <form id="beneficiary" name="beneficiary" method="POST" action="/beneficiary/beneficiary/">
                 <div class="pl-3 pr-3">
                     <div class="form-row">
                         <div class="col-6 form-group mb-3">
@@ -88,6 +90,85 @@
     </div>
     <% include ../partials/footer %>
     <% include ../partials/scripts %>
+    <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+        $(function () {
+
+            $("#beneficiary").validate({
+                rules: {
+                    fundraiserId: "required",
+                    bank: {
+                        required: true,
+                        minlength: 5
+                    },
+                    branch: {
+                        required: true,
+                        minlength: 5
+                    },
+                    accountNo: {
+                        required: true,
+                        rangelength: [5, 10]
+                    },
+                    accountName: {
+                        required: true,
+                        minlength: 5
+                    },
+                    routingCode: {
+                        required: true,
+                        rangelength: [3, 10]
+                    },
+                    email: {
+                        required: true
+                    },
+                    phone: {
+                        required: true,
+                        rangelength: [10, 10]
+                    },
+                    address: {
+                        required: true,
+                        minlength: 5
+                    }
+                    
+                },
+                messages: {
+                    fundraiserId: 'Please select category',
+                    bank: {
+                        required: 'Please enter Bank Name',
+                        minlength: 'Bank Name must consist at least 5 characters'
+                    },
+                    branch: {
+                        required: 'Please enter Branch Name',
+                        minlength: 'Branch Name must consist at least 5 characters'
+                    },
+                    accountNo: {
+                        required: 'Please enter Account Number',
+                        rangelength: 'Account Number is invalid'
+                    },
+                    accountName: {
+                        required: 'Please enter Account Name',
+                        minlength: 'Account Name must consist at least 5 characters'
+                    },
+                    routingCode: {
+                        required: 'Please enter Routing Code',
+                        rangelength: 'Routing Code is invalid'
+                    },
+                    email: {
+                        required: 'Please enter Email Id'
+                    },
+                    phone: {
+                        required: 'Please enter mobile Number',
+                        rangelength: 'Mobile number is invalid'
+                    },
+                    address: {
+                        required: 'Please enter Address',
+                        minlength: 'Address must consist at least 5 characters'
+                    }
+                }
+            });
+        });
+    </script>
+    
+    
 </body>
 
 </html>
