@@ -105,7 +105,7 @@
                             <br>
                             <span><small>How many days will you be running your fundraiser for?
                             </small></span>
-                            <input type="date" name="targetDate" id="targetDate" class="form-control" 
+                            <input name="targetDate" id="targetDate" class="form-control datepicker" data-date-format="mm-dd-yyyy"
                             value = "<%= moment(x.targetDate).format('YYYY-MM-DD')%>">
                         </div>
                     </div>
@@ -167,7 +167,7 @@
 
     <% include ../partials/footer %>
 
-
+    <% include ../partials/scripts %>
 
     <script src="../../node_modules/jquery-validation/dist/jquery.validate.js"></script>
     <script>
