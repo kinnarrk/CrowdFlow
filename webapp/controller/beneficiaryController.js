@@ -1,12 +1,12 @@
 const express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcrypt');
 const passport = require('passport');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
 const Beneficiary=model.Beneficiary;
 const User=model.User;
-
 
 
 // router.post('/beneficiary',(req,res) =>
