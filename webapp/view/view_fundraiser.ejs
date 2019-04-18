@@ -41,7 +41,7 @@
         <!-- <hr> -->
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="../view/images/<%= event.image %>" alt="../view/images/<%= event.image %>">
+        <img class="img-fluid rounded" src="<%= event.categoryId.categoryImage %>" alt="<%= event.categoryId.categoryImage %> %>">
 
         <hr>
 
@@ -76,14 +76,14 @@
 
           <!-- Single Comment -->
           <ul class="list-unstyled">
-          <% for(var i =0 ; i<docs.length; i++) { %>
+          <% for(var i =0 ; i<comments_list.length; i++) { %>
 
              
                   <li class="media mb-4">
                     <img src="http://placehold.it/50x50" class="mr-3" alt="...">
                     <div class="media-body">
-                      <h5 class="mt-0 mb-1"><%= docs[i].createdBy.fullName %></h5>
-                      <%= docs[i].comment%>
+                      <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
+                      <%= comments_list[i].comment %>
                     </div>
                   </li>
             
@@ -92,17 +92,11 @@
 
 
 
-          <!-- <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-              <h5 class="mt-0"><%= docs[i].createdBy.fullName %></h5>
-              <%= docs[i].comment%>
-            </div>
-          </div> -->
+          
 
           <% } %>
         </ul>
-        <form action ="/fundraiser/view_fundraiser/<%= event._id %>" method="GET">
+        <form action ="/fundraiser/fundraiserPage/<%= event._id %>" method="GET">
             <button type="submit" class="btn btn-primary">Show more comments</button>
         </form>
        

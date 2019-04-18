@@ -129,23 +129,28 @@ router.get('/view_fundraiser/:id', (req, res) => {
 
     fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]').populate('donations.userId').exec(function(err,event){
         if(err){res.send(err)}
-        image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
-            // console.log("-----------------------");
-            // console.log(event);
-            // console.log("-----------------------");
-            // console.log(event.donations[0].userId.fullName);
+        //image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
+            console.log("-----------------------");
+            console.log(event);
+            console.log("-----------------------");
+           // console.log(event.donations[0].userId.fullName);
             var currentamount = 0;
             var progress = 0;
 
-            for(var i=0;i<event.donations.length;i++){
-                currentamount += event.donations[i].amount ;
-                
+            if(event.donations.length > 0){
+                for(var i=0;i<event.donations.length;i++){
+                    currentamount += event.donations[i].amount ;
+                    
+    
+                }
 
             }
+
+           
             progress = (currentamount/event.amount)*100;
 
-            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(count).exec(function (err, docs) {
-                             console.log(docs);
+            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(count).exec(function (err, comments_list) {
+                             console.log(comments_list);
                              console.log("------------------------");
     console.log(count);
     count += 1;
@@ -157,7 +162,7 @@ router.get('/view_fundraiser/:id', (req, res) => {
                                
                 //             //         userList = users;
                 //             //         console.log(userList);
-                res.render('../view/view_fundraiser', { event: event,docs:docs,image:image,currentamount,progress});
+                res.render('../view/view_fundraiser', { event: event,comments_list:comments_list,currentamount,progress});
                                 
                 })
                 
@@ -235,6 +240,8 @@ router.get('/view_fundraiser/:id', (req, res) => {
 
 // following code edited by Vivek on 15th april
 router.post('/fundraiser_comment/:id/comment', (req, res) => {
+
+    console.log(req.params.id);
     const newComment = new Comment({
         comment: req.body.comment,
         fundraiserId: req.params.id,
@@ -249,7 +256,7 @@ router.post('/fundraiser_comment/:id/comment', (req, res) => {
         // );
         errors = [];
 
-        res.redirect('/fundraiser/view_fundraiser/' + req.params.id);
+        res.redirect('/fundraiser/fundraiserPage/' + req.params.id);
     })
         .catch(err => console.log(err));
 });
