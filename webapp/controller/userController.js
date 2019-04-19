@@ -130,6 +130,7 @@ router.post('/register', (req, res) => {
 
 //Login
 router.post('/login', (req, res, next) => {
+    console.log("return path="+req.session.returnTo);
     passport.authenticate('local', {
         successRedirect: req.session.returnTo || '/',
         failureRedirect: '/users/login',
