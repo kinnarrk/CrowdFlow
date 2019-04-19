@@ -84,8 +84,10 @@
                                         <br>
                                         <span><small>Upload a square image that represents your fundraiser.</small></span>
                                         <br>
+                                        <img src="/view/images/fundraisers/<%= x.image%>" height="150px" width="150px"
+                                            class="img-fluid">
                                         <input name="image" id="image" type="file" accept="image/*" class="file"
-                                            data-preview-file-type="text" />
+                                            data-preview-file-type="text" value="<%= x.image%>" />
                                     </div>
                                 </div>
                                 <div class="form-row">
