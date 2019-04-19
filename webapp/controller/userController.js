@@ -9,6 +9,7 @@ const model = require('../model/commonModel');
 const User = model.User;
 const Role = model.Role;
 const Fundraiser = model.Fundraiser;
+const Comment = model.Comment;
 const {
     ensureAuthenticated
 } = require('../config/auth');
@@ -130,7 +131,7 @@ router.post('/register', (req, res) => {
 
 //Login
 router.post('/login', (req, res, next) => {
-    console.log("return path="+req.session.returnTo);
+    console.log("return path=" + req.session.returnTo);
     passport.authenticate('local', {
         successRedirect: req.session.returnTo || '/',
         failureRedirect: '/users/login',
@@ -170,10 +171,7 @@ router.get('/google/callback', (req, res, next) => {
 });
 
 router.get('/profile', ensureAuthenticated, (req, res) => {
-    // Fundraiser.find({donations:{userId : req.user._id}}
-    //         ,'donations', (err, arr) => {
-    //     console.log("arr=="+JSON.stringify(arr));
-    // });
+
     User.aggregate([{
             $match: {
                 _id: mongoose.Types.ObjectId(req.user._id)
@@ -188,10 +186,32 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
             }
         }
     ]).exec((err, arr) => {
-        console.log("ARR" + JSON.stringify(arr));
-        res.render('../view/profile', {
-            profile: arr
+        //console.log("ARR" + JSON.stringify(arr));
+
+        Fundraiser.aggregate([{
+                '$unwind': '$donations'
+            },
+            {
+                $match: {
+                    'donations.userId': req.user._id
+                }
+            }
+        ]).exec((error, array) => {
+
+            Comment.find({
+                createdBy: req.user._id
+            })
+            .populate('fundraiserId')
+            .exec(function (errComment, comment) {
+                res.render('../view/profile', {
+                    profile: arr,
+                    donations: array,
+                    comments: comment
+                });
+            });
         });
+
+
     });
 
 });
@@ -208,13 +228,15 @@ router.post('/update/:id', (req, res) => {
     }
 
     if (errors.length > 0) {
-        res.redirect('/users/profile', {errors});
+        res.redirect('/users/profile', {
+            errors
+        });
     } else {
         User.updateOne({
             _id: req.params.id
         }, req.body, (err, arr) => {
             console.log("arr=" + JSON.stringify(arr));
-    
+
             if (!arr.n && !arr.ok && !arr.nModified) {
                 req.flash(
                     'error_msg',
