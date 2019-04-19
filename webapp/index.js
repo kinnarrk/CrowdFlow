@@ -78,6 +78,7 @@ app.use('/beneficiary', require('./controller/beneficiaryController'));
 app.use('/trending', require('./controller/trendingController'));
 
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
+app.use('/donate', require('./controller/donationController'));
 
 
 // start our server
