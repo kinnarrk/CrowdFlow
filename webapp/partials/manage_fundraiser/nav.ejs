@@ -54,8 +54,8 @@
                     <li>
                         <a href="#">Past Withdrawal</a>
                     </li>
-                    <li>
-                        <a href="#">Beneficiary</a>
+                    <li <% if(page == "beneficiary"){ %>class="active" <% } %>>
+                        <a href="/beneficiary/beneficiary/<%= fundraiser._id %>">Beneficiary</a>
                     </li>
                 </ul>
             </li>
