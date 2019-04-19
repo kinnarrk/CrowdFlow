@@ -50,7 +50,7 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
     var invoiceId = 'INV000000001';
     var tax = 0.08;
 
-    if(req.body.amount != undefined){
+    if(req.body.amount != undefined || req.query.amount != undefined){
         if(req.body.fullName != undefined && req.body.phone != undefined && req.body.city != undefined){
             var user = {
                 fullName: req.body.fullName,
@@ -64,7 +64,7 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                 }
             });
         }
-        var amount = (req.body.amount != undefined)?req.body.amount:100;
+        var amount = (req.body.amount != undefined)?(parseFloat(req.body.amount)).toFixed(2):(parseFloat(req.query.amount)).toFixed(2);
         if(req.params.fundraiserId != undefined){
             Fundraiser.aggregate([
                 { "$unwind": '$donations' },
@@ -112,18 +112,18 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                                     "name": docs2.title,
                                     "description": docs2._id,
                                     "sku": "1",
-                                    "price": amount,                               
+                                    "price": Number(amount),                               
                                     "currency": "USD",
                                     "quantity": "1",
                                     "tax": tax
                                 }]
                             },                        
                             "amount": {
-                                "total": (amount + amount*tax), //req.body.amount,
+                                "total": (parseFloat( parseFloat(amount) + parseFloat(amount*tax))).toFixed(2), //req.body.amount,
                                 "currency": "USD",
                                 "details": {
                                     "subtotal": amount,
-                                    "tax": amount*tax                                
+                                    "tax": (parseFloat(amount*tax)).toFixed(2)
                                 }
                             },
                             "description": "Donation for fundraiserId: " + docs2._id                                              
@@ -197,7 +197,8 @@ router.get('/success' , (req ,res ) => {
                 fr.save((err, doc) => {
                     if(!err) {
                         console.log('Donation added');
-                        // res.send("Success");                        
+                        // res.send("Success");    
+                        res.redirect('../view/paypal/success.html');                    
                     }
                     else {           
                         console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));

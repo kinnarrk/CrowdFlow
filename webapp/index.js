@@ -76,6 +76,7 @@ app.use('/editFundraiser', require('./controller/editFundraiserController'));
 app.use('/browseFundraiser', require('./controller/browseFundraiserController'));
 app.use('/beneficiary', require('./controller/beneficiaryController'));
 app.use('/trending', require('./controller/trendingController'));
+app.use('/AboutUs',require('./controller/AboutUsController'))
 
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
 app.use('/donate', require('./controller/donationController'));
