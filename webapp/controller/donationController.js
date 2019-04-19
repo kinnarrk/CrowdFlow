@@ -14,11 +14,11 @@ var paypal = require('paypal-rest-sdk');
 var path = require('path');
 const {ensureAuthenticated } = require('../config/auth');
 
-// var bodyParser = require('body-parser');
-// var app = express();
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json())
-// app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
+var bodyParser = require('body-parser');
+var app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -47,24 +47,26 @@ router.use(function (req, res, next) {
 // start payment process 
 router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) => {
     console.log("Inside donate through paypal");
+    console.log("Body:::: " + JSON.stringify(req.body));
     var invoiceId = 'INV000000001';
     var tax = 0.08;
 
-    if(req.body.amount != undefined){
+    if(req.body.amount != undefined || req.query.amount != undefined){
         if(req.body.fullName != undefined && req.body.phone != undefined && req.body.city != undefined){
             var user = {
                 fullName: req.body.fullName,
                 phone: req.body.phone,
                 city: req.body.city
             }
-            User.findOneAndUpdate(req.user._id,{$set: user}, {new: true},(err,doc)=>{
+            User.findByIdAndUpdate(req.user._id,{$set: user}, (err,doc)=>{
                 if(err){
                     console.log('Error in updating user: ' + JSON.stringify(err, undefined, 2));
-                    res.redirect('/404');
+                    // res.redirect('/404');
+                    // return;
                 }
             });
         }
-        var amount = (req.body.amount != undefined)?req.body.amount:100;
+        var amount = (req.body.amount != undefined)?(parseFloat(req.body.amount)).toFixed(2):(parseFloat(req.query.amount)).toFixed(2);
         if(req.params.fundraiserId != undefined){
             Fundraiser.aggregate([
                 { "$unwind": '$donations' },
@@ -112,18 +114,18 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                                     "name": docs2.title,
                                     "description": docs2._id,
                                     "sku": "1",
-                                    "price": amount,                               
+                                    "price": Number(amount),                               
                                     "currency": "USD",
                                     "quantity": "1",
                                     "tax": tax
                                 }]
                             },                        
                             "amount": {
-                                "total": (amount + amount*tax), //req.body.amount,
+                                "total": (parseFloat( parseFloat(amount) + parseFloat(amount*tax))).toFixed(2), //req.body.amount,
                                 "currency": "USD",
                                 "details": {
                                     "subtotal": amount,
-                                    "tax": amount*tax                                
+                                    "tax": (parseFloat(amount*tax)).toFixed(2)
                                 }
                             },
                             "description": "Donation for fundraiserId: " + docs2._id                                              
@@ -197,7 +199,8 @@ router.get('/success' , (req ,res ) => {
                 fr.save((err, doc) => {
                     if(!err) {
                         console.log('Donation added');
-                        // res.send("Success");                        
+                        // res.send("Success");    
+                        res.redirect('/fundraiser/view_fundraiser/'+payment.transactions[0].item_list.items[0].description+'?donation=success');                    
                     }
                     else {           
                         console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
