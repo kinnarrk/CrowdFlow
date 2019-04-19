@@ -312,6 +312,9 @@
 
                         <img src="/view/images/donate_modal_thank_you.jpg" class="card-img-top" alt="...">
                         <br>
+                        <% if(user == undefined) { %>
+                          <span>You are not logged in. Please <a href="/users/login">Login</a> in to make a donation.</span>
+                          <% } else {%>
 
 
                         <form action="/donate/donatePaypal/<%= event._id %>" method="POST">
@@ -393,17 +396,16 @@
 
 
                     </div>
-                    <% if(user == undefined) { %>
-                    <span>You are not logged in. Please <a href="/users/login">Login</a> in to make a donation.</span>
-                    <% } else {%>
+                    
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       
                       <button type ="submit" class="btn btn-primary">Proceed to Pay</button>
                     </div>
-                    <% } %>
+                    
                     <br>
                   </form>
+                  <% } %>
                   </div>
                 </div>
               </div>
