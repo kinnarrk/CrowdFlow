@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+
+<body>
+    <div class="wrapper">
+        <!-- Side Navigation -->
+        <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'beneficiary'}); %>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <!-- Top Navigation -->
+            <% include ../../partials/manage_fundraiser/nav_top %>
+
+            <div class="fluid-container">
+                <h1 class="container text-left">Beneficiary</h1>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <form id="beneficiary" name="beneficiary" method="POST"
+                            action="/beneficiary/beneficiary/<%= fundraiser._id%>">
+                            <!-- <div class="pl-3 pr-3">
+                            <div class="form-row">
+                                <div class="col-6 form-group mb-3">
+                                    <label class="my-1 mr-2" for="category">Fundraiser</label>
+                                    <select name="fundraiserId" class="custom-select my-1 mr-sm-2 col-12">
+                                        <option selected>Choose Your Fundraiser</option>
+                                        <% if( sample1 != undefined) { %>
+                                        <% sample1.forEach(function(a){ %>
+                                        <option value="<%- a._id%>"><%= a.title%></option>
+                                        <% }); %>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="bank">Bank Name</label>
+                                    <input name="bank" class="form-control" placeholder="Bank">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="branch">Branch Name</label>
+                                    <input name="branch" class="form-control" placeholder="Branch">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="accountNo">Account Number</label>
+                                    <input name="accountNo" class="form-control" placeholder="Account Number">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="accountName">Account Name</label>
+                                    <input name="accountName" class="form-control" placeholder="Account Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="routingCode">Routing Code</label>
+                                    <input name="routingCode" class="form-control" placeholder="Routing Code">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="email">Email Id</label>
+                                    <input name="email" type=email class="form-control" placeholder="abc@xyz.com">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="phone">Phone Number</label>
+                                    <input name="phone" class="form-control" placeholder="Phone Number">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <label class="my-1 mr-2" for="address">Address</label>
+                                    <input name="address" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12 form-group mb-3">
+                                    <button type="submit" class="btn btn-primary my-1">Save</button>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-6">
+                            <img class="img-fluid" src="../../view/images/Beneficiary.jpg">
+                        </div>
+                    </form>
+                </div>
+               
+            </div>
+
+            <% include ../../partials/manage_fundraiser/footer %>
+            <% include ../../partials/manage_fundraiser/scripts %>
+        </div>
+    </div>
+    <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+        $(function () {
+
+            $("#beneficiary").validate({
+                rules: {
+                    fundraiserId: "required",
+                    bank: {
+                        required: true,
+                        minlength: 5
+                    },
+                    branch: {
+                        required: true,
+                        minlength: 5
+                    },
+                    accountNo: {
+                        required: true,
+                        rangelength: [5, 10]
+                    },
+                    accountName: {
+                        required: true,
+                        minlength: 5
+                    },
+                    routingCode: {
+                        required: true,
+                        rangelength: [3, 10]
+                    },
+                    email: {
+                        required: true
+                    },
+                    phone: {
+                        required: true,
+                        rangelength: [10, 10]
+                    },
+                    address: {
+                        required: true,
+                        minlength: 5
+                    }
+
+                },
+                messages: {
+                    fundraiserId: 'Please select category',
+                    bank: {
+                        required: 'Please enter Bank Name',
+                        minlength: 'Bank Name must consist at least 5 characters'
+                    },
+                    branch: {
+                        required: 'Please enter Branch Name',
+                        minlength: 'Branch Name must consist at least 5 characters'
+                    },
+                    accountNo: {
+                        required: 'Please enter Account Number',
+                        rangelength: 'Account Number is invalid'
+                    },
+                    accountName: {
+                        required: 'Please enter Account Name',
+                        minlength: 'Account Name must consist at least 5 characters'
+                    },
+                    routingCode: {
+                        required: 'Please enter Routing Code',
+                        rangelength: 'Routing Code is invalid'
+                    },
+                    email: {
+                        required: 'Please enter Email Id'
+                    },
+                    phone: {
+                        required: 'Please enter mobile Number',
+                        rangelength: 'Mobile number is invalid'
+                    },
+                    address: {
+                        required: 'Please enter Address',
+                        minlength: 'Address must consist at least 5 characters'
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

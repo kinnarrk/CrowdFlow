@@ -6,6 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "paypal",
+    "payment",
+    "gateway",
+    "nodejs",
+    "payment",
+    "integration",
+    "in",
+    "web",
+    "apps"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -30,6 +41,7 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "password-validator": "^4.1.1",
+    "paypal-rest-sdk": "^1.8.1",
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "social-media-sharing": "1.0.2",
     "validator": "^10.11.0"
