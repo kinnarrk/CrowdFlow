@@ -5,16 +5,16 @@
         </div>
 
         <ul class="list-unstyled components">
-            <p class="font-weight-bold"><%= fundraiser%></p>
+            <p class="font-weight-bold"><%= fundraiser.title %></p>
 
-            <li class="active">
-                <a href="#">
+            <li <% if(page == "dashboard"){ %>class="active" <% } %>>
+                <a href="/manageFundraiser/<%= fundraiser._id %>">
                     <i class="fas fa-home"></i>
                     Dashboard
                 </a>
             </li>
-            <li>
-                <a href="#">
+            <li <% if(page == "editFundraiser"){ %>class="active" <% } %>>
+                <a href="/editFundraiser/edit/<%= fundraiser._id %>">
                     <i class="fas fa-edit"></i>
                     Edit Fundraiser
                 </a>

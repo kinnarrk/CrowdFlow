@@ -15,4 +15,9 @@ router.get('/' ,(req, res) =>{
     
 });
 
+router.get('/404' ,(req, res) =>{
+    
+    res.render('../view/404');
+});
+
 module.exports = router;
