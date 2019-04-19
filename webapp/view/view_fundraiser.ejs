@@ -9,67 +9,263 @@
   <% include ../partials/nav %>
 
   <!-- Page Content -->
-  <!-- <div class="container text-center">
-   
-  </div> -->
-  <div class="container" >
+  
+  <div class="container mx-5 " >
+    <div class = "col-md-12 text-center my-3">
+        <h2><%= event.title %></h2>        <!-- Title -->
+
+    </div>
+    
+    
+
+    
 
     <div class="row">
+        
 
       <!-- Fundraiser  Content Column -->
-      <div class="col-lg-8">
+      <div class="col-md-8">
 
+   
+        
 
-        <!-- Title -->
-        <h1 class="mt-4"><%= event.title %></h1>
-        <p class="lead">
-          by
-          <a href="#"><%= event.createdBy.fullName %></a>
-        </p>
-
-
-       
-
-        <hr>
-
-        <!-- Date/Time -->
-        <!-- <p><%= event.createdDate %></p> -->
-
-        <!-- <hr> -->
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="/view/images/fundraisers/<%= event.image %>" alt="<%= event.image %> ">
+        <div>
+            <img class="img-fluid rounded" src="/view/images/fundraisers/<%= event.image %>" alt="<%= event.image %> ">
+            <div class = "text-center">
+                <%= event.description%>
+            </div>
+
+        </div>
+        
+        
 
         <hr>
 
         <!-- Post Content -->
-        <p class="lead">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><i class="fas fa-info-circle"></i> About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-comment-alt"></i> Comments</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+            </li> -->
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active mx-3" id="home" role="tabpanel" aria-labelledby="home-tab">
+              
+
+              <div class = "text-center mt-3 font-weight-bold">About the Fundraiser</div>
+              <p class="text-justify ">
+
+                  <%- event.story %>
+
+              </p>
+
+              <hr>
+
+              <% if(user == undefined) { %>
+                <span>You are not logged in. Please <a href="/users/login">Login</a>  in to make comment.</span>
+                <br>
+              <% } else {%>
+                 <!-- Comments Form -->
+              <div class="card my-2">
+                  <h5 class="card-header">Leave a Comment:</h5>
+                  <div class="card-body">
+                    <!-- edited by Vivek 15th april-->
+                    <form action="/fundraiser/fundraiser_comment/<%= event._id %>/comment " method="post">
+                      <div class="form-group">
+                        <textarea class="form-control" name="comment" rows="3"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                  </div>
+                </div>
+                <% } %>
+
+                <hr>
+
+                <ul class="list-unstyled">
+                    <% for(var i =0 ; i< comments_list.length; i++) { %>
+        
+        
+                        <div class="card">
+                            <div class="card-body">
+        
+        
+                                <li class="media mb-4">
+        
+                                    <div class="col-12 col-sm-6 col-md-3 px-0 float-left">
+                      
+                                      <% if(comments_list[i].createdBy.image == null || comments_list[i].createdBy.image == undefined) {%>
+                                      <img class="rounded-circle img-fluid" src="/view/images/user_placeholder.png"
+                                        alt="Avatar" />
+                                      <% } else { %>
+                                      <img class="rounded-circle img-fluid"
+                                        src="/view/images/users/<%= comments_list[i].createdBy.image%>" alt="Avatar" />
+                                      <% } %>
+                      
+                      
+                                      <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+                                    </div>
+                      
+                      
+                      
+                      
+                                    <!-- <div class="col-12 col-sm-6 col-md-3 px-0">
+                                                <img src="/view/images/users/<%= comments_list[i].createdBy.image %>" height="30" width= "30" alt="" class="rounded-circle mx-auto d-block img-fluid">
+                                            </div> -->
+                                    <div class="media-body">
+                                      <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
+                                      <%= comments_list[i].comment %>
+                                    </div>
+                                  </li>
+                      
+        
+        
+                              
+                            </div>
+                        </div>
+        
+        
+                    
+        
+        
+        
+        
+        
+        
+        
+                    <% } %>
+                  </ul>
+
+
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                <% if(user == undefined) { %>
+                  <span>You are not logged in. Please <a href="/users/login">Login</a>  in to make comment.</span>
+                <% } else {%>
+                   <!-- Comments Form -->
+                <div class="card my-2">
+                    <h5 class="card-header">Leave a Comment:</h5>
+                    <div class="card-body">
+                      <!-- edited by Vivek 15th april-->
+                      <form action="/fundraiser/fundraiser_comment/<%= event._id %>/comment " method="post">
+                        <div class="form-group">
+                          <textarea class="form-control" name="comment" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+                    </div>
+                  </div>
+                  <% } %>
+  
+
+                <ul class="list-unstyled">
+                    <% for(var i =0 ; i<comments_list.length; i++) { %>
+        
+        
+                        <div class="card">
+                            <div class="card-body">
+        
+        
+                                <li class="media mb-4">
+        
+                                    <div class="col-12 col-sm-6 col-md-3 px-0 float-left">
+                      
+                                      <% if(comments_list[i].createdBy.image == null || comments_list[i].createdBy.image == undefined) {%>
+                                      <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                                        alt="Avatar" />
+                                      <% } else { %>
+                                      <img class="rounded-circle mx-auto d-block img-fluid"
+                                        src="/view/images/users/<%= comments_list[i].createdBy.image%>" alt="Avatar" />
+                                      <% } %>
+                      
+                      
+                                      <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+                                    </div>
+                      
+                      
+                      
+                      
+                                    <!-- <div class="col-12 col-sm-6 col-md-3 px-0">
+                                                <img src="/view/images/users/<%= comments_list[i].createdBy.image %>" height="30" width= "30" alt="" class="rounded-circle mx-auto d-block img-fluid">
+                                            </div> -->
+                                    <div class="media-body">
+                                      <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
+                                      <%= comments_list[i].comment %>
+                                    </div>
+                                  </li>
+                      
+        
+        
+                              
+                            </div>
+                        </div>
+        
+        
+                    
+        
+        
+        
+        
+        
+        
+        
+                    <% } %>
+                  </ul>
+
+
+
+              </div>
+            <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
+          </div>
+
+      
+
+
+
+
+
+
+        <!-- <p class="lead">
 
           <%- event.story %>
 
-
+        </p> -->
 
 
           <hr>
 
-          <!-- Comments Form -->
-          <div class="card my-4">
-            <h5 class="card-header">Leave a Comment:</h5>
-            <div class="card-body">
-              <!-- edited by Vivek 15th april-->
-              <form action="/fundraiser/fundraiser_comment/<%= event._id %>/comment " method="post">
-                <div class="form-group">
-                  <textarea class="form-control" name="comment" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
+          <!-- <% if(user == undefined) { %>
+            <span>You are not logged in. Please <a href="/users/login">Login</a>  in to make comment.</span>
+          <% } else {%> -->
+             <!-- Comments Form -->
+          <!-- <div class="card my-2">
+              <h5 class="card-header">Leave a Comment:</h5>
+              <div class="card-body"> -->
+                <!-- edited by Vivek 15th april-->
+                <!-- <form action="/fundraiser/fundraiser_comment/<%= event._id %>/comment " method="post">
+                  <div class="form-group">
+                    <textarea class="form-control" name="comment" rows="3"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
             </div>
-          </div>
+            <% } %> -->
+         
 
           <!-- Single Comment -->
 
 
-          <ul class="list-unstyled">
+          <!-- <ul class="list-unstyled">
             <% for(var i =0 ; i<comments_list.length; i++) { %>
 
 
@@ -87,11 +283,11 @@
                               <% } else { %>
                               <img class="rounded-circle mx-auto d-block img-fluid"
                                 src="/view/images/users/<%= comments_list[i].createdBy.image%>" alt="Avatar" />
-                              <% } %>
+                              <% } %> -->
               
               
                               <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
-                            </div>
+                            <!-- </div> -->
               
               
               
@@ -99,16 +295,16 @@
                             <!-- <div class="col-12 col-sm-6 col-md-3 px-0">
                                         <img src="/view/images/users/<%= comments_list[i].createdBy.image %>" height="30" width= "30" alt="" class="rounded-circle mx-auto d-block img-fluid">
                                     </div> -->
-                            <div class="media-body">
+                            <!-- <div class="media-body">
                               <h5 class="mt-0 mb-1"><%= comments_list[i].createdBy.fullName %></h5>
                               <%= comments_list[i].comment %>
                             </div>
-                          </li>
+                          </li> -->
               
 
 
                       
-                    </div>
+                    <!-- </div>
                 </div>
 
 
@@ -121,7 +317,7 @@
 
 
             <% } %>
-          </ul>
+          </ul> -->
           <!-- <form action="/fundraiser/view_fundraiser/<%= event._id %>" method="GET">
             <button type="submit" class="btn btn-primary">Show more comments</button>
           </form> -->
@@ -131,146 +327,180 @@
       </div>
 
       <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
+      <div class="col-md-4 ">
 
-        <!-- Search Widget -->
-        <div class="card my-4">
+        <!-- progress widget-->
+        <div class="card border-light mb-3">
           <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
+          <div class="card-header text-center"><i class="fas fa-share-alt text-muted float-left"></i>Share on Social Media</div>
           <div class="card-body">
-            <div class="col-lg-10" style="height:90px;">
+            <!-- <div class="col-lg-10" style="height:90px;"> -->
               <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
               <% include  ../view/share %>
               <br>
+              <div class="list-group-item border-0 text-center">
+                      
+                  <button type="button" class = "btn btn-info">
+                    Contribute Now
+  
+                  </button>
+                
+                </div>
+              <br>
+
               <h2><i class="fas fa-dollar-sign"></i> <%= currentamount%> </h2>
 
               <p class="">raised of <b>&nbsp<i class="fas fa-dollar-sign"></i> <%= event.amount%></b> goal</p>
 
-            </div>
+            <!-- </div> -->
+            
 
-            <br>
-            <br>
+            
+            
 
             <div class="progress">
               <div class="progress-bar" role="progressbar" style="width: <%= progress%>%"
-                aria-valuenow="<%= currentamount%>" aria-valuemin="0" aria-valuemax="<%= event.amount%>"></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Categories Widget -->
-        <div class="card my-4 text-center">
-          <h5 class="card-header">Donations</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-10">
-                <% for(var j=0; j<event.donations.length;j++) { %>
-
-
-                <div class="row w-12">
-                  <div class="col-12 col-sm-6 col-md-3 px-0 float-left">
-
-                    <% if(event.donations[j].userId.image == null ||event.donations[j].userId.image == undefined) {%>
-                    <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
-                      alt="Avatar" />
-                    <% } else { %>
-                    <img class="rounded-circle mx-auto d-block img-fluid"
-                      src="/view/images/users/<%= event.donations[j].userId.image%>" alt="Avatar" />
-                    <% } %>
-
-
-                    <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
-                  </div>
-                  <div class="float-left">
-                    <%=  event.donations[j].userId.fullName%>
-
-
-                  </div>
-
-                  <div class="float-right">
-                    <%=  event.donations[j].amount %>
-                  </div>
-                  <br>
-                  <br>
-
-
-
-
-
-                  <% } %>
-
-
-                </div>
-
+                aria-valuenow="<%= currentamount%>" aria-valuemin="0" aria-valuemax="<%= event.amount%>">
               </div>
             </div>
+
           </div>
         </div>
-        <!-- Side Widget -->
-        <!-- <div class="card my-4">
-          <h5 class="card-header">Side Widget</h5>
-          <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new
-            Bootstrap 4 card containers!
-          </div>-->
+        <!-- Campaigner Widget -->
+        <div class="card border-light mb-3">
+            <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
+            <div class = "card-header text-center"><i class="fas fa-address-card text-muted float-left"></i>Campaigner</div>
+            <div class="card-body">
+
+                <ul class="list-group pull-down " id="contact-list">
+                    <li class="list-group-item border-0">
+                        <div class="row w-100">
+
+                            <div class="col-12 col-sm-6 col-md-3 px-0">
+    
+                                <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
+                                <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                                  alt="Avatar" />
+                                <% } else { %>
+                                <img class="rounded-circle mx-auto d-block img-fluid"
+                                  src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar" />
+                                <% } %>
+                
+                
+                                <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
+                              </div>
+                              <div class="col-12 col-sm-6 col-md-9 text-center text-sm-left ">
+                
+                                <!-- <span class="text-muted small">Campaigner</span> -->
+                                <!-- <br> -->
+                
+                
+                                <span class="text-info small font-weight-bold"><%= event.createdBy.fullName%></span>
+                                <br>
+                
+                                <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title=""
+                                  data-original-title="<%= event.createdBy.phone%>"></span>
+                                <span class="text-muted small"><%= event.createdBy.phone%></span>
+                                <br>
+                                <span class="fa fa-envelope fa-fw text-muted" data-toggle="tooltip" data-original-title=""
+                                  title=""></span>
+                                <span class="text-muted small text-truncate"><%= event.createdBy.email%></span>
+                                <br>
+                                <span class="fas fa-user-check fa-fw text-primary" data-toggle="tooltip" data-original-title=""
+                                  title=""></span>
+                                <span class="text-muted small text-truncate">Verified</span>
+                
+                              </div>
+
+                        </div>
+
+                    </li>
+
+
+                </ul>
+
+
+
+               
+    
+             
+  
+              
+  
+             
+  
+            </div>
+        </div>
+
+        <!-- Donations Widget -->
+       
+        <div class="card border-light " >
+          <div class="card-header text-center"><i class="fas fa-users float-left text-muted"></i>Donations</div>
+            <div class="card-body">
+
+                <ul class="list-group " >
+                    <!-- <li class="list-group-item disabled text-center border-0" aria-disabled="true">Donations</li> -->
+                    <li class="list-group-item border-0">
+                      
+                      
+                      
+                        <% for(var j=0; j<event.donations.length;j++) { %>
+                            <ul class="list-group list-group-horizontal ">
+                                <li class="list-group-item border-0">
+                                  
+                                    <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
+                                      <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
+                                        alt="Avatar" />
+                                      <% } else { %>
+                                      <img class="rounded-circle mx-auto d-block img-fluid"
+                                        src="/view/images/users/<%= event.donations[j].userId.image%>" alt="Avatar" />
+                                      <% } %>
+                                
+                                
+                                </li>
+            
+            
+                                <li class="list-group-item border-0 "><%= event.donations[j].userId.fullName%></li>
+            
+                                <li class="list-group-item border-0 text-info">$<%= event.donations[j].amount%></li>
+                              </ul>
+                            <% } %>
+                    
+                    
+                    </li>
+                    
+                    <!-- <li class="list-group-item border-0 text-center">
+                      
+                      <button type="button" class = "btn btn-info">
+                        Contribute Now
+
+                      </button>
+                    
+                    </li> -->
+                  </ul>
+
+
+
+
+                
+            </div>
+        </div>
+        
+        
+     
+       
+        
+        
 
 
 
 
       </div>
-      <div class="card my-4">
+      
+         
 
-
-        <ul class="list-group pull-down" id="contact-list">
-          <li class="list-group-item">
-            <div class="row w-12">
-              <div class="col-12 col-sm-6 col-md-3 px-0">
-
-                <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
-                <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
-                  alt="Avatar" />
-                <% } else { %>
-                <img class="rounded-circle mx-auto d-block img-fluid"
-                  src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar" />
-                <% } %>
-
-
-                <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
-              </div>
-              <div class="col-12 col-sm-6 col-md-9 text-center text-sm-left">
-
-                <span class="text-muted small">Campaigner</span>
-                <br>
-
-
-                <span class="text-muted small"><%= event.createdBy.fullName%></span>
-                <br>
-
-                <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title=""
-                  data-original-title="<%= event.createdBy.phone%>"></span>
-                <span class="text-muted small"><%= event.createdBy.phone%></span>
-                <br>
-                <span class="fa fa-envelope fa-fw text-muted" data-toggle="tooltip" data-original-title=""
-                  title=""></span>
-                <span class="text-muted small text-truncate"><%= event.createdBy.email%></span>
-                <br>
-                <span class="fas fa-user-check fa-fw text-muted" data-toggle="tooltip" data-original-title=""
-                  title=""></span>
-                <span class="text-muted small text-truncate">Verified</span>
-
-              </div>
-
-
-            </div>
-
-          </li>
-
-
-        </ul>
-
-
-
-      </div>
+      </div> 
+     
     </div>
     <!-- /.row -->
 
