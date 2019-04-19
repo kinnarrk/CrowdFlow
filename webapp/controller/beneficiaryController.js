@@ -5,8 +5,9 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const model = require('../model/commonModel');
 const fundraiser = model.Fundraiser;
-const Beneficiary=model.Beneficiary;
-const User=model.User;
+const Beneficiary = model.Beneficiary;
+const User = model.User;
+const {ensureAuthenticated } = require('../config/auth');
 
 
 // router.post('/beneficiary',(req,res) =>
@@ -29,19 +30,9 @@ const User=model.User;
 //     })
 // });
 
+ben = [];
 
-
-
-
-
-
-
-
-
-
-
-
-router.post('/beneficiary',(req, res) =>{
+router.post('/beneficiary/:fundraiserId',ensureAuthenticated, (req, res) => {
     // fundraiser.findById({"_id":req.params.id},(err,event)=>{
     //     console.log(event);
     //     if(err){
@@ -49,45 +40,53 @@ router.post('/beneficiary',(req, res) =>{
     //     }
     //     else{
 
-            const beneficiary = new Beneficiary({
-                fundraiserId : req.body.fundraiserId,
-                userId : "5ca2a2e1d485057a7cbaa0a1",
-                bank:req.body.bank,
-                branch : req.body.branch,
-                accountNo : req.body.accountNo,
-                accountName : req.body.accountName,
-                routingCode : req.body.routingCode,
-                email : req.body.email,
-                phone : req.body.phone,
-                address : req.body.address
-            });
-            console.log(req.body.bank);
+    
+
+    // console.log(sample1.categoryImage);
+    //res.send(sample);
+    const beneficiary = new Beneficiary({
+        fundraiserId: req.params.fundraiserId,
+        userId: req.user._id,
+        bank: req.body.bank,
+        branch: req.body.branch,
+        accountNo: req.body.accountNo,
+        accountName: req.body.accountName,
+        routingCode: req.body.routingCode,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address
+    });
+    console.log(req.body.bank);
+    beneficiary.save().then(user => {
+        console.log(user);
+        res.redirect('/beneficiary/beneficiary');
+    
+    })
+    
+        .catch(err => console.log(err));
+});
 
 
-            beneficiary.save().then(user =>{
-                console.log(user);
-                res.redirect('/beneficiary/beneficiary');
-                
-            })
-            
-            .catch(err => console.log(err));
-           
-              
-            
-        });
 
-        router.get('/beneficiary',(req,res) =>
-        {
-         
-            res.render('../partials/beneficiary'); 
-         });
+router.get('/beneficiary/:fundraiserId',ensureAuthenticated, (req, res) => {
+    fundraiser.findOne({
+        _id: req.params.fundraiserId
 
-         fundraiser.find({
-     
-        }).then(sample=> {
-           sample1 = [];
-           sample1 = sample;
-           
-        });
+    }).then(sample => {
 
-        module.exports = router;
+        res.render('../view/manage_fundraiser/beneficiary', { fundraiser: sample });
+
+    }).catch((err) => {
+        res.redirect('/404');
+    });
+});
+
+fundraiser.find({
+
+}).then(sample => {
+    sample1 = [];
+    sample1 = sample;
+
+});
+
+module.exports = router;
