@@ -45,114 +45,122 @@ router.use(function (req, res, next) {
   });
 
 // start payment process 
-router.get('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) => {
+router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) => {
+    console.log("Inside donate through paypal");
     var invoiceId = 'INV000000001';
     var tax = 0.08;
 
-    var user = {
-        fullName: req.body.fullName,
-        phone: req.body.phone,
-        city: req.body.city
-    }
-    User.findOneAndUpdate(req.user._id,{$set: user}, {new: true},(err,doc)=>{
-        if(err){
-            console.log('Error in updating user: ' + JSON.stringify(err, undefined, 2));
-            res.redirect('/404');
-        }
-    });
-    var amount = (req.body.amount != undefined)?req.body.amount:100;
-    if(req.params.fundraiserId != undefined){
-        Fundraiser.aggregate([
-            { "$unwind": '$donations' },
-            { $group : {
-                // "_id": "$_id",
-                "_id": null,              
-                "maxInvoiceId": { "$max": "$donations.invoiceId" }
-                },
+    if(req.body.amount != undefined){
+        if(req.body.fullName != undefined && req.body.phone != undefined && req.body.city != undefined){
+            var user = {
+                fullName: req.body.fullName,
+                phone: req.body.phone,
+                city: req.body.city
             }
-        ]).exec(function (err, docs){
-            console.log("donations:" + JSON.stringify(docs));
-            if(err){
-                console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
-                res.redirect('/404');
-            }
-            if(docs.length > 0){
-                var maxId = docs[0].maxInvoiceId;
-                maxId = maxId.substr(3);
-                var max = Number(maxId);
-                max++;
-                invoiceId = 'INV' + String("000000000" + max).slice(-9);
-            }
-            console.log("finalId:" + invoiceId);
-            Fundraiser.findOne({_id: req.params.fundraiserId}).exec(function (err2, docs2) {
-                if(err2){
-                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
+            User.findOneAndUpdate(req.user._id,{$set: user}, {new: true},(err,doc)=>{
+                if(err){
+                    console.log('Error in updating user: ' + JSON.stringify(err, undefined, 2));
                     res.redirect('/404');
                 }
-                console.log("docs2: " + JSON.stringify(docs2));
-                // create payment object (JSON)
-                var payment = {
-                    "intent": "authorize",
-                    "payer": {
-                        "payment_method": "paypal"
-                    },
-                    "redirect_urls": {
-                        "return_url": "http://localhost:3000/donate/success",
-                        "cancel_url": "http://localhost:3000/donate/err"
-                    },
-                    "transactions": [{
-                        "invoice_number": invoiceId,
-                        
-                        "item_list": {
-                            "items": [{
-                                "name": docs2.title,
-                                "description": docs2._id,
-                                "sku": "1",
-                                "price": amount,                               
-                                "currency": "USD",
-                                "quantity": "1",
-                                "tax": tax
-                            }]
-                        },                        
-                        "amount": {
-                            "total": (amount + amount*tax), //req.body.amount,
-                            "currency": "USD",
-                            "details": {
-                                "subtotal": amount,
-                                "tax": amount*tax                                
-                            }
-                        },
-                        "description": "Donation for fundraiserId: " + docs2._id                                              
-                    }]
-                };
-    
-                console.log("payment json: " + JSON.stringify(payment));
-                // call the create Pay method 
-                createPay( payment )
-                    .then( ( transaction ) => {
-                        var id = transaction.id; 
-                        var links = transaction.links;
-                        var counter = links.length; 
-                        while( counter -- ) {
-                            if ( links[counter].method == 'REDIRECT') {
-                                // redirect to paypal where user approves the transaction 
-                                return res.redirect( links[counter].href )
-                            }
-                        }
-                    })
-                    .catch( ( err ) => { 
-                        console.log( JSON.stringify(err) ); 
-                        res.redirect('/donate/err');
-                    });
             });
-        });
-
+        }
+        var amount = (req.body.amount != undefined)?req.body.amount:100;
+        if(req.params.fundraiserId != undefined){
+            Fundraiser.aggregate([
+                { "$unwind": '$donations' },
+                { $group : {
+                    // "_id": "$_id",
+                    "_id": null,              
+                    "maxInvoiceId": { "$max": "$donations.invoiceId" }
+                    },
+                }
+            ]).exec(function (err, docs){
+                console.log("donations:" + JSON.stringify(docs));
+                if(err){
+                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                    res.redirect('/404');
+                }
+                if(docs.length > 0){
+                    var maxId = docs[0].maxInvoiceId;
+                    maxId = maxId.substr(3);
+                    var max = Number(maxId);
+                    max++;
+                    invoiceId = 'INV' + String("000000000" + max).slice(-9);
+                }
+                console.log("finalId:" + invoiceId);
+                Fundraiser.findOne({_id: req.params.fundraiserId}).exec(function (err2, docs2) {
+                    if(err2){
+                        console.log('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
+                        res.redirect('/404');
+                    }
+                    console.log("docs2: " + JSON.stringify(docs2));
+                    // create payment object (JSON)
+                    var payment = {
+                        "intent": "authorize",
+                        "payer": {
+                            "payment_method": "paypal"
+                        },
+                        "redirect_urls": {
+                            "return_url": "http://localhost:3000/donate/success",
+                            "cancel_url": "http://localhost:3000/donate/err"
+                        },
+                        "transactions": [{
+                            "invoice_number": invoiceId,
+                            
+                            "item_list": {
+                                "items": [{
+                                    "name": docs2.title,
+                                    "description": docs2._id,
+                                    "sku": "1",
+                                    "price": amount,                               
+                                    "currency": "USD",
+                                    "quantity": "1",
+                                    "tax": tax
+                                }]
+                            },                        
+                            "amount": {
+                                "total": (amount + amount*tax), //req.body.amount,
+                                "currency": "USD",
+                                "details": {
+                                    "subtotal": amount,
+                                    "tax": amount*tax                                
+                                }
+                            },
+                            "description": "Donation for fundraiserId: " + docs2._id                                              
+                        }]
+                    };
         
+                    console.log("payment json: " + JSON.stringify(payment));
+                    // call the create Pay method 
+                    createPay( payment )
+                        .then( ( transaction ) => {
+                            var id = transaction.id; 
+                            var links = transaction.links;
+                            var counter = links.length; 
+                            while( counter -- ) {
+                                if ( links[counter].method == 'REDIRECT') {
+                                    // redirect to paypal where user approves the transaction 
+                                    return res.redirect( links[counter].href )
+                                }
+                            }
+                        })
+                        .catch( ( err ) => { 
+                            console.log( JSON.stringify(err) ); 
+                            res.redirect('/donate/err');
+                        });
+                });
+            });
+
+            
+        } else {
+            console.log("Fundraiser id is not defined");
+            res.redirect('/404');
+        }
+    
     } else {
+        console.log("Amount is not passed in parameter");
         res.redirect('/404');
     }
-    
-	
 });
 
 // success page 
