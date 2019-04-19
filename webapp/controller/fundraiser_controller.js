@@ -141,10 +141,10 @@ router.post('/:id/comment', (req, res) => {
 // keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
 router.get('/view_fundraiser/:id', (req, res) => {
     
+    req.session.returnTo = req.originalUrl;
+    console.log("curl="+req.session.returnTo);
 
-    
-
-    fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]').populate('donations.userId').exec(function(err,event){
+    fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]',{sort:{amount: -1}}).populate('donations.userId').exec(function(err,event){
         if(err){res.send(err)}
         //image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
             console.log("-----------------------");
@@ -166,7 +166,7 @@ router.get('/view_fundraiser/:id', (req, res) => {
            
             progress = (currentamount/event.amount)*100;
 
-            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(15).exec(function (err, comments_list) {
+            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(30).exec(function (err, comments_list) {
                              console.log(comments_list);
                              console.log("------------------------");
     //console.log(count);
