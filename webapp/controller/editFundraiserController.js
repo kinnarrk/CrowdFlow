@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const model = require('../model/commonModel');
-const User = model.Fundraiser;
+const fundraiser = model.Fundraiser;
 const category = model.Category;
 var moment= require('moment');
 const passport = require('passport');
@@ -12,7 +12,7 @@ edit = [];
 router.get('/edit/:id', ensureAuthenticated, (req,res) =>
 {
     // console.log("Showing all frs");
- User.find({_id:req.params.id
+ fundraiser.find({_id:req.params.id
     
  }).then(sample=> {
     edit = sample;
@@ -60,7 +60,7 @@ router.post('/edit/:id', ensureAuthenticated, (req,res) =>
     // });
 
 
-    User.findOneAndUpdate({_id: req.params.id},{$set: req.body}).then((data)=>{
+    fundraiser.findOneAndUpdate({_id: req.params.id},{$set: req.body}).then((data)=>{
 
         fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function (err) {
             if (err) {
