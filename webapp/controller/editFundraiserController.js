@@ -60,7 +60,7 @@ router.post('/edit/:id', ensureAuthenticated, (req,res) =>
     // });
 
 
-    User.findOneAndUpdate({_id: req.params.id},{$set: req.body}).then((data)=>{
+    fundraiser.findOneAndUpdate({_id: req.params.id},{$set: req.body}).then((data)=>{
 
         fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function (err) {
             if (err) {
