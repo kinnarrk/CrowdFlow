@@ -140,6 +140,10 @@ router.post('/:id/comment', (req, res) => {
 // following code edited by Vivek on 15th april
 // keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
 router.get('/view_fundraiser/:id', (req, res) => {
+
+    //var msg = req.query.donation;
+
+    //console.log(req.query.donation);
     
     req.session.returnTo = req.originalUrl;
     console.log("curl="+req.session.returnTo);
@@ -171,8 +175,14 @@ router.get('/view_fundraiser/:id', (req, res) => {
                              console.log("------------------------");
     //console.log(count);
    // count += 1;
-    
-                            
+                // if(msg != null){
+                //     req.flash(
+                //         'success_msg',
+                //         'Profile updated successfully'
+                //     ); 
+
+                // }
+                          
             
                
                 res.render('../view/view_fundraiser', { event: event,comments_list:comments_list,currentamount,progress});
