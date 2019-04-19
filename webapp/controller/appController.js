@@ -109,6 +109,7 @@ router.get('/' ,(req, res) =>{
 
 });
 
+<<<<<<< HEAD
 module.exports = router;
 
 function getDaysLeft(target) {
@@ -117,3 +118,11 @@ function getDaysLeft(target) {
     let diffDays = parseInt((date2 - date1) / (1000 * 60 * 60 * 24));
     return diffDays;
 }
+=======
+router.get('/404' ,(req, res) =>{
+    
+    res.render('../view/404');
+});
+
+module.exports = router;
+>>>>>>> b42358b6a47dd11aed728f8e119a75fc9e7ac2d8
