@@ -47,9 +47,17 @@ router.get('/:id', ensureAuthenticated, (req, res) =>{
             { '$lookup': { from: 'users', localField: 'createdBy', foreignField: '_id', as: 'createdBy'} },
             { '$unwind': '$createdBy' },
             { '$lookup': { from: 'beneficiaries', localField: '_id', foreignField: 'fundraiserId', as: 'beneficiaries'} },
-            { '$unwind': '$beneficiaries' },
+            // { '$unwind': '$beneficiaries' },
+            { "$unwind": {
+                "path": "$beneficiaries",
+                "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+            }},
             { '$lookup': { from: 'comments', localField: '_id', foreignField: 'fundraiserId', as: 'comments'} },
-            { '$unwind': '$comments' },
+            // { '$unwind': '$comments' },
+            { "$unwind": {
+                "path": "$comments",
+                "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+            }},
             { "$unwind": {
                 "path": "$donations",
                 "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
@@ -67,9 +75,13 @@ router.get('/:id', ensureAuthenticated, (req, res) =>{
                 console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
                 res.redirect('/404');
             }
-            // var frs = JSON.stringify(docs);
-            // console.log("fundraisers for manage with fr id: " + JSON.stringify(docs));            
-            res.render('../view/manage_fundraiser/dashboard', {fundraiser: docs});
+            if(docs.length > 0){
+                // var frs = JSON.stringify(docs);
+                console.log("fundraisers for manage with fr id: " + JSON.stringify(docs));            
+                res.render('../view/manage_fundraiser/dashboard', {fundraiser: docs});
+            } else {
+                res.redirect('/404');
+            }
         });
     } else {
         res.redirect('/404');
