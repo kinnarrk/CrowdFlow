@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-    <link href="../../view/css/style.css" rel="stylesheet">
-<body>
+
         <div id="trending" class="container-fluid">
                 <div class="row mt-5">
                     <h1 class="text-center w-100">Trending Fundraisers</h1>
                     <h6 class="text-center w-100">View the fundraisers that are most active right now!!!</h6>
-                </div>
+        </div>
 
 <div class="container">
 
   <div class="row mx-auto">
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
-          <div class="col-md-4 ">
+          <div class="col-md-3 ">
             <div class="card card-custom bg-white border-white border-0 glide__slide  ">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.image%>);"></div>
               <div class="card-custom-avatar">
@@ -62,18 +59,4 @@
     </div>
   </div>
   </div> 
-  
 </div>
-      <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="node_modules/@glidejs/glide/dist/glide.min.js"></script>
-
-  <script>
-    new Glide('.glide').mount()
-  </script>
-  <% include ../partials/scripts %>
-    <% include ../partials/carousal %>
-</body>
-
-</html>
