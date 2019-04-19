@@ -14,12 +14,14 @@ router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
         if(err) {
             console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+            res.redirect('/404');
         }
         causes = arr;
     });
     Category.find({isDeleted: false}, (err, arr) => {
         if(err) {
             console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+            res.redirect('/404');
         }
         categories = arr;
     });
@@ -52,6 +54,7 @@ router.get('/:categoryId?', (req, res) => {
         ]).exec(function (err, docs){
             if(err){
                 console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                res.redirect('/404');
             }
             // console.log("fundraisers: " + JSON.stringify(docs));                
             res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
@@ -87,13 +90,14 @@ router.get('/:categoryId?', (req, res) => {
             ]).exec(function (err, docs){    
                 if(err){
                     console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                    res.redirect('/404');
                 }
                 // var frs = JSON.stringify(docs);
                 // console.log("fundraisers with category id: " + JSON.stringify(docs));            
                 res.render('../view/browse_fundraiser', {fundraisers: docs, categories: categories, causes: causes});
             });
         } else {
-            res.render('../view/browse_fundraiser', {fundraisers: [], categories: categories, causes: causes});
+            res.redirect('/404');
         }
     }
 });
