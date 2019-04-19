@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <% include ../partials/head %>
+<link href="/view/css/style.css" rel="stylesheet">
 
 <body>
     <% include ../partials/nav %>
@@ -55,13 +56,8 @@
             </a>
 
         </div>
-
-
      <% include ../view/trending %>
-
-     
-
-                    <!-- </div> -->
+     <%-include('../partials/categories',{categories: categories}); %>                    <!-- </div> -->
                     <!-- <div class="row row-equal carousel-item m-t-0">
                         <div class="col-md-4">
                             <div class="card">
