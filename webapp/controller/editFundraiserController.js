@@ -18,7 +18,7 @@ router.get('/edit/:id',(req,res) =>
      
     }).then(categories=> {
       //  console.log(sample1);
-      res.render('../partials/editFundraiser',{edit : edit,categories : categories,moment:moment});
+      res.render('../view/editFundraiser',{edit : edit,categories : categories,moment:moment});
     });
     
     // console.log(sample1.categoryImage);
