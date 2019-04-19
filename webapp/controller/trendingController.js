@@ -32,6 +32,18 @@ router.get('/', (req, res) => {
             "preserveNullAndEmptyArrays": false  //This is needed.. to only show the donated 
     } 
     },
+    { '$lookup': { 
+        from: 'categories', 
+        localField: 'categoryId', 
+        foreignField: '_id', 
+        as: 'category'} }, 
+    { '$unwind': '$category' },
+    {  '$lookup': { 
+        from: 'users', 
+        localField: 'createdBy', 
+        foreignField: '_id',
+         as: 'user'} },
+    {'$unwind': '$createdBy'},
     {
     $group : {
             _id: "$_id",
@@ -48,7 +60,7 @@ router.get('/', (req, res) => {
 
  // -------- Sorting method 4 --------------
    
-   var limitcount = 4;
+   var limitcount = 5;
        
 // mysort is the variable based on which we have sorted
 fundraiserdb.aggregate(mysort).limit(limitcount)
@@ -63,7 +75,7 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
              //   console.log("------"+sample[i]);
              trendingFundRaisers.push(sample[i].doc);
                 //donation._id = sample1[i]._id;
-                console.log(trendingFundRaisers);
+             //   console.log(trendingFundRaisers);
                 category.findById({"_id":trendingFundRaisers[i].categoryId}).then(function(cat){ 
                     category1.push(cat);
                 }).catch(err => {
@@ -105,21 +117,19 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
                  donationObject = {
                     totalDonations : total , // finding the total sum of donations for specific fundraiser
                     fid : d[i].doc._id,  // finding the fundraiser id 
-                    numberofDonations : d[i].totalDonations, // finding the number of donations
+                   numberofDonations : d[i].totalDonations, // finding the number of donations
                     daysLeft : numberofDaysLeft // finding the number of days left;
                 }
-                console.log(donationArray);
             donationArray.push(donationObject);                      
     }
         });
        // console.log(donationArray);
      //  console.log(users);
     // console.log("iamhere")
-
-
-      setTimeout(() => {
-        res.render('../view/index');
-     }, 50);
+     //   console.log(trendingFundRaisers[0]);
+       setTimeout(() => {
+        res.render('../view/index')
+      }, 100);
         
 });
 // change to sharing controller [lines 105 to 123]
