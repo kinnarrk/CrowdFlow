@@ -4,10 +4,12 @@ const model = require('../model/commonModel');
 const User = model.Fundraiser;
 const category = model.Category;
 var moment= require('moment');
+const passport = require('passport');
+const {ensureAuthenticated } = require('../config/auth');
 
 edit = [];
 
-router.get('/edit/:id',(req,res) =>
+router.get('/edit/:id', ensureAuthenticated, (req,res) =>
 {
     // console.log("Showing all frs");
  User.find({_id:req.params.id
@@ -18,12 +20,15 @@ router.get('/edit/:id',(req,res) =>
      
     }).then(categories=> {
       //  console.log(sample1);
-      res.render('../partials/editFundraiser',{edit : edit,categories : categories,moment:moment});
+      console.log("Edit json before sending: " + edit);
+      res.render('../view/manage_fundraiser/editFundraiser',{edit : edit, categories : categories, moment:moment});
+    }).catch((err) => {
+        res.redirect('/404');
     });
     
     // console.log(sample1.categoryImage);
     //res.send(sample);
-    console.log("Edit json before sending: " + edit);
+    
     
  });
  //console.log(require('path').resolve(__dirname, '..'));
@@ -33,31 +38,81 @@ router.get('/edit/:id',(req,res) =>
 });
 
 
-router.post('/edit/:id',(req,res) =>
+router.post('/edit/:id', ensureAuthenticated, (req,res) =>
 {
-    
-    //console.log("id to be updated: "+ req.params.id);
- User.findOneAndUpdate({_id: req.params.id},{$set: req.body},
 
-    function(err,User)
-    {
-        if(err)
-        return next(err);
-       // res.send('Fundraiser Updated');
-        res.redirect('/editFundraiser/edit/'+req.params.id);
-    }
-    )
 
-})
+    let fundraiserImage = req.files.image;
 
-router.get('/edit/:id',(req,res) =>
-{
-    User.findById(req.params.id, function (err, User)
-    {
-        if (err) return next(err);
-        res.redirect('/editFundraiser/edit/'+req.params.id);
+    let fileParts = fundraiserImage.name.split('.');
+    //let fund = new fundraiser(req.body);
+    // fund.save().then((data) => {
+    //     fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function (err) {
+    //         if (err) {
+    //             return res.status(500).send(err);
+    //         }
+    //         data.image = data._id + '.' + fileParts[1];
+    //         data.save();
+    //         res.render('../view/fundraiser_success');
+    //     });
+    // }).catch({
+
+    // });
+
+
+    User.findOneAndUpdate({_id: req.params.id},{$set: req.body}).then((data)=>{
+
+        fundraiserImage.mv("./view/images/fundraisers/" + data._id + '.' + fileParts[1], function (err) {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            data.image = data._id + '.' + fileParts[1];
+            data.save();
+            res.redirect('/editFundraiser/edit/'+req.params.id);
+        });
+
     })
+    
+
+            // function(err,User)
+            // {
+            //     if(err)
+            //     return next(err);
+            //    // res.send('Fundraiser Updated');
+            //     res.redirect('/editFundraiser/edit/'+req.params.id);
+            // }
+            // )
+
+
+
+
+
+
+
+
+    
+//     //console.log("id to be updated: "+ req.params.id);
+//  User.findOneAndUpdate({_id: req.params.id},{$set: req.body},
+
+//     function(err,User)
+//     {
+//         if(err)
+//         return next(err);
+//        // res.send('Fundraiser Updated');
+//         res.redirect('/editFundraiser/edit/'+req.params.id);
+//     }
+//     )
+
 })
+
+// router.get('/edit/:id',(req,res) =>
+// {
+//     User.findById(req.params.id, function (err, User)
+//     {
+//         if (err) return next(err);
+//         res.redirect('/editFundraiser/edit/'+req.params.id);
+//     })
+// })
 
 // category.find({
      

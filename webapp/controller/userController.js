@@ -8,8 +8,14 @@ const passport = require('passport');
 const model = require('../model/commonModel');
 const User = model.User;
 const Role = model.Role;
+const {
+    ensureAuthenticated
+} = require('../config/auth');
+var mongoose = require('mongoose');
+const objectID = require('mongodb').ObjectID;
 
 router.get('/login', (req, res) => {
+    errors = [];
     res.render('../view/login');
 });
 
@@ -162,21 +168,71 @@ router.get('/google/callback', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/profile', (req, res) => {
-    res.render('../view/profile');
+router.get('/profile', ensureAuthenticated, (req, res) => {
+    User.aggregate([{
+            $match: {
+                _id: mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+
+        {
+            '$lookup': {
+                from: 'fundraisers',
+                localField: '_id',
+                foreignField: 'createdBy',
+                as: 'fundraisers'
+            }
+        },
+
+    ]).exec((err, arr) => {
+        console.log("ARR" + JSON.stringify(arr));
+        res.render('../view/profile', {
+            profile: arr
+        });
+    });
+
 });
 
 router.post('/update/:id', (req, res) => {
-    User.updateOne({
-        _id: req.params.id
-    }, req.body, (err, arr) => {
-        res.redirect('/users/profile');
-    });
+    errors = [];
+
+    const validEmail = emailValidator.validate(req.body.email);
+
+    if (!validEmail) {
+        errors.push({
+            msg: 'Email address format is invalid'
+        })
+    }
+
+    if (errors.length > 0) {
+        res.redirect('/users/profile', {errors});
+    } else {
+        User.updateOne({
+            _id: req.params.id
+        }, req.body, (err, arr) => {
+            console.log("arr=" + JSON.stringify(arr));
+    
+            if (!arr.n && !arr.ok && !arr.nModified) {
+                req.flash(
+                    'error_msg',
+                    'Email address has already been taken'
+                );
+                res.redirect('/users/profile');
+                return;
+            }
+            req.flash(
+                'success_msg',
+                'Profile updated successfully'
+            );
+            res.redirect('/users/profile');
+        });
+    }
+
 });
 
 router.post('/update-profile-pic/:id', (req, res) => {
     let profileImage = req.files.profile;
-
+    success = [];
     User.updateOne({
         _id: req.params.id
     }, {
@@ -186,9 +242,51 @@ router.post('/update-profile-pic/:id', (req, res) => {
             if (err1) {
                 return res.status(500).send(err1);
             }
+            req.flash(
+                'success_msg',
+                'Profile picture updated successfully'
+            );
             res.redirect('/users/profile');
         });
     });
+});
+
+router.post('/update-password/:id', (req, res) => {
+    success = [];
+    passwordPattern.is().min(8)
+        .is().max(100)
+        .has().uppercase()
+        .has().lowercase()
+        .has().digits()
+        .has().not().spaces();
+
+    const validPassword = passwordPattern.validate(req.body.password);
+
+    errors = [];
+    if (!validPassword) {
+        errors.push({
+            msg: 'Password must contains at least 8 characters, 1 uppercase, 1 lowercase, 1 digit'
+        });
+    }
+
+    if (errors.length > 0) {
+        res.render('../view/profile', {
+            errors
+        });
+    } else {
+        User.updateOne({
+            _id: req.params.id
+        }, {
+            password: req.body.password
+        }, (err, arr) => {
+            req.flash(
+                'success_msg',
+                'Password updated successfully'
+            );
+            res.redirect('/users/profile');
+        });
+
+    }
 });
 
 //Logout

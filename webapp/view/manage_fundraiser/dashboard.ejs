@@ -1,10 +1,11 @@
+<% var fundraiser = fundraiser[0]; %>
 <!DOCTYPE html>
 <html lang="en">
-    <% include ../../partials/manage_fundraiser/head %>
+    <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser.doc }); %>
 <body>
   <div class="wrapper">
     <!-- Side Navigation -->
-    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: 'Test Fundraiser'}); %>
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser.doc, page: 'dashboard' }); %>
 
     <!-- Page Content Holder -->
     <div id="content">

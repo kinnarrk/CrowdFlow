@@ -92,23 +92,23 @@ router.post('/submit-for-approval', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-    fundraiser.findById({
-        "_id": req.params.id
-    }, (err, event) => {
-        console.log(event);
-        if (err) {
-            res.render({
-                'messages': err
-            });
-        } else {
-            res.render('../view/view_fundraiser', {
-                event: event
-            });
-        }
-    })
+// router.get('/:id', (req, res) => {
+//     fundraiser.findById({
+//         "_id": req.params.id
+//     }, (err, event) => {
+//         console.log(event);
+//         if (err) {
+//             res.render({
+//                 'messages': err
+//             });
+//         } else {
+//             res.render('../view/view_fundraiser', {
+//                 event: event
+//             });
+//         }
+//     })
 
-});
+// });
 
 router.post('/:id/comment', (req, res) => {
     fundraiser.findById({
