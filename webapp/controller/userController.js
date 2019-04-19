@@ -8,6 +8,7 @@ const passport = require('passport');
 const model = require('../model/commonModel');
 const User = model.User;
 const Role = model.Role;
+const Fundraiser = model.Fundraiser;
 const {
     ensureAuthenticated
 } = require('../config/auth');
@@ -168,6 +169,10 @@ router.get('/google/callback', (req, res, next) => {
 });
 
 router.get('/profile', ensureAuthenticated, (req, res) => {
+    // Fundraiser.find({donations:{userId : req.user._id}}
+    //         ,'donations', (err, arr) => {
+    //     console.log("arr=="+JSON.stringify(arr));
+    // });
     User.aggregate([{
             $match: {
                 _id: mongoose.Types.ObjectId(req.user._id)
@@ -198,7 +203,7 @@ router.post('/update/:id', (req, res) => {
     if (!validEmail) {
         errors.push({
             msg: 'Email address format is invalid'
-        })
+        });
     }
 
     if (errors.length > 0) {
