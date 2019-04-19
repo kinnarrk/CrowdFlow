@@ -173,7 +173,6 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
                 _id: mongoose.Types.ObjectId(req.user._id)
             }
         },
-
         {
             '$lookup': {
                 from: 'fundraisers',
@@ -181,8 +180,7 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
                 foreignField: 'createdBy',
                 as: 'fundraisers'
             }
-        },
-
+        }
     ]).exec((err, arr) => {
         console.log("ARR" + JSON.stringify(arr));
         res.render('../view/profile', {
