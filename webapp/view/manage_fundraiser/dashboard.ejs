@@ -1,40 +1,143 @@
+<% var fundraiser = fundraiser[0]; %>
 <!DOCTYPE html>
 <html lang="en">
-    <% include ../partials/manage_fundraiser/head %>
+    <% include ../../partials/manage_fundraiser/head %>
 <body>
   <div class="wrapper">
     <!-- Side Navigation -->
-    <% include ../partials/nav %>
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser.doc.title }); %>
 
     <!-- Page Content Holder -->
     <div id="content">
 
       <!-- Top Navigation -->
-      <% include ../partials/nav_top %>
+      <% include ../../partials/manage_fundraiser/nav_top %>
 
 
-      <h2>Collapsible Sidebar Using Bootstrap 4</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <h2>Welcome !!</h2>
 
-        <div class="line"></div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
 
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>Submit your bank details for on time payout.</p>
+              <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Add Bank Details</button>
 
-        <div class="line"></div>
+          </div>
+      </nav>
 
-        <h2>Lorem Ipsum Dolor</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <div class="line"></div>
 
-        <div class="line"></div>
+      <div id="featured" class="container">
+          <div class="row mt-3">
+              <div class="col-lg-4">
+                  <div class="card">
+                      <!-- <img class="card-img-top" src="images/TheHindu.png" alt="Card image"> -->
+                      <div class="card-body">
+                          <h5 class="card-title text-center">Visits Today</h5>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="card">
+                      <!-- <img class="card-img-top" src="images/new-york-times.png" alt="Card image"> -->
+                      <div class="card-body">
+                          <h5 class="card-title text-center">Donation Today</h5>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="card">
+                      <!-- <img class="card-img-top" src="images/washington-post.png" alt="Card image"> -->
+                      <div class="card-body">
+                          <h5 class="card-title text-center">Total Raised</h5>
+                      </div>
+                  </div>
+              </div>
 
-        <h3>Lorem Ipsum Dolor</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+
+          <div class="line"></div>
+
+          <div id="featured" class="container">
+              <div class="row mt-3">
+                  <div class="col-lg-6">
+                      <div class="card" style="height : 120px">
+                          <!-- <img class="card-img-top" src="images/TheHindu.png" alt="Card image"> -->
+                          <div class="card-body">
+                              <h5 class="card-title text-center">You have 2 remaining to do tasks.</h5>
+                              <a href="#" class="btn btn-primary float-right" data-toggle="tooltip"
+                                  data-placement="bottom" title="View this category">Complete</a>
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="col-lg-6">
+                      <div class="card" style="height : 120px">
+                          <!-- <img class="card-img-top" src="images/new-york-times.png" alt="Card image"> -->
+                          <div class="card-body">
+                              <h5 class="card-title text-center">Remind To Donate</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="line"></div>
+
+          <div id="featured" class="container">
+              <div class="row mt-3">
+                  <div class="col-lg-12">
+                      <div class="card" style="height : 310px">
+                          <!-- <img class="card-img-top" src="images/TheHindu.png" alt="Card image"> -->
+                          <div class="card-body">
+                              <h5 class="card-title text-center">Fundraiser Review</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="line"></div>
+
+          <div id="featured" class="container">
+              <div class="row mt-3">
+                  <div class="col-lg-12">
+                      <div class="card" style="height : 310px">
+                          <!-- <img class="card-img-top" src="images/TheHindu.png" alt="Card image"> -->
+                          <div class="card-body">
+                              <a href="#" class="btn btn-primary float-right" data-toggle="tooltip"
+                                  data-placement="top" title="View this category">Get More Visits</a>
+                              <h5 class="card-title text-center">Fund Visit Trend</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="line"></div>
+
+          <div id="featured" class="container">
+              <div class="row mt-3">
+                  <div class="col-lg-12">
+                      <div class="card" style="height : 310px">
+                          <!-- <img class="card-img-top" src="images/TheHindu.png" alt="Card image"> -->
+                          <div class="card-body">
+                              <a href="#" class="btn btn-primary float-right" data-toggle="tooltip"
+                                  data-placement="top" title="View this category">Share</a>
+                              <h5 class="card-title text-center">Social Media</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <% include ../../partials/manage_fundraiser/footer %>
+      </div>
+
     </div>
   </div>
 
   <!-- Scripts -->
-  <% include ../partials/scripts %>
+  <% include ../../partials/manage_fundraiser/scripts %>
 </body>
 </html>

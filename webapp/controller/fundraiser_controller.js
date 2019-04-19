@@ -36,8 +36,8 @@ const Comment = model.Comment;
 var commentList = [];
 // following lines added by Vivek on 16 april
 const User = model.User;
-var userList = [];
-var count = 1;
+//var userList = []; vivek
+//var count = 1;  vivek
 
 //
 
@@ -140,12 +140,7 @@ router.post('/:id/comment', (req, res) => {
 // following code edited by Vivek on 15th april
 // keep view_fundraiser in front of id otherwise it will create problem for other routers - Kinnar (15 Apr)
 router.get('/view_fundraiser/:id', (req, res) => {
-    // fundraiser.findById({ "_id": req.params.id }, (err, event) => {
-    //     console.log(event);
-    //     image1 = "../view/images/fundraiser_1.jpg";// event.image.replace(/\\/g, "/");
-    //     console.log(image1);
-    //     if (err) {
-    //         res.render({ 'messages': err });
+    
 
     
 
@@ -171,19 +166,15 @@ router.get('/view_fundraiser/:id', (req, res) => {
            
             progress = (currentamount/event.amount)*100;
 
-            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(count).exec(function (err, comments_list) {
+            Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(15).exec(function (err, comments_list) {
                              console.log(comments_list);
                              console.log("------------------------");
-    console.log(count);
-    count += 1;
+    //console.log(count);
+   // count += 1;
     
                             
             
-                //             // fundraiser.find({fundraiserId: req.params.id}).populate('donations.userId')
-                //             // User.find({},(err,users)=>{
-                               
-                //             //         userList = users;
-                //             //         console.log(userList);
+               
                 res.render('../view/view_fundraiser', { event: event,comments_list:comments_list,currentamount,progress});
                                 
                 })
@@ -195,63 +186,24 @@ router.get('/view_fundraiser/:id', (req, res) => {
 
     })
     
-   // res.render('../view/view_fundraiser', { events: events, image1 : image1});
-
-            //console.log(comments);
-            // commentList = comments;
-
-            // console.log(commentList);
-            // console.log(image1);
-            // console.log(userList);
-            // res.render('../view/view_fundraiser', { event: event, image1, commentList,userList,DonorList });
-        //}
-    // fundraiser.findById({ "_id": req.params.id }, (err, event) => {
-    //     console.log(event);
-    //     image1 = "../view/images/fundraiser_1.jpg";// event.image.replace(/\\/g, "/");
-    //     console.log(image1);
-    //     if (err) {
-    //         res.render({ 'messages': err });
-
-    //     }
-    //     else {
-
-            
-    //         //console.log("fr id:" + req.params.id);
-    //         Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').exec(function (err, docs) {
-    //             console.log(docs);
+  
 
     });
 
 
 
-//});
-//
 
-// router.get('/fundraiser_comment/:id/comment',(req,res)=>{
-    
-//     Comment.find({fundraiserId: req.params.id}, null, {sort:{createdDate: -1}}).populate('createdBy').limit(count).exec(function (err, docs) {
-//         console.log(docs);
-
-// //             // fundraiser.find({fundraiserId: req.params.id}).populate('donations.userId')
-// //             // User.find({},(err,users)=>{
-          
-// //             //         userList = users;
-// //             //         console.log(userList);
-// res.render('../view/view_fundraiser', { event: event,docs:docs,image:image,currentamount,progress});
-// count +=2;
            
-// })
 
-// })
 
 // following code edited by Vivek on 15th april
-router.post('/fundraiser_comment/:id/comment', (req, res) => {
+router.post('/fundraiser_comment/:id/comment',ensureAuthenticated, (req, res) => {
 
     console.log(req.params.id);
     const newComment = new Comment({
         comment: req.body.comment,
         fundraiserId: req.params.id,
-        createdBy: "5ca2fbd72d28de361ef43b76"
+        createdBy: req.user._id
     })
     console.log(newComment);
 
@@ -262,7 +214,7 @@ router.post('/fundraiser_comment/:id/comment', (req, res) => {
             // );
             errors = [];
 
-            res.redirect('/fundraiser/' + req.params.id);
+            res.redirect('/fundraiser/view_fundraiser/' + req.params.id); // edited by vivek on 18th april
         })
         .catch(err => console.log(err));
 });

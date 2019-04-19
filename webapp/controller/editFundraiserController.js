@@ -3,6 +3,7 @@ var router = express.Router();
 const model = require('../model/commonModel');
 const User = model.Fundraiser;
 const category = model.Category;
+var moment= require('moment');
 
 edit = [];
 
@@ -13,10 +14,17 @@ router.get('/edit/:id',(req,res) =>
     
  }).then(sample=> {
     edit = sample;
+    category.find({
+     
+    }).then(categories=> {
+      //  console.log(sample1);
+      res.render('../view/editFundraiser',{edit : edit,categories : categories,moment:moment});
+    });
+    
     // console.log(sample1.categoryImage);
     //res.send(sample);
     console.log("Edit json before sending: " + edit);
-    res.render('../partials/editFundraiser',{edit : edit});
+    
  });
  //console.log(require('path').resolve(__dirname, '..'));
   
@@ -35,7 +43,6 @@ router.post('/edit/:id',(req,res) =>
     {
         if(err)
         return next(err);
-        
        // res.send('Fundraiser Updated');
         res.redirect('/editFundraiser/edit/'+req.params.id);
     }
@@ -52,13 +59,13 @@ router.get('/edit/:id',(req,res) =>
     })
 })
 
-category.find({
+// category.find({
      
-}).then(sample=> {
-   sample1 = [];
-   sample1 = sample;
-  //  console.log(sample1);
+// }).then(sample=> {
+//    sample1 = [];
+//    sample1 = sample;
+//   //  console.log(sample1);
    
-});
+// });
 
 module.exports = router;

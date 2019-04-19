@@ -11,9 +11,10 @@ router.get('/sample', (req, res) => {
   }).then(sample => {
     sample1 = [];
     sample1 = sample;
+    console.log
   });
 
-  res.render('../view/category');
+  res.render('../view/category',{});
 });
 
 module.exports = router;
