@@ -217,7 +217,7 @@
                         <% donations.forEach((donation) => { %>
                             <div class="card mt-3">
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-5">
                                         <div class="card-body">
                                             <div class="media">
                                                 <img src="/view/images/fundraisers/<%= donation.image %>" alt="<%= donation.title %>"
@@ -225,29 +225,31 @@
                                                 <div class="media-body">
                                                     <a class="stretched-link"
                                                         href="/fundraiser/view_fundraiser/<%= donation._id %>">
-                                                        <h4><%= donation.title %></h4>
+                                                        <h5 class="font-weight-bold"><%= donation.title %></h5>
                                                     </a>
-                                                    <p><%= donation.description %></p>
-                                                    <h3 class="text-primary">$<%= donation.amount %></h3>
+                                                    <span><small><%= donation.description %></small></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
         
+                                    <div style="border-right: 2px solid #e3e3e3; margin:10px;"></div>
+
+                                    <div class="col-4 align-self-center">
+                                            <h3 class="text-primary">$<%= donation.amount %></h3>
+                                    </div>
                                     <div class="col-2 text-right align-self-center pr-5">
                                         <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-expanded="false"></i>
         
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" href="/fundraiser/view_fundraiser/<%= donation._id %>">View
                                                 Fundraiser</a>
-                                            <a class="dropdown-item" href="/manageFundraiser/<%= donation._id %>">Fundraiser
-                                                Dashboard</a>
                                         </div>
                                     </div>
                                 </div>
         
                             </div>
-                            <% }) %>
+                            <% }); %>
                     </div>
                     
                     <!-- Comments Tab -->
@@ -258,7 +260,7 @@
                                 <% comments.forEach((comment) => { %>
                                     <div class="card mt-3">
                                         <div class="row">
-                                            <div class="col-6">
+                                            <div class="col-5">
                                                 <div class="card-body">
                                                     <div class="media">
                                                         <img src="/view/images/fundraisers/<%= comment.fundraiserId.image %>" alt="<%= comment.fundraiserId.title %>"
@@ -266,19 +268,19 @@
                                                         <div class="media-body">
                                                             <a class="stretched-link"
                                                                 href="/fundraiser/view_fundraiser/<%= comment.fundraiserId._id %>">
-                                                                <h4><%= comment.fundraiserId.title %></h4>
+                                                                <h5 class="font-weight-bold"><%= comment.fundraiserId.title %></h5>
                                                             </a>
-                                                            <span><%= comment.fundraiserId.description %></span>
+                                                            <span><small><%= comment.fundraiserId.description %></small></span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div style="border-right: 2px solid #e3e3e3; margin-top:10px; margin-bottom: 10px;"></div>
-                                            <div class="col-4 align-self-center">
+                                            <div style="border-right: 2px solid #e3e3e3; margin:10px;"></div>
+                                            <div class="col-5 align-self-center">
                                                 <%= comment.comment %>
                                             </div>
-                                            <div class=" align-self-center">
-                                                    <i class="fas fa-trash-alt"></i>
+                                            <div class="col-1 align-self-center">
+                                                <i class="fas fa-trash-alt"></i>
                                             </div>
 
                                         </div>
