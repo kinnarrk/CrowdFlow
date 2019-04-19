@@ -10,7 +10,7 @@
 
 <div class="container">
 
-  <div class="row">
+  <div class="row mx-auto">
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
           <div class="col-md-4 ">
@@ -25,7 +25,7 @@
             <%}%>
               </div>
               <div class="card-body" style="overflow-y: auto">
-                <a href="fr.category.categoryName>"><span class="badge badge-dark"><%= fr.category.categoryName %></span></a>
+                <a href="<% fr.category.categoryName %>"><span class="badge badge-dark"><%= fr.category.categoryName %></span></a>
                 <h4 class="card-title"><%=fr.title%></h4> 
                 <p class="card-text">By: <%= fr.user.fullName %></p>
                 <p class="card-text"><%=fr.description%></p>

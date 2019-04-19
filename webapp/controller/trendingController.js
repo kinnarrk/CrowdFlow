@@ -129,7 +129,7 @@ fundraiserdb.aggregate(mysort).limit(limitcount)
      //   console.log(trendingFundRaisers[0]);
        setTimeout(() => {
         res.render('../view/index')
-      }, 1000);
+      }, 100);
         
 });
 // change to sharing controller [lines 105 to 123]
