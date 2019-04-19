@@ -110,6 +110,13 @@ router.post('/submit-for-approval', (req, res) => {
 
 // });
 
+router.get('/comment/:id/delete', (req, res) => {
+    Comment.remove({_id: req.params.id}, (err, arr) => {
+        console.log("arr==="+JSON.stringify(arr));
+        res.redirect('/users/profile');
+    });
+});
+
 router.post('/:id/comment', (req, res) => {
     fundraiser.findById({
         "_id": req.params.id
