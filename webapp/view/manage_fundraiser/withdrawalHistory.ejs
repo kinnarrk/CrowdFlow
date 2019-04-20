@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+
+<body>
+    <div class="wrapper">
+        <!-- Side Navigation -->
+        <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser,  page: 'withdrawalHistory' }); %>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <!-- Top Navigation -->
+            <%- include ../../partials/manage_fundraiser/nav_top %>
+            <div class="fluid-container">
+                <h1 class="container text-left">Past Withdrawals</h1>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                            <table id="tablePreview" class="table">
+                                    <!--Table head-->
+                                      <thead>
+                                        <tr>
+                                          <th>#</th>
+                                          <th>fundraiser Title</th>
+                                          <th>Fundraiser Description</th>
+                                          <th>Withdrawal Date</th>
+                                          <th>Amount Withdrawn</th>
+                                        </tr>
+                                      </thead>
+                                      <!--Table head-->
+                                      <!--Table body-->
+                                      <tbody>
+                                      <% for(var i =0 ; i < withdrawal.length ; i++){%>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td><%=fundraiser.title%></td>
+                                            <td><%= fundraiser.description  %></td>                                               
+                                            <td><%=  moment(withdrawal[i].createdDate).format('YYYY-MM-DD') %></td>
+                                            <td><%= withdrawal[i].amount %></td>
+                                          </tr>       
+                                      <% }%>
+                                                                            
+                                         
+                                   
+                                                                             </tbody>
+                                      <!--Table body-->
+                                    </table>
+                </div>
+               
+            </div>
+
+            <% include ../../partials/manage_fundraiser/footer %>
+            <% include ../../partials/manage_fundraiser/scripts %>
+        </div>
+    </div>
+ </body>
+
+</html>

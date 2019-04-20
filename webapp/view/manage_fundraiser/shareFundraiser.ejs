@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+
+<%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+
 <body>
-  <div class="wrapper">
-    <!-- Side Navigation -->
-    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'requestWithdrawal' }); %>
+    <div class="wrapper">
+        <!-- Side Navigation -->
+        <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser,  page: 'withdrawalHistory' }); %>
 
-    <!-- Page Content Holder -->
-    <div id="content">
+        <!-- Page Content Holder -->
+        <div id="content">
 
-      <!-- Top Navigation -->
-      <% include ../../partials/manage_fundraiser/nav_top %>
-     <p> Share Fundraiser</p>
-      <button type="button" class="btn btn-primary"  data-js="twitter-share">Twitter <i class="fab fa-twitter"></i></button><br><br>
-      <button type="button" class="btn btn-primary"  data-js="facebook-share" >Facebook <i class="fab fa-facebook-f"></i></button><br><br>
-      <button  type="button" class="btn btn-primary"><a href  = "/fundraiser/view_fundraiser/<%= fundraiser._id%>">View  More Fundraisers</button></a>
+            <!-- Top Navigation -->
+            <%- include ../../partials/manage_fundraiser/nav_top %>
+            <div class="fluid-container">
+                <h1 class="container text-left">Share FundRaiser</h1>
+            </div>
 
-    <div class="card mx-5 my-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                      
+   <p> Share Fundraiser</p>
+  <button type="button" class="btn btn-primary"  data-js="twitter-share">Twitter <i class="fab fa-twitter"></i></button><br><br>
+  <button type="button" class="btn btn-primary"  data-js="facebook-share" >Facebook <i class="fab fa-facebook-f"></i></button><br><br> 
+  <button  type="button" class="btn btn-primary"><a href  = "/fundraiser/view_fundraiser/<%= fundraiser._id%>">View  More Fundraisers</button></a> 
+                </div>
+               
+            </div>
 
+            <% include ../../partials/manage_fundraiser/footer %>
+            <% include ../../partials/manage_fundraiser/scripts %>
+        </div>
     </div>
-    </div>
-  </div>
-  <% include ../../partials/manage_fundraiser/footer %>
-  <% include ../../partials/manage_fundraiser/scripts %>
+  </body>
+
+</html>
+
+
+

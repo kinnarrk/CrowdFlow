@@ -1,21 +1,17 @@
-
-        <div id="trending" class="container">
+ <div id="trending" class="container">
                 <div class="row mt-5">
                     <h1 class="text-center w-100">Trending Fundraisers</h1>
                     <h6 class="text-center w-100">View the fundraisers that are most active right now!!!</h6>
               </div>
             </div>
-
 <div class="container">
-
   <div class="row mx-auto">
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
           <div class="col-md-3 ">
-            <div class="card card-custom bg-white border-white border-0 glide__slide  ">
+            <div class="card card-custom bg-white border-white border-0 ">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.image%>);"></div>
               <div class="card-custom-avatar">
-                 
                     <%   if( fr.user[0].image != undefined && fr.user[0].image != null){ %>
                         <img class="img-fluid" src="/view/images/users/<%= fr.user[0].image %>" alt="Avatar" />
                 <%}else{%>
@@ -56,12 +52,13 @@
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
               </div>
             </div>
-          </div>
+        </div>
         <% }); %>
-        <%}%>
+        <%}%> 
       </div>
       </div>
     </div>
   </div>
   </div> 
+</div>
 </div>

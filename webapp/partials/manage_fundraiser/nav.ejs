@@ -52,7 +52,7 @@
                         <a href="/requestWithdrawal/withdraw/<%= fundraiser._id%>">Request Withdrawal</a>
                     </li>
                     <li>
-                        <a href="#">Past Withdrawal</a>
+                        <a href="/withdrawHistory/withdrawHistory/<%= fundraiser._id %>">Past Withdrawal</a>
                     </li>
                     <li <% if(page == "beneficiary"){ %>class="active" <% } %>>
                         <a href="/beneficiary/beneficiary/<%= fundraiser._id %>">Beneficiary</a>
