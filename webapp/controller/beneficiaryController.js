@@ -59,7 +59,7 @@ router.post('/beneficiary/:fundraiserId',ensureAuthenticated, (req, res) => {
     console.log(req.body.bank);
     beneficiary.save().then(user => {
         console.log(user);
-        res.redirect('/beneficiary/beneficiary');
+        res.redirect('/beneficiary/beneficiary/'+req.params.fundraiserId);
     
     })
     
