@@ -50,10 +50,12 @@
                     <img src="/view/images/users/<%= user.image %>" width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/users/profile">My Profile</a>
-                    <a class="dropdown-item" href="/users/profile">My Fundraiser</a>
+                    <a class="dropdown-item" href="/users/profile/info"><i class="fas fa-user-circle mr-2"></i>My Profile</a>
+                    <a class="dropdown-item" href="/users/profile/fundraiser"><i class="fas fa-hand-holding-usd mr-2"></i>My Fundraiser</a>
+                    <a class="dropdown-item" href="/users/profile/donation"><i class="fas fa-donate mr-2"></i>My Donations</a>
+                    <a class="dropdown-item" href="/users/profile/comment"><i class="fas fa-comments mr-2"></i>My Comments</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/users/logout">Log Out</a>
+                    <a class="dropdown-item" href="/users/logout"><i class="fas fa-sign-out-alt mr-2"></i>Log Out</a>
                 </div>
             </li>
             <% } %>

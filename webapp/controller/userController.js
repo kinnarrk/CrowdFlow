@@ -170,7 +170,7 @@ router.get('/google/callback', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/profile', ensureAuthenticated, (req, res) => {
+router.get('/profile/:tab', ensureAuthenticated, (req, res) => {
 
     User.aggregate([{
             $match: {
@@ -186,7 +186,7 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
             }
         }
     ]).exec((err, arr) => {
-        //console.log("ARR" + JSON.stringify(arr));
+        console.log("ARR user=" + JSON.stringify(arr));
 
         Fundraiser.aggregate([{
                 '$unwind': '$donations'
@@ -206,7 +206,8 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
                 res.render('../view/profile', {
                     profile: arr,
                     donations: array,
-                    comments: comment
+                    comments: comment,
+                    tab: req.params.tab
                 });
             });
         });
@@ -228,7 +229,7 @@ router.post('/update/:id', (req, res) => {
     }
 
     if (errors.length > 0) {
-        res.redirect('/users/profile', {
+        res.redirect('/users/profile/info', {
             errors
         });
     } else {
@@ -242,14 +243,14 @@ router.post('/update/:id', (req, res) => {
                     'error_msg',
                     'Email address has already been taken'
                 );
-                res.redirect('/users/profile');
+                res.redirect('/users/profile/info');
                 return;
             }
             req.flash(
                 'success_msg',
                 'Profile updated successfully'
             );
-            res.redirect('/users/profile');
+            res.redirect('/users/profile/info');
         });
     }
 
@@ -272,7 +273,7 @@ router.post('/update-profile-pic/:id', (req, res) => {
                 'success_msg',
                 'Profile picture updated successfully'
             );
-            res.redirect('/users/profile');
+            res.redirect('/users/profile/info');
         });
     });
 });
@@ -309,7 +310,7 @@ router.post('/update-password/:id', (req, res) => {
                 'success_msg',
                 'Password updated successfully'
             );
-            res.redirect('/users/profile');
+            res.redirect('/users/profile/info');
         });
 
     }
