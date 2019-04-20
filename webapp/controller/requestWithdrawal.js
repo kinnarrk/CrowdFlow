@@ -3,6 +3,8 @@ var router = express.Router();
 const model = require('../model/commonModel');
 const Withdrawal = model.Withdrawal;
 const beneficiary = model.Beneficiary;
+var moment= require('moment');
+
 const {
     ensureAuthenticated
 } = require('../config/auth');
@@ -13,7 +15,7 @@ router.get('/withdraw/:fundraiserId',ensureAuthenticated, (req, res) => {
         _id: req.params.fundraiserId
     }).then(sample => {
       
-        res.render('../view/manage_fundraiser/requestWithdrawal', { fundraiser: sample });
+        res.render('../view/manage_fundraiser/requestWithdrawal', { fundraiser: sample ,moment:moment});
     }).catch((err) => {
         res.redirect('/404');
     });
@@ -42,9 +44,9 @@ router.get('/withdraw/:fundraiserId',ensureAuthenticated, (req, res) => {
                     _id: req.params.fundraiserId
                 }).then(sample => {
                     if(sample.amount > req.body.amount[0] ){
-                        res.render('../view/manage_fundraiser/requestWithdrawal_success',{fundraiser: sample });
+                        res.render('../view/manage_fundraiser/requestWithdrawal_success',{fundraiser: sample ,moment:moment});
                     }else {
-                        res.render('../view/manage_fundraiser/requestWithdrawal_failure',{fundraiser: sample });
+                        res.render('../view/manage_fundraiser/requestWithdrawal_failure',{fundraiser: sample , moment:moment});
                     } 
                  
                 }).catch((err) => {
