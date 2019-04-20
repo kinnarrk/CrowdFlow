@@ -76,6 +76,11 @@ app.use('/editFundraiser', require('./controller/editFundraiserController'));
 app.use('/browseFundraiser', require('./controller/browseFundraiserController'));
 app.use('/beneficiary', require('./controller/beneficiaryController'));
 app.use('/trending', require('./controller/trendingController'));
+<<<<<<< HEAD
+app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
+app.use('/requestWithdrawal', require('./controller/requestWithdrawal'));
+app.use('/share', require('./controller/shareController'));
+=======
 app.use('/AboutUs',require('./controller/AboutUsController'));
 app.use('/Jobs',require('./controller/Jobs'));
 app.use('/OurPatners',require('./controller/OurPatners'));
@@ -83,6 +88,7 @@ app.use('/FundraiserTips',require('./controller/FundraiserTips'));
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
 app.use('/donate', require('./controller/donationController'));
 
+>>>>>>> 33e45dbfd089e72772086d49e377dfa6a112a66e
 
 // start our server
 const port = process.env.PORT || 3000;
