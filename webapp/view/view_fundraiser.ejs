@@ -3,6 +3,7 @@
 <% include ../partials/head %>
 
 
+
 <body>
 
   <!-- Navigation -->
@@ -10,16 +11,16 @@
 
   <!-- Page Content -->
 
-  <div class="container">
+  <div class="container ">
 
     <div>
       <% include ../partials/messages %>
 
     </div>
 
-
-    <div class="col-md-12 text-center bg-info">
-      <h2 class = "text-white py-3 text-capitalize font-weight-bold"><%= event.title %></h2> <!-- Title -->
+ 
+    <div class="col-md-12 text-center">
+      <h2 class = "text-dark py-3 text-capitalize font-weight-bold"><%= event.title %></h2> <!-- Title -->
 
     </div>
 
@@ -99,16 +100,16 @@
 
             <hr>
             <% for(var i =0 ; i< comments_list.length; i++) { %>
-            <div class="card mt-3">
+            <div class="card mt-3 bg-light">
 
               <div class="row">
                 <div class="col-10">
-                  <div class="card-body">
+                  <div class="card-body ">
                     <div class="media">
                       <img src="/view/images/users/<%= comments_list[i].createdBy.image%>" class="align-self-start mr-3"
                         alt="..." style="width:100px;">
 
-                      <div class="media-body">
+                      <div class="media-body ">
                         <h5 class="mt-0"><%= comments_list[i].createdBy.fullName %></h5>
 
                         <%= comments_list[i].comment %>
@@ -171,7 +172,7 @@
             <% for(var i =0 ; i<comments_list.length; i++) { %>
 
 
-            <div class="card mt-3">
+            <div class="card mt-3 bg-light">
 
               <div class="row">
                 <div class="col-10">
@@ -233,7 +234,7 @@
       </div>
 
       <!-- Sidebar Widgets Column -->
-      <div class="col-md-4 ">
+      <div class="col-md-4" id ="sortable">
 
         <!-- progress widget-->
         <div class="card border-light mb-3">
@@ -351,6 +352,7 @@
                           </div>
 
                         </div>
+                        
                         <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
 
 
@@ -380,7 +382,7 @@
 
             <h2 class="large"><i class="fas fa-dollar-sign small"></i> <%= currentamount%> </h2>
 
-            <p class="">raised of <b>&nbsp<i class="fas fa-dollar-sign"></i> <%= event.amount%></b> goal</p>
+            <p class="text-muted small">raised of <b class ="text-dark">&nbsp<i class="fas fa-dollar-sign "></i> <%= event.amount%></b> goal</p>
 
             <!-- </div> -->
 
@@ -469,14 +471,14 @@
           <div class="card-header text-center"><i class="fas fa-users float-left text-muted"></i>Donations</div>
           <div class="card-body">
 
-            <ul class="list-group ">
+            <ul class="list-group " >
               <!-- <li class="list-group-item disabled text-center border-0" aria-disabled="true">Donations</li> -->
               <li class="list-group-item border-0">
 
 
 
                 <% for(var j=0; j<event.donations.length;j++) { %>
-                <ul class="list-group list-group-horizontal ">
+                <ul class="list-group list-group-horizontal " >
                   <li class="list-group-item border-0 px-0">
 
                     <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
@@ -548,6 +550,15 @@
   <!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+      $( function() {
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
+        $( "#selectable" ).selectable();
+      } );
+      </script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </body>
 
