@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+
+<body>
+  <div class="wrapper">
+    <!-- Side Navigation -->
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'donationFundraiser'}); %>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <!-- Top Navigation -->
+      <% include ../../partials/manage_fundraiser/nav_top %>
+
+
+      <h2>Donations</h2>
+
+      <div class="container">
+        <% fundraiser.donations.forEach((donation) => { %>
+
+        <div class="card mt-3">
+          <div class="row">
+            <div class="col-5">
+              <div class="card-body">
+                <div class="media">
+                  <img src="/view/images/users/<%= donation.userId.image %>"
+                    alt="<%= donation.userId.title %>" class="mr-3 rounded-circle" style="width:100px;">
+                  <div class="media-body align-self-center">
+                    <a class="stretched-link">
+                      <h5 class="font-weight-bold"><%= donation.userId.fullName %></h5>
+                    </a>
+                    <span><small></small></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="border-right: 2px solid #e3e3e3; margin:10px;"></div>
+            <div class="col-5 align-self-center">
+              <h5 class="font-weight-bold text-primary">$<%= donation.amount %></h5>
+            </div>
+
+          </div>
+
+        </div>
+
+        <% }); %>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <% include ../../partials/manage_fundraiser/scripts %>
+
+</body>
+
+</html>
