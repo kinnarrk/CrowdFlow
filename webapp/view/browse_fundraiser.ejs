@@ -59,7 +59,7 @@
               </div>
               <div class="card-body" style="overflow-y: auto">
                 <a href="/browseFundraiser/<%= fr.doc.category._id%>"><span class="badge badge-<%= fr.doc.category.colorClass%>"><%=fr.doc.category.categoryName%></span></a>
-                <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>"><h4 class="card-title"><%=fr.doc.title%></h4></a>
+                <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>" class="stretched-link"><h4 class="card-title"><%=fr.doc.title%></h4></a>
                 <p class="card-text">By: <%=fr.doc.createdBy.fullName%></p>
                 <p class="card-text"><%=fr.doc.description%></p>
                 <%
@@ -80,10 +80,10 @@
                   Fundraiser ended
                 <% } %>
               </div>
-              <div class="card-footer" style="background: inherit; border-color: inherit;">
+              <!-- <div class="card-footer" style="background: inherit; border-color: inherit;">
                 <a href="/fundraiser/view_fundraiser/<%=fr.doc._id%>" class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
-              </div>
+              </div> -->
             </div>
           </div>
         <% }); %>
