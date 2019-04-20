@@ -2,6 +2,7 @@
 <html lang="en">
 <% include ../partials/head %>
 <link rel="stylesheet" href="/view/css/comments.css">
+<link rel="stylesheet" href="/view/css/view_fundraiser.css">
 
 <body>
 
@@ -122,13 +123,26 @@
           <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
           <div class="card-header text-center"><i class="fas fa-share-alt text-muted float-left"></i>Share on Social
             Media</div>
-          <div class="card-body">
+          <div class="card-body text-center">
             <!-- <div class="col-lg-10" style="height:90px;"> -->
             <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
-            <div class="list-group-item text-center">
-              <% include  ../view/share %>
-            </div>
+ 
 
+            <div class="social d-inline-block text-center">
+              <div class="text-center">
+                  <a data-js="facebook-share" id="facebook" >
+                    <div class="social-media facebook d-inline-block">
+                        <span class="fab fa-facebook"></span>
+                    </div>
+                </a>
+                <a data-js="twitter-share">
+                    <div class="social-media twitter d-inline-block">
+                        <span class="fab fa-twitter"></span>
+                    </div>
+                </a>
+              </div>
+                
+            </div>
             <br>
             <div class="list-group-item border-0 text-center">
 
@@ -280,6 +294,8 @@
 
           </div>
         </div>
+
+
         <!-- Campaigner Widget -->
         <div class="card border-light mb-3 shadow-sm">
           <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
@@ -290,7 +306,7 @@
               <li class="list-group-item border-0">
                 <div class="row w-100">
 
-                  <div class="col-12 col-sm-6 col-md-3 px-0">
+                  <div class="col-lg-3 px-0">
 
                     <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
                     <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
@@ -304,18 +320,18 @@
 
                     <!-- <img src="/view/images/users/<%= event.createdBy.image %>" height="70" width= "50" alt="Avatar" class="rounded-circle mx-auto d-block img-fluid"> -->
                   </div>
-                  <div class="col-12 col-sm-6 col-md-9 text-center text-sm-left ">
+                  <div class="col-lg-9 text-center text-sm-left ">
 
                     <!-- <span class="text-muted small">Campaigner</span> -->
                     <!-- <br> -->
 
 
-                    <span class="text-info small font-weight-bold text-capitalize"><%= event.createdBy.fullName%></span>
+                    <span class="text-info font-weight-bold text-capitalize"><%= event.createdBy.fullName%></span>
                     <br>
 
                     <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title=""
                       data-original-title="<%= event.createdBy.phone%>"></span>
-                    <span class="text-muted small"><%= event.createdBy.phone%></span>
+                    <span class="text-muted"><%= event.createdBy.phone%></span>
                     <br>
                     <span class="fa fa-envelope fa-fw text-muted" data-toggle="tooltip" data-original-title=""
                       title=""></span>
@@ -323,7 +339,7 @@
                     <br>
                     <span class="fas fa-user-check fa-fw text-primary" data-toggle="tooltip" data-original-title=""
                       title=""></span>
-                    <span class="text-muted small text-truncate">Verified</span>
+                    <span class="text-muted text-truncate">Verified</span>
 
                   </div>
 
@@ -394,14 +410,6 @@
         </div>
 
 
-
-
-
-
-
-
-
-
       </div>
 
 
@@ -424,11 +432,6 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
-    $(function () {
-      $("#sortable").sortable();
-      $("#sortable").disableSelection();
-      $("#selectable").selectable();
-    });
 
     $("#fundraiser").validate({
       rules: {

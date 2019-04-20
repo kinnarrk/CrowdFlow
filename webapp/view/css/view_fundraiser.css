@@ -1,0 +1,62 @@
+.social a:hover {
+    text-decoration: none;
+}
+
+.social {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-media {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 4px;
+    border: 2px solid black;
+    transition: 0.15s;
+    padding: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.7rem;
+    border: none;
+}
+
+.social-media.facebook {
+    border-color: #3b5998;
+    color: #3b5998;
+}
+
+.social-media.facebook:hover {
+    background-color: #3b5998;
+    color: white;
+}
+
+.social-media.twitter {
+    border-color: #00acee;
+    color: #00acee;
+}
+
+.social-media.twitter:hover {
+    background-color: #00acee;
+    color: white;
+}
+
+.card {
+    box-shadow : -1px 9px 40px -12px rgba(0,0,0,0.75); 
+}
+
+.card .card-body a {
+    color : black;
+    text-decoration: none;
+}
