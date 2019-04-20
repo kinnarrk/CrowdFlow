@@ -46,7 +46,7 @@ router.get('/' ,(req, res) =>{
         }];
      // -------- Sorting method 4 --------------
        
-       var limitcount = 5;
+       var limitcount = 4;
            
     // mysort is the variable based on which we have sorted
     fundraiserdb.aggregate(mysort).limit(limitcount)

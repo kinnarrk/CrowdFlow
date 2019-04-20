@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+<body>
+  <div class="wrapper">
+    <!-- Side Navigation -->
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'requestWithdrawal' }); %>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <!-- Top Navigation -->
+      <% include ../../partials/manage_fundraiser/nav_top %>
+     <p> Share Fundraiser</p>
+      <button type="button" class="btn btn-primary"  data-js="twitter-share">Twitter <i class="fab fa-twitter"></i></button><br><br>
+      <button type="button" class="btn btn-primary"  data-js="facebook-share" >Facebook <i class="fab fa-facebook-f"></i></button><br><br>
+      <button  type="button" class="btn btn-primary"><a href  = "/fundraiser/view_fundraiser/<%= fundraiser._id%>">View  More Fundraisers</button></a>
+
+    <div class="card mx-5 my-5">
+
+    </div>
+    </div>
+  </div>
+  <% include ../../partials/manage_fundraiser/footer %>
+  <% include ../../partials/manage_fundraiser/scripts %>
