@@ -439,3 +439,8 @@ ul.social-buttons {
     max-height: 250px;
     overflow:hidden;
 }
+
+.footer-copyright{
+    padding-top: 25px;
+    border-top: 1px dashed #fff;
+}
