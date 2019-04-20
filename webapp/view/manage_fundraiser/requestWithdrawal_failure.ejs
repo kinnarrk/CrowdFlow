@@ -34,9 +34,14 @@
                 </div>
                 <div class="col-md-6 position-static p-4 pl-md-0">
                     <!-- <h5 class="mt-0">Columns with stretched link</h5> -->
-                    <p> Please Check, you have entered the amount greather than the required Amount, Please Contact our team on <i class="fab fa-whatsapp"> +1 123-456-7890</i>. Also
-                        <a href= "/browseFundraiser">browse</a> fundraiser and contribute to the various causes</p>
-                    <!-- <a href="/" class="stretched-link">Home</a> -->
+                    <% if(bid == null){ %>
+                        <p> Please Check, add a beneficiary to withdraw, Please Contact our team on <i class="fab fa-whatsapp"> +1 123-456-7890</i>
+
+                        <%}else{%>
+                            <p> Please Check, you have entered the amount greather than the required Amount, Please Contact our team on <i class="fab fa-whatsapp"> +1 123-456-7890</i>
+                        . Also <a href= "/browseFundraiser">browse</a> fundraiser and contribute to the various causes</p>
+                    <%}%>
+                        <!-- <a href="/" class="stretched-link">Home</a> -->
                 </div>
             </div>
             <!-- <h5 class="card-title">Meanwhile you ca</h5>
