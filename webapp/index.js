@@ -65,8 +65,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-
 //Setup Routes
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
@@ -76,11 +74,18 @@ app.use('/editFundraiser', require('./controller/editFundraiserController'));
 app.use('/browseFundraiser', require('./controller/browseFundraiserController'));
 app.use('/beneficiary', require('./controller/beneficiaryController'));
 app.use('/trending', require('./controller/trendingController'));
+app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
+app.use('/requestWithdrawal', require('./controller/requestWithdrawal'));
+app.use('/share', require('./controller/shareController'));
 app.use('/AboutUs',require('./controller/AboutUsController'));
 app.use('/Jobs',require('./controller/Jobs'));
 app.use('/OurPatners',require('./controller/OurPatners'));
+app.use('/FundraiserTips',require('./controller/FundraiserTips'));
+app.use('/ContactUs',require('./controller/ContactUs'));
+app.use('/TermsOfUse',require('./controller/TermsOfUse'));
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
 app.use('/donate', require('./controller/donationController'));
+app.use('/withdrawHistory', require('./controller/withdrawHistory'));
 
 
 // start our server

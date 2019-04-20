@@ -25,19 +25,16 @@
                     Activity
                 </a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Comments</a>
+                    <li <% if(page == "commentFundraiser"){ %>class="active" <% } %>>
+                        <a href="/manageFundraiser/comment/<%= fundraiser._id %>">Comments</a>
                     </li>
-                    <li>
-                        <a href="#">Messages</a>
-                    </li>
-                    <li>
-                        <a href="#">Donor Information</a>
+                    <li <% if(page == "donationFundraiser"){ %>class="active" <% } %>>
+                        <a href="/manageFundraiser/donation/<%= fundraiser._id %>">Donor Information</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="/share/share/<%= fundraiser._id%>">
                     <i class="fas fa-share-alt"></i>
                     Share Fundraiser
                 </a>
@@ -49,7 +46,7 @@
                 </a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Request Withdrawal</a>
+                        <a href="/requestWithdrawal/withdraw/<%= fundraiser._id%>">Request Withdrawal</a>
                     </li>
                     <li>
                         <a href="#">Past Withdrawal</a>

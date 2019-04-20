@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../view/css/style.css" />
+</head>
+<% include ../partials/head %>
+
+<body>
+    <% include ../partials/nav %>
+    <div class="fluid-container">
+        <div class="jumbotron p-3 bg-info text-white">
+            <h1 class="container text-center ">Contact Us</h1>
+        </div>
+        <div class="row">
+        <div class="col-md-8 text-center">
+            <h4>Contact Us</h4>
+            <p>Drop us a query and we will get back to you at the earliest!</p>
+            <form class="form">
+                <div class=“form-row”>
+                    <div class=“col-6 form-group mb-3">
+                        <label class=“my-1 mr-2” for=“category”>Topic od Query</label>
+                        <select class=“custom-select my-1 mr-sm-2 col-6” id=“category”>
+                            <option selected>Select a Query Topic</option>
+                            <option value=“1”>General Enquiries</option>
+                            <option value=“2">Fundraising Enquiries</option>
+                            <option value=“3”>Payment Enquiries</option>
+                            <option value=“4”>Account Enquiries</option>
+                            <option value=“5”>Partnership Enquiries</option>
+                            <option value=“6”>Complaints</option>
+                            <option value=“7”>Any other Queries</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-md-4 float-right">
+            <h4>Our Office</h4>
+            <p>Crow Flow - Boston, MA<br>
+                1302-1306, 13th Floor, A-4,<br>
+                Northeastern University,<br>
+                Smith Street,<br>
+                Behind Mission Main,<br>
+                02120.
+            </p>
+            <p>For any queries, reach us out at email : info@ketto.org<br><br>
+
+                Crowd Flow is now on WhatsApp! Add 123456789 to your <br>
+                contact list & say hello to subscribe. Get stories of people who <br>
+                need nothing more than your voice - a simple share.<br><br>
+
+                Send your feedback directly to the CEO. Email <br>
+                anonymous@crowdflow.org and tell him about your experience, what<br>
+                we're doing well and what we can improve.
+            </p>
+        </div>
+    </div>
+
+
+
+    </div>
+
+
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+</body>
+
+</html>
