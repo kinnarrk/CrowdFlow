@@ -8,16 +8,16 @@
     <% if(typeof categories != 'undefined') { %>
     <div class="row ml-5 mr-5">
         <% categories.forEach(function(category) { %>
-        <div class="col-lg-3  mb-5 mt-5">
+        <div class="col-lg-3 mt-2  d-flex align-items-stretch">
             <div class="card">
                 <img height=180px class="card-img-top" src="../view/images/<%= category.categoryImage %>" alt="Card image">
                 <div class="card-body">
-                    <h4 class="card-title text-center"><%= category.categoryName %></h4>
+                        <a href="/browseFundraiser/<%=category._id%>" class="card-title stretched-link" data-toggle="tooltip" data-placement="bottom"
+                            title="View this category"><h4 class="text-center"><%= category.categoryName %></h4></a>
                     <p class="card-text text-center"><%= category.categoryDescription%></p>
                     <!-- <p class="card-text"><%= category.createdDate %></p> -->
                     <!-- <p class="card-text"><%= category.createdBy %></p> -->
-                    <a href="/browseFundraiser/<%=category._id%>" class="btn btn-primary float-right" data-toggle="tooltip" data-placement="bottom"
-                        title="View this category">View</a>
+
                 </div>
             </div>
         </div>
