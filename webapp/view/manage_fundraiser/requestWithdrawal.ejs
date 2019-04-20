@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+<body>
+  <div class="wrapper">
+    <!-- Side Navigation -->
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'requestWithdrawal' }); %>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <!-- Top Navigation -->
+      <% include ../../partials/manage_fundraiser/nav_top %>
+      
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post">
+     <div class="form-group ">
+      <label class="control-label " for="amount">
+       Enter the Amount to Withdraw
+      </label>
+      <input class="form-control" id="amount" name="amount"/>
+     </div>
+       <button class="btn btn-primary " name="amount" type="submit">
+        Submit
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+
+    </div>
+  </div>
+  <% include ../../partials/manage_fundraiser/footer %>
+  <% include ../../partials/manage_fundraiser/scripts %>

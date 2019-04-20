@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
+<body>
+  <div class="wrapper">
+    <!-- Side Navigation -->
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'requestWithdrawal' }); %>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <!-- Top Navigation -->
+      <% include ../../partials/manage_fundraiser/nav_top %>
+      
+        
+    <div class="card mx-5 my-5">
+        <div class="card-header">
+            Withdrawal Submitted for approval
+        </div>
+        <div class="card-body">
+
+
+            <div class="row no-gutters bg-light position-relative">
+                <div class="col-md-6 mb-md-0 p-md-4">
+                    <img src="/view/images/fundraisers/5cb9eeae9864143414f82925.png" class="w-100" alt="...">
+                </div>
+                <div class="col-md-6 position-static p-4 pl-md-0">
+                    <!-- <h5 class="mt-0">Columns with stretched link</h5> -->
+                    <p>Our team will validate your Withdrawal details , once they verify them, amount will be
+                        transffered . Meanwhile you can contact our team  on <i class="fab fa-whatsapp"> +1 123-456-7890</i>. Also
+                        <a href= "/browseFundraiser">browse</a> fundraiser and contribute to the various causes</p>
+                    <!-- <a href="/" class="stretched-link">Home</a> -->
+                </div>
+            </div>
+            <!-- <h5 class="card-title">Meanwhile you ca</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+    </div>
+
+    </div>
+  </div>
+  <% include ../../partials/manage_fundraiser/footer %>
+  <% include ../../partials/manage_fundraiser/scripts %>
