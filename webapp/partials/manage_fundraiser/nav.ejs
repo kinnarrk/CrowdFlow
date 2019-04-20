@@ -25,14 +25,11 @@
                     Activity
                 </a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Comments</a>
+                    <li <% if(page == "commentFundraiser"){ %>class="active" <% } %>>
+                        <a href="/manageFundraiser/comment/<%= fundraiser._id %>">Comments</a>
                     </li>
-                    <li>
-                        <a href="#">Messages</a>
-                    </li>
-                    <li>
-                        <a href="#">Donor Information</a>
+                    <li <% if(page == "donationFundraiser"){ %>class="active" <% } %>>
+                        <a href="/manageFundraiser/donation/<%= fundraiser._id %>">Donor Information</a>
                     </li>
                 </ul>
             </li>

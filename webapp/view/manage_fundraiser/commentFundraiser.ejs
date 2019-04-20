@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser[0].fundraiserId }); %>
+
+<head>
+  <link rel="stylesheet" href="/view/css/comments.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Side Navigation -->
+    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser[0].fundraiserId, page: 'commentFundraiser'}); %>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+
+      <!-- Top Navigation -->
+      <% include ../../partials/manage_fundraiser/nav_top %>
+
+
+      <h2>Comments</h2>
+
+      <div class="container">
+        <ul class="comment-section">
+          <% fundraiser.forEach((comment) => { %>
+
+
+          <li class="comment user-comment">
+            <div class="info">
+              <a><%= comment.createdBy.fullName %></a>
+              <span><%= comment.createdDate %></span>
+            </div>
+            <a class="avatar" href="#">
+              <img src="/view/images/users/<%= comment.createdBy.image %>" width="35"
+                alt="<%= comment.createdBy.fullName %>" title="Anie Silverston" />
+            </a>
+            <p><%= comment.comment %></p>
+          </li>
+          <% }); %>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Scripts -->
+  <% include ../../partials/manage_fundraiser/scripts %>
+
+</body>
+
+</html>

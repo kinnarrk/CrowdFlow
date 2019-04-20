@@ -12,7 +12,7 @@
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
           <div class="col-md-3 ">
-            <div class="card card-custom bg-white border-white border-0 glide__slide  ">
+            <div class="card card-custom bg-white border-white border-0">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.image%>);"></div>
               <div class="card-custom-avatar">
                  
@@ -32,7 +32,7 @@
                     <%   percentage = Math.round((donationArray[i].totalDonations/fr.amount) *100) %>
                 <div class="d-flex justify-content-between">
                     <div><b>$<%= donationArray[i].totalDonations %></b> raised</div>
-                   <% if (percentage < 0) { %>
+                   <% if (percentage < 100) { %>
                     <div><%=percentage%>%</div>
                     <%}else{ %>
                       <%= 100%>%

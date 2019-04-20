@@ -200,6 +200,13 @@ router.get('/success' , (req ,res ) => {
                     if(!err) {
                         console.log('Donation added');
                         // res.send("Success");    
+                        
+                            req.flash(
+                                'success_msg',
+                                'Payment Successfully. Thanks for your contribution'
+                            ); 
+        
+                        
                         res.redirect('/fundraiser/view_fundraiser/'+payment.transactions[0].item_list.items[0].description+'?donation=success');                    
                     }
                     else {           
