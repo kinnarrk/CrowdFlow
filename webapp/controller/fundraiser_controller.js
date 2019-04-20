@@ -157,10 +157,23 @@ router.get('/view_fundraiser/:id', (req, res) => {
 
     fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]',{sort:{createdDate: -1}}).populate('donations.userId').exec(function(err,event){
         if(err){res.redirect('/404');}
+
+        //updating the visit count
+        var visits = 0;
+        if(event.visits != undefined && event.visits != null){
+            visits = parseInt(event.visits) + 1;
+        }
+        var fr = {visits: visits};
+        fundraiser.findByIdAndUpdate(req.params.id,{$set: fr}, (err,doc)=>{
+            if(err){
+                console.log('Error in updating fr: ' + JSON.stringify(err, undefined, 2));
+            }
+        });
+
         //image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
-            console.log("-----------------------");
-            console.log(event);
-            console.log("-----------------------");
+            // console.log("-----------------------");
+            // console.log(event);
+            // console.log("-----------------------");
            // console.log(event.donations[0].userId.fullName);
             var currentamount = 0;
             var progress = 0;

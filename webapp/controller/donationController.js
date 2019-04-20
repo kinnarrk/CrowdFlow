@@ -13,6 +13,7 @@ const objectID = require('mongodb').ObjectID;
 var paypal = require('paypal-rest-sdk');
 var path = require('path');
 const {ensureAuthenticated } = require('../config/auth');
+// var logger = require('../config/log');
 
 // var bodyParser = require('body-parser');
 // var app = express();
@@ -170,7 +171,6 @@ router.get('/success' , (req ,res ) => {
     // console.log("Query:::: " + JSON.stringify(req.query));
     // console.log("Query:::: " + req.query);
     // console.log("Body:::: " + JSON.stringify(req.body));
-
 
 
     paypal.payment.get(req.query.paymentId, function (error, payment) {
