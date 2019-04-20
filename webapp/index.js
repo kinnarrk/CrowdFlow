@@ -15,8 +15,6 @@ const fileUpload = require('express-fileupload');
 
 const mongoose = require('./config/database.js');
 
-
-
 app.use(bodyParser.json());
 app.use(fileUpload());
 

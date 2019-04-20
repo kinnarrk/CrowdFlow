@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-root-path": "^2.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "bootbox": "^5.1.2",
@@ -35,6 +36,7 @@
     "jquery-validation": "^1.19.0",
     "moment": "^2.24.0",
     "mongoose": "^5.5.2",
+    "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
     "owl.carousel": "^2.3.4",
     "passport": "^0.4.0",
@@ -45,6 +47,7 @@
     "paypal-rest-sdk": "^1.8.1",
     "select2-bootstrap-theme": "0.1.0-beta.10",
     "social-media-sharing": "1.0.2",
-    "validator": "^10.11.0"
+    "validator": "^10.11.0",
+    "winston": "^3.2.1"
   }
 }
