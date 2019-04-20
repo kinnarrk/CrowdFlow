@@ -12,24 +12,10 @@
       <!-- Top Navigation -->
       <% include ../../partials/manage_fundraiser/nav_top %>
       
-      <ul class="list-group list-group-horizontal">
-            <!-- <li class="list-group-item border-0 text-center">Share on Social Media</li> -->
-            <li class="list-group-item border-0 text-center ">
-                
-                    <button data-js="twitter-share" type="button" class="btn btn-lg btn-primary px-3 ">
-                            <i class="fab fa-twitter"></i>
-                    </button>
-            
-            </li>
-            <li class="list-group-item border-0 text-center float-right">
-                
-                    <button data-js="facebook-share" type="button" class="btn btn-lg btn-primary px-3  ">
-                             <i class="fab fa-facebook-f pr-1"></i>
-                    </button>
-            
-            </li>
-            
-    </ul>
+      <button type="button" class="btn btn-primary"  data-js="twitter-share" >Twitter</button><br><br>
+      <button type="button" class="btn btn-primary"  data-js="facebook-share" >Facebook</button><br><br>
+      <button href = "/fundraiser/view_fundraiser/<%= fundraiser._id%>" type="button" class="btn btn-primary">View  More Fundraisers</button>
+
     <div class="card mx-5 my-5">
 
     </div>
