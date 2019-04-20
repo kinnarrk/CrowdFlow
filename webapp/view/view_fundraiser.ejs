@@ -118,7 +118,7 @@
       <div class="col-md-4" id="sortable">
 
         <!-- progress widget-->
-        <div class="card border-light mb-3">
+        <div class="card border-light mb-3 shadow-sm">
           <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
           <div class="card-header text-center"><i class="fas fa-share-alt text-muted float-left"></i>Share on Social
             Media</div>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="modal-body ">
 
-                      <img src="/view/images/donate_modal_thank_you.jpg" class="card-img-top" alt="...">
+                      <img src="/view/images/donate_modal_thank_you.jpg" class="card-img-top" alt="">
                       <br>
                       <% if(user == undefined) { %>
                       <span>You are not logged in. Please <a href="/users/login">Login</a> in to make a donation.</span>
@@ -281,7 +281,7 @@
           </div>
         </div>
         <!-- Campaigner Widget -->
-        <div class="card border-light mb-3">
+        <div class="card border-light mb-3 shadow-sm">
           <!-- <h5 class="card-header">Fundraiser Progress</h5> -->
           <div class="card-header text-center"><i class="fas fa-address-card text-muted float-left"></i>Campaigner</div>
           <div class="card-body">
@@ -297,7 +297,7 @@
                       alt="Avatar" />
                     <% } else { %>
                     <img class="rounded-circle mx-auto d-block img-fluid"
-                      src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar"
+                      src="/view/images/users/<%= event.createdBy.image%>" alt=""
                       style="width:60px;height:60px;" />
                     <% } %>
 
@@ -339,7 +339,7 @@
 
         <!-- Donations Widget -->
 
-        <div class="card border-light ">
+        <div class="card border-light shadow-sm">
           <div class="card-header text-center"><i class="fas fa-users float-left text-muted"></i>Donations</div>
           <div class="card-body">
 
