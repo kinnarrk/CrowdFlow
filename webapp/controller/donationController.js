@@ -14,11 +14,11 @@ var paypal = require('paypal-rest-sdk');
 var path = require('path');
 const {ensureAuthenticated } = require('../config/auth');
 
-var bodyParser = require('body-parser');
-var app = express();
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
+// var bodyParser = require('body-parser');
+// var app = express();
+// app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.json())
+// app.use(bodyParser.json({ type: 'application/vnd.api+json' }))
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -47,7 +47,7 @@ router.use(function (req, res, next) {
 // start payment process 
 router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) => {
     console.log("Inside donate through paypal");
-    console.log("Body:::: " + JSON.stringify(req.body));
+    // console.log("Body:::: " + JSON.stringify(req.body));
     var invoiceId = 'INV000000001';
     var tax = 0.08;
 
@@ -114,18 +114,18 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                                     "name": docs2.title,
                                     "description": docs2._id,
                                     "sku": "1",
-                                    "price": Number(amount),                               
+                                    "price": (parseFloat(amount)).toFixed(2),                               
                                     "currency": "USD",
                                     "quantity": "1",
-                                    "tax": tax
+                                    "tax": 0
                                 }]
                             },                        
                             "amount": {
-                                "total": (parseFloat( parseFloat(amount) + parseFloat(amount*tax))).toFixed(2), //req.body.amount,
+                                "total": (parseFloat(amount)).toFixed(2), //req.body.amount,
                                 "currency": "USD",
                                 "details": {
-                                    "subtotal": amount,
-                                    "tax": (parseFloat(amount*tax)).toFixed(2)
+                                    "subtotal": (parseFloat(amount)).toFixed(2),
+                                    "tax": 0
                                 }
                             },
                             "description": "Donation for fundraiserId: " + docs2._id                                              

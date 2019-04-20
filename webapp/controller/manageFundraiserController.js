@@ -12,6 +12,9 @@ const Cause = model.Cause;
 const Comment = model.Comment;
 const Beneficiary = model.Beneficiary;
 const objectID = require('mongodb').ObjectID;
+const moment = require('moment')
+
+const today = moment().startOf('day')
 
 // const objectID = require('mongodb').ObjectID;
 
@@ -40,7 +43,7 @@ router.get('/:id', ensureAuthenticated, (req, res) =>{
 
             //Typecast is needed for ObjectId when using within aggregate - known issue
             //For more info on this issue: https://github.com/Automattic/mongoose/issues/1399
-            { $match: {_id: mongoose.Types.ObjectId(req.params.id)}},
+            { $match: {_id: mongoose.Types.ObjectId(req.params.id), createdBy: mongoose.Types.ObjectId(req.user._id) } },
             
             { '$lookup': { from: 'categories', localField: 'categoryId', foreignField: '_id', as: 'category'} }, 
             { '$unwind': '$category' }, //We may need category info like name and description so pushing it to the resule
@@ -78,7 +81,174 @@ router.get('/:id', ensureAuthenticated, (req, res) =>{
             if(docs.length > 0){
                 // var frs = JSON.stringify(docs);
                 // console.log("fundraisers for manage with fr id: " + JSON.stringify(docs));            
-                res.render('../view/manage_fundraiser/dashboard', {fundraiser: docs});
+                
+                Fundraiser.aggregate([                    
+                    { $match: {createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                    { $group : {
+                        // "_id": "$_id", //rather use below
+                        "_id": null, //rather than only id we may need other fields for sort
+                        // "doc":{"$first":"$$ROOT"},  //pushing the entire document so that we can use all the fields                        
+                        "totalVisits": { "$sum": "$visits" }   //the main reason why this grouping was used: sum of the donations for each fundraisers
+                    }}
+                ]).exec(function (err2, docs2){    
+                    if(err2){
+                        console.log('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
+                        res.redirect('/404');
+                    }
+                    console.log("Log 2: "+ JSON.stringify(docs2));
+
+                    Fundraiser.aggregate([
+                        { "$unwind": {
+                            "path": "$donations",
+                            "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                        }},
+                        // { "$unwind": '$donations' },
+                        { $match: {"donations.createdDate": {
+                            $gte: today.toDate(),
+                            $lte: moment(today).endOf('day').toDate()
+                        }, createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                        { $group : {
+                            // "_id": "$_id",
+                            "_id": null,              
+                            "todaysDonations": { "$sum": "$donations.amount" }
+                            },
+                        }            
+                        
+                    ]).exec(function (err3, docs3){
+                        // console.log("donations:" + JSON.stringify(docs3));
+                        if(err3){
+                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err3, undefined, 2));
+                            res.redirect('/404');
+                        } else {
+                            if(docs3 != undefined && docs3 != null && docs3.length>0){
+                                console.log("Log 3: "+ JSON.stringify(docs3));
+                            } else {
+                                console.log("Log 3: 0");
+                            }
+                            Fundraiser.aggregate([
+                                { "$unwind": {
+                                    "path": "$donations",
+                                    "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                                }},
+                                // { "$unwind": '$donations' },
+                                { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                                { $group : {
+                                    // "_id": "$_id",
+                                    "_id": null,              
+                                    "totalDoantions": { "$sum": "$donations.amount" }
+                                    },
+                                }            
+                                
+                            ]).exec(function (err4, docs4){
+                                // console.log("donations:" + JSON.stringify(docs4));
+                                if(err4){
+                                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err4, undefined, 2));
+                                    res.redirect('/404');
+                                } else {
+                                    console.log("Log 4: "+ JSON.stringify(docs4));
+                                    Fundraiser.aggregate([
+                                        // { "$unwind": {
+                                        //     "path": "$donations",
+                                        //     "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                                        // }},
+                                        // { "$unwind": '$donations' },
+                                        { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                                        { $group : {
+                                            // "_id": "$_id",
+                                            "_id": null,              
+                                            // "totalDoantions": { "$sum": "$donations.amount" },
+                                            "totalAmount": { "$sum": "$amount" }
+                                            },
+                                        }            
+                                        
+                                    ]).exec(function (err5, docs5){
+                                        // console.log("donations:" + JSON.stringify(docs4));
+                                        if(err5){
+                                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err5, undefined, 2));
+                                            res.redirect('/404');
+                                        } else {
+                                            console.log("Log 5: "+ JSON.stringify(docs5));
+
+                                            Fundraiser.aggregate([
+                                                { "$unwind": {
+                                                    "path": "$donations",
+                                                    "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                                                }},
+                                                // { "$unwind": '$donations' },
+                                                { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                                                {$project : { 
+                                                    month : {$month : "$donations.createdDate"}, 
+                                                    year : {$year :  "$donations.createdDate"},
+                                                    "donations.amount" : 1
+                                                }}, 
+                                                { $group : {
+                                                    // "_id": "$_id",
+                                                    _id : {month : "$month" ,year : "$year" },             
+                                                    // "totalDoantions": { "$sum": "$donations.amount" },
+                                                    "monthlyAmount": { "$sum": "$donations.amount" }
+                                                    },
+                                                }            
+                                                
+                                            ]).exec(function (err6, docs6){
+                                                // console.log("donations:" + JSON.stringify(docs4));
+                                                if(err6){
+                                                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err6, undefined, 2));
+                                                    res.redirect('/404');
+                                                } else {
+                                                    console.log("Log 6: "+ JSON.stringify(docs6));
+                                                    
+                                                    Fundraiser.aggregate([
+                                                        { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) }},
+                                                        { "$unwind": {
+                                                            "path": "$donations",
+                                                            "preserveNullAndEmptyArrays": true  //This is needed when we want fundraisers which have empty or null donations to be included
+                                                        }},
+                                                        {$project : { 
+                                                            title : "$title",
+                                                            amount : "$amount", 
+                                                            donation : "$donations.amount",
+                                                            "donations.amount" : 1
+                                                        }},                                                        
+                                                        { $group : {
+                                                            // "_id": "$_id",
+                                                            _id : {_id: "$_id", amount : "$amount", donation : "$donation" },
+                                                            "doc":{"$first":"$$ROOT"},
+                                                            "totalDoantions": { "$sum": "$donations.amount" },
+                                                            "totalAmount": { "$sum": "$amount" }
+                                                            },
+                                                        }                                                        
+                                                    ]).exec(function (err7, docs7){
+                                                        // console.log("donations:" + JSON.stringify(docs4));
+                                                        if(err7){
+                                                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err7, undefined, 2));
+                                                            res.redirect('/404');
+                                                        } else {
+                                                            console.log("Log 7: "+ JSON.stringify(docs7));
+                                                            // console.log("Log 4: "+ JSON.stringify(docs4));
+                                                            res.render('../view/manage_fundraiser/dashboard', {
+                                                                fundraiser: docs, 
+                                                                totalVisits: docs2,//[0].totalVisits, 
+                                                                todaysDonations: docs3,//[0].todaysDonations,
+                                                                totalDonations: docs4,//[0].totalDonations,
+                                                                target: docs5,//[0].totalAmount,
+                                                                monthlyAmount: docs6,//[0],
+                                                                donations: docs7
+                                                            });
+                                                        }
+                                                    });
+                                                }
+                                            });                                            
+                                        }
+                                    });
+                                    
+                                }
+                            });
+                            
+                        }
+                    });
+                    
+                });
+                
             } else {
                 res.redirect('/404');
             }
