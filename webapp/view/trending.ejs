@@ -1,26 +1,29 @@
- <div id="trending" class="container">
+
+        <div id="trending" class="container">
                 <div class="row mt-5">
                     <h1 class="text-center w-100">Trending Fundraisers</h1>
                     <h6 class="text-center w-100">View the fundraisers that are most active right now!!!</h6>
-              </div>
-            </div>
+        </div>
+
 <div class="container">
+
   <div class="row mx-auto">
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
           <div class="col-md-3 ">
-            <div class="card card-custom bg-white border-white border-0 ">
+            <div class="card card-custom bg-white border-white border-0 glide__slide  ">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.image%>);"></div>
               <div class="card-custom-avatar">
-                    <%   if( fr.user[0].image != undefined && fr.user[0].image != null){ %>
-                        <img class="img-fluid" src="/view/images/users/<%= fr.user[0].image %>" alt="Avatar" />
+                 
+                    <%   if( fr.user.image != undefined && fr.user.image != null){ %>
+                        <img class="img-fluid" src="../view/images/<%=fr.createdBy.image%>" alt="Avatar" />
                 <%}else{%>
                   <img class="img-fluid" src="/view/images/user_placeholder.png" alt="Avatar" /> 
             <%}%>
               </div>
               <div class="card-body" style="overflow-y: auto">
                 <a href="browseFundraiser/<%= fr.categoryId %>"><span class="badge badge-dark"><%= fr.category.categoryName%></span></a>
-                <h4 class="card-title"><a href="/fundraiser/view_fundraiser/<%=fr._id%>"><%=fr.title%></h4> </a>
+                <h4 class="card-title"><a class="stretched-link" href="/fundraiser/view_fundraiser/<%=fr._id%>"><%=fr.title%></h4> </a>
                 <p class="card-text">By: <%= fr.user[0].fullName %></p>
                 <p class="card-text"><%=fr.description%></p>
                 <% for(var i =0; i < donationArray.length; i++) { %>
@@ -28,11 +31,7 @@
                     <%   percentage = Math.round((donationArray[i].totalDonations/fr.amount) *100) %>
                 <div class="d-flex justify-content-between">
                     <div><b>$<%= donationArray[i].totalDonations %></b> raised</div>
-                   <% if (percentage < 100) { %>
                     <div><%=percentage%>%</div>
-                    <%}else{ %>
-                      <%= 100%>%
-                      <%}%>
                </div>
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <%=percentage%>%" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100"></div>          
@@ -47,18 +46,17 @@
                   <%}%>
                 <%}%>    
               </div>
-              <div class="card-footer" style="background: inherit; border-color: inherit;">
+              <!-- <div class="card-footer" style="background: inherit; border-color: inherit;">
                 <a href="/fundraiser/view_fundraiser/<%=fr._id%>" class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
-              </div>
+              </div> -->
             </div>
-        </div>
+          </div>
         <% }); %>
-        <%}%> 
+        <%}%>
       </div>
       </div>
     </div>
   </div>
   </div> 
-</div>
 </div>
