@@ -54,9 +54,6 @@ router.get('/withdraw/:fundraiserId',ensureAuthenticated, (req, res) => {
     });
 });    
         
-  
 
-
-
- 
 module.exports = router;
+
