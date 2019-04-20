@@ -155,8 +155,8 @@ router.get('/view_fundraiser/:id', (req, res) => {
     req.session.returnTo = req.originalUrl;
     console.log("curl="+req.session.returnTo);
 
-    fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]',{sort:{amount: -1}}).populate('donations.userId').exec(function(err,event){
-        if(err){res.send(err)}
+    fundraiser.findById({"_id":req.params.id}).populate('createdBy').populate('donations[]',{sort:{createdDate: -1}}).populate('donations.userId').exec(function(err,event){
+        if(err){res.redirect('/404');}
         //image = "../view/images/"+event.image;// event.image.replace(/\\/g, "/");
             console.log("-----------------------");
             console.log(event);
@@ -395,5 +395,8 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         });
     });
 });
+
+
+
 
 module.exports = router;

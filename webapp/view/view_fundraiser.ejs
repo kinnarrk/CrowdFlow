@@ -10,16 +10,16 @@
 
   <!-- Page Content -->
 
-  <div class="container mx-5 ">
+  <div class="container">
 
     <div>
-        <% include ../partials/messages %>
+      <% include ../partials/messages %>
 
     </div>
-    
-    
-    <div class="col-md-12 text-center my-3">
-      <h2><%= event.title %></h2> <!-- Title -->
+
+
+    <div class="col-md-12 text-center bg-info">
+      <h2 class = "text-white py-3 text-capitalize font-weight-bold"><%= event.title %></h2> <!-- Title -->
 
     </div>
 
@@ -39,8 +39,8 @@
 
         <!-- Preview Image -->
         <div>
-          <img class="img-fluid rounded" src="/view/images/fundraisers/<%= event.image %>" alt="<%= event.image %> ">
-          <div class="text-center">
+          <img class="img-fluid rounded" src="/view/images/fundraisers/<%= event.image %>" alt="<%= event.image %> " style = "width:100%">
+          <div class="text-center font-weight-light text-muted small">
             <%= event.description%>
           </div>
 
@@ -70,7 +70,7 @@
 
 
             <div class="text-center mt-3 font-weight-bold">About the Fundraiser</div>
-            <p class="text-justify ">
+            <p class="text-justify lead">
 
               <%- event.story %>
 
@@ -99,22 +99,47 @@
 
             <hr>
             <% for(var i =0 ; i< comments_list.length; i++) { %>
+            <div class="card mt-3">
 
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
-                  <div class="col-md-4">
-                    <img src="/view/images/users/<%= comments_list[i].createdBy.image%>" class="card-img" alt="...">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= comments_list[i].createdBy.fullName %></h5>
-                      <p class="card-text"><%= comments_list[i].comment %></p>
-                      <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+              <div class="row">
+                <div class="col-10">
+                  <div class="card-body">
+                    <div class="media">
+                      <img src="/view/images/users/<%= comments_list[i].createdBy.image%>" class="align-self-start mr-3"
+                        alt="..." style="width:100px;">
+
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= comments_list[i].createdBy.fullName %></h5>
+
+                        <%= comments_list[i].comment %>
+                      </div>
+
                     </div>
+
+
                   </div>
+
                 </div>
               </div>
-              <% } %>
+            
+                
+                
+
+             
+              
+              
+               
+
+            </div>
+           
+
+
+
+
+
+
+           
+            <% } %>
 
 
           </div>
@@ -141,26 +166,32 @@
             <% } %>
             <br>
 
-<!-- comments list -->
-            
-              <% for(var i =0 ; i<comments_list.length; i++) { %>
+            <!-- comments list -->
+
+            <% for(var i =0 ; i<comments_list.length; i++) { %>
 
 
-                  <div class="card mb-3" style="max-width: 540px;">
-                      <div class="row no-gutters">
-                        <div class="col-md-4">
-                          <img src="/view/images/users/<%= comments_list[i].createdBy.image %>" class="card-img" alt="/view/images/users/<%= comments_list[i].createdBy.image %>">
-                        </div>
-                        <div class="col-md-8">
-                          <div class="card-body">
-                            <h5 class="card-title"><%= comments_list[i].createdBy.fullName %></h5>
-                            <p class="card-text"><%= comments_list[i].comment %></p>
-                            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                          </div>
-                        </div>
+            <div class="card mt-3">
+
+              <div class="row">
+                <div class="col-10">
+                  <div class="card-body">
+                    <div class="media">
+                      <img src="/view/images/users/<%= comments_list[i].createdBy.image%>" class="align-self-start mr-3"
+                        alt="..." style="width:100px;">
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= comments_list[i].createdBy.fullName %></h5>
+
+                        <%= comments_list[i].comment %>
                       </div>
                     </div>
 
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
 
 
 
@@ -170,13 +201,14 @@
 
 
 
-              <% } %>
-            
+
+            <% } %>
+
 
 
 
           </div>
-          <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> -->
+
         </div>
 
 
@@ -186,15 +218,15 @@
 
 
 
-        
+
 
 
         <hr>
 
-       
 
 
- 
+
+
 
 
 
@@ -212,9 +244,9 @@
             <!-- <div class="col-lg-10" style="height:90px;"> -->
             <!-- <button type="button" class="btn btn-lg btn-primary"><i class="fab fa-facebook-f pr-1"></i> Facebook</button> -->
             <div class="list-group-item text-center">
-                <% include  ../view/share %>
+              <% include  ../view/share %>
             </div>
-            
+
             <br>
             <div class="list-group-item border-0 text-center">
 
@@ -232,7 +264,7 @@
                   <div class="modal-content ">
                     <div class="modal-header ">
 
-                      <h5 class="modal-title text-info font-weight-bold" id="exampleModalLabel">Choose the donation
+                      <h5 class="modal-title text-info font-weight-bold" id="exampleModalLabel">Enter the donation
                         amount</h5>
 
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -242,102 +274,103 @@
                     </div>
                     <div class="modal-body ">
 
-                        <img src="/view/images/donate_modal_thank_you.jpg" class="card-img-top" alt="...">
+                      <img src="/view/images/donate_modal_thank_you.jpg" class="card-img-top" alt="...">
+                      <br>
+                      <% if(user == undefined) { %>
+                      <span>You are not logged in. Please <a href="/users/login">Login</a> in to make a donation.</span>
+                      <% } else {%>
+
+
+                      <form action="/donate/donatePaypal/<%= event._id %>" method="POST">
                         <br>
-                        <% if(user == undefined) { %>
-                          <span>You are not logged in. Please <a href="/users/login">Login</a> in to make a donation.</span>
-                          <% } else {%>
-
-
-                        <form action="/donate/donatePaypal/<%= event._id %>" method="POST">
-                          <br>
-                            <div class="form-group">
-                                <div class="input-group flex-nowrap">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="addon-wrapping">Amount</span>
-                                    </div>
-                                    <input type="number" class="form-control " placeholder="donotion amount" name="amount"
-                                      aria-label="amount" aria-describedby="addon-wrapping" min = "1"required>
-                                    <!-- <select class="custom-select" id="inputGroupSelect01">
+                        <div class="form-group">
+                          <div class="input-group flex-nowrap">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="addon-wrapping">Amount</span>
+                            </div>
+                            <input type="number" class="form-control " placeholder="donotion amount" name="amount"
+                              aria-label="amount" aria-describedby="addon-wrapping" min="1" required>
+                            <!-- <select class="custom-select" id="inputGroupSelect01">
                                                   <option selected>Choose...</option>
                                                   <option value="10">One</option>
                                                   <option value="30">Two</option>
                                                   <option value="80">Three</option>
                                                 </select> -->
-      
-                                    <div class="input-group-append">
-                                      <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-                                    </div>
-                                  </div>
-                                  
-                               
 
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                             </div>
-                            <div class="form-group">
+                          </div>
 
-                                <div class="input-group flex-nowrap">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="addon-wrapping">Name</span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="donor's name" name="fullName"
-                                      aria-label="fullName" aria-describedby="addon-wrapping" value="<%= user.fullName%>" required>
-      
-                                    <div class="input-group-append">
-                                      <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                    </div>
-                                  </div>
-                              
+
+
+                        </div>
+                        <div class="form-group">
+
+                          <div class="input-group flex-nowrap">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="addon-wrapping">Name</span>
                             </div>
-                            <div class="form-group">
+                            <input type="text" class="form-control" placeholder="donor's name" name="fullName"
+                              aria-label="fullName" aria-describedby="addon-wrapping" value="<%= user.fullName%>"
+                              required>
 
-                                <div class="input-group flex-nowrap">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="addon-wrapping">Phone</span>
-                                    </div>
-                                    <input type="text" class="form-control " placeholder="donor's phone number" name="phone"
-                                      aria-label="phone" aria-describedby="addon-wrapping" value="<%= user.phone%>" required>
-      
-                                    <div class="input-group-append">
-                                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                    </div>
-                                  </div>
-                              
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <div class ="form-group">
+                          </div>
 
-                                <div class="input-group flex-nowrap">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="addon-wrapping">City</span>
-                                    </div>
-                                    <input type="text" class="form-control " placeholder="city" name="city" aria-label="city"
-                                      aria-describedby="addon-wrapping" value="<%= user.city%>">
-      
-                                    <div class="input-group-append">
-                                      <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
-                                    </div>
-                                  </div>
+                        </div>
+                        <div class="form-group">
 
+                          <div class="input-group flex-nowrap">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="addon-wrapping">Phone</span>
                             </div>
-                            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                          
+                            <input type="text" class="form-control " placeholder="donor's phone number" name="phone"
+                              aria-label="phone" aria-describedby="addon-wrapping" value="<%= user.phone%>" required>
 
-                     
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="form-group">
+
+                          <div class="input-group flex-nowrap">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="addon-wrapping">City</span>
+                            </div>
+                            <input type="text" class="form-control " placeholder="city" name="city" aria-label="city"
+                              aria-describedby="addon-wrapping" value="<%= user.city%>">
+
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fas fa-map-marker"></i></span>
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
+
+
 
 
 
 
 
                     </div>
-                    
+
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      
-                      <button type ="submit" class="btn btn-primary">Proceed to Pay</button>
+
+                      <button type="submit" class="btn btn-primary">Proceed to Pay</button>
                     </div>
-                    
+
                     <br>
-                  </form>
-                  <% } %>
+                    </form>
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -345,7 +378,7 @@
             </div>
             <br>
 
-            <h2><i class="fas fa-dollar-sign"></i> <%= currentamount%> </h2>
+            <h2 class="large"><i class="fas fa-dollar-sign small"></i> <%= currentamount%> </h2>
 
             <p class="">raised of <b>&nbsp<i class="fas fa-dollar-sign"></i> <%= event.amount%></b> goal</p>
 
@@ -380,7 +413,8 @@
                       alt="Avatar" />
                     <% } else { %>
                     <img class="rounded-circle mx-auto d-block img-fluid"
-                      src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar" />
+                      src="/view/images/users/<%= event.createdBy.image%>" alt="Avatar"
+                      style="width:60px;height:60px;" />
                     <% } %>
 
 
@@ -392,7 +426,7 @@
                     <!-- <br> -->
 
 
-                    <span class="text-info small font-weight-bold"><%= event.createdBy.fullName%></span>
+                    <span class="text-info small font-weight-bold text-capitalize"><%= event.createdBy.fullName%></span>
                     <br>
 
                     <span class="fa fa-phone fa-fw text-muted" data-toggle="tooltip" title=""
@@ -443,23 +477,25 @@
 
                 <% for(var j=0; j<event.donations.length;j++) { %>
                 <ul class="list-group list-group-horizontal ">
-                  <li class="list-group-item border-0">
+                  <li class="list-group-item border-0 px-0">
 
                     <% if(event.createdBy.image == null || event.createdBy.image == undefined) {%>
                     <img class="rounded-circle mx-auto d-block img-fluid" src="/view/images/user_placeholder.png"
                       alt="Avatar" />
                     <% } else { %>
                     <img class="rounded-circle mx-auto d-block img-fluid"
-                      src="/view/images/users/<%= event.donations[j].userId.image%>" alt="Avatar" />
+                      src="/view/images/users/<%= event.donations[j].userId.image%>" alt="Avatar"
+                      style="width:30px;height:30px;" />
                     <% } %>
 
 
                   </li>
 
 
-                  <li class="list-group-item border-0 "><%= event.donations[j].userId.fullName%></li>
+                  <li class="list-group-item border-0 text-capitalize small"><%= event.donations[j].userId.fullName%>
+                  </li>
 
-                  <li class="list-group-item border-0 text-info">$<%= event.donations[j].amount%></li>
+                  <li class="list-group-item border-0 text-info small ">$<%= event.donations[j].amount%></li>
                 </ul>
                 <% } %>
 
