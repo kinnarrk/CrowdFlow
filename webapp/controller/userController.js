@@ -197,7 +197,7 @@ router.get('/profile', ensureAuthenticated, (req, res) => {
                 }
             }
         ]).exec((error, array) => {
-
+            console.log("DONATIONS="+JSON.stringify(array));
             Comment.find({
                 createdBy: req.user._id
             })
