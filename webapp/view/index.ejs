@@ -404,6 +404,10 @@
 <script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
 <script>
     $(function() {
+        $(document).ready(function(){
+  $('.owl-carousel').owlCarousel();
+});
+
         $("#myCarousel").on("slide.bs.carousel", function(e) {
     var $e = $(e.relatedTarget);
     var idx = $e.index();
