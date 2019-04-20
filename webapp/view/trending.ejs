@@ -24,7 +24,7 @@
               </div>
               <div class="card-body" style="overflow-y: auto">
                 <a href="browseFundraiser/<%= fr.categoryId %>"><span class="badge badge-dark"><%= fr.category.categoryName%></span></a>
-                <h4 class="card-title"><a href="/fundraiser/view_fundraiser/<%=fr._id%>"><%=fr.title%></h4> </a>
+                <h4 class="card-title"><a class="stretched-link" href="/fundraiser/view_fundraiser/<%=fr._id%>"><%=fr.title%></h4> </a>
                 <p class="card-text">By: <%= fr.user[0].fullName %></p>
                 <p class="card-text"><%=fr.description%></p>
                 <% for(var i =0; i < donationArray.length; i++) { %>
@@ -47,10 +47,10 @@
                   <%}%>
                 <%}%>    
               </div>
-              <div class="card-footer" style="background: inherit; border-color: inherit;">
+              <!-- <div class="card-footer" style="background: inherit; border-color: inherit;">
                 <a href="/fundraiser/view_fundraiser/<%=fr._id%>" class="btn btn-primary">View</a>
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
-              </div>
+              </div> -->
             </div>
           </div>
         <% }); %>
