@@ -41,10 +41,10 @@ router.get('/withdraw/:fundraiserId',ensureAuthenticated, (req, res) => {
                 fundraiser.findOne({
                     _id: req.params.fundraiserId
                 }).then(sample => {
-                    if(sample.amount < req.body.amount[0] ){
-                        res.render('../view/manage_fundraiser/requestWithdrawal_success',{fundraiser: fundraiser });
+                    if(sample.amount > req.body.amount[0] ){
+                        res.render('../view/manage_fundraiser/requestWithdrawal_success',{fundraiser: sample });
                     }else {
-                        res.render('../view/manage_fundraiser/requestWithdrawal_failure',{fundraiser: fundraiser });
+                        res.render('../view/manage_fundraiser/requestWithdrawal_failure',{fundraiser: sample });
                     } 
                  
                 }).catch((err) => {
