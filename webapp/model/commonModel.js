@@ -104,6 +104,7 @@ var fundraiserSchema = new Schema({
     phone : {type: String, required: true},
     city : {type: String},
     story : {type: String},
+    visits: {type: Number},
     donations : [donationSchema]   //added on 15/4 for easier retrieval
  });
  var Fundraiser = mongoose.model('Fundraiser', fundraiserSchema);

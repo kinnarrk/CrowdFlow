@@ -1,98 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <%- include('../../partials/manage_fundraiser/head', {fundraiser: fundraiser }); %>
 
 <body>
-  <div class="wrapper">
-    <!-- Side Navigation -->
-    <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser, page: 'requestWithdrawal' }); %>
+    <div class="wrapper">
+        <!-- Side Navigation -->
+        <%- include('../../partials/manage_fundraiser/nav', {fundraiser: fundraiser,  page: 'withdrawalHistory' }); %>
 
-    <!-- Page Content Holder -->
-    <div id="content">
+        <!-- Page Content Holder -->
+        <div id="content">
 
-      <!-- Top Navigation -->
-      <% include ../../partials/manage_fundraiser/nav_top %>
+            <!-- Top Navigation -->
+            <%- include ../../partials/manage_fundraiser/nav_top %>
+            <div class="fluid-container">
+                <h1 class="container text-left">Request Withdrawal</h1>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <form method="post" id="withdraw" name="withdraw">
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Fundraiser Title
+                              </label>
+                              <input class="form-control" id="amount" name="amount" disabled placeholder="<%= fundraiser.title%>" />
+                            </div>
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Target Date
+                              </label>
+                              <input class="form-control" id="amount" name="amount" disabled
+                                placeholder="<%= fundraiser.targetDate%>" />
+                            </div>
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Created Date
+                              </label>
+                              <input class="form-control" id="amount" name="amount" disabled
+                                placeholder="<%= fundraiser.description%>" />
+                            </div>
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Target Amount
+                              </label>
+                              <input class="form-control" id="amount" name="amount" disabled placeholder="<%= fundraiser.amount%>" />
+                            </div>
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Description
+                              </label>
+                              <input class="form-control" id="amount" name="amount" disabled
+                                placeholder="<%= fundraiser.description%>" />
+                            </div>
+                        
+                            <div class="form-group ">
+                              <label class="control-label " for="amount">
+                                Enter the Amount to Withdraw
+                              </label>
+                              <input class="form-control" id="amount" name="amount" />
+                            </div>
+                            <div class="form-group">
+                              <img class="img-fluid" src="../../view/images/Beneficiary.jpg">
+                            </div>
+                            <div>
+                              <button class="btn btn-primary " name="amount" type="submit">
+                                Submit
+                              </button>
+                            </div>
+                        </div>
+                        </form>
+                        
+                </div>
+               
+            </div>
+
+            <% include ../../partials/manage_fundraiser/footer %>
+            <% include ../../partials/manage_fundraiser/scripts %>
+        </div>
+    </div>
+    <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+      $(function () {
   
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <form method="post" id="withdraw" name="withdraw">
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Fundraiser Title
-                </label>
-                <input class="form-control" id="amount" name="amount" disabled placeholder="<%= fundraiser.title%>" />
-              </div>
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Target Date
-                </label>
-                <input class="form-control" id="amount" name="amount" disabled
-                  placeholder="<%= fundraiser.targetDate%>" />
-              </div>
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Created Date
-                </label>
-                <input class="form-control" id="amount" name="amount" disabled
-                  placeholder="<%= fundraiser.description%>" />
-              </div>
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Target Amount
-                </label>
-                <input class="form-control" id="amount" name="amount" disabled placeholder="<%= fundraiser.amount%>" />
-              </div>
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Description
-                </label>
-                <input class="form-control" id="amount" name="amount" disabled
-                  placeholder="<%= fundraiser.description%>" />
-              </div>
-
-              <div class="form-group ">
-                <label class="control-label " for="amount">
-                  Enter the Amount to Withdraw
-                </label>
-                <input class="form-control" id="amount" name="amount" />
-              </div>
-              <div class="form-group">
-                <img class="img-fluid" src="../../view/images/Beneficiary.jpg">
-              </div>
-              <div>
-                <button class="btn btn-primary " name="amount" type="submit">
-                  Submit
-                </button>
-              </div>
-          </div>
-        </div>
-        </form>
-        </div>
-      </div>
-
-  </div>
-  <% include ../../partials/manage_fundraiser/footer %>
-  <% include ../../partials/manage_fundraiser/scripts %>
-  </div>
-  </div>
-  <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
-  <script>
-    $(function () {
-
-      $("#withdraw").validate({
-        rules: {
-          amount: {
-            required: true,
-            number: true
+        $("#withdraw").validate({
+          rules: {
+            amount: {
+              required: true,
+              number: true
+            },
           },
-        },
-        messages: {
-          address: {
-            required: 'Please enter Address',
-            minlength: 'Amount should be Valid'
+          messages: {
+            address: {
+              required: 'Please enter Address',
+              minlength: 'Amount should be Valid'
+            }
           }
-        }
+        });
       });
-    });
-  </script>
+    </script>
+ </body>
+
+</html>
+
