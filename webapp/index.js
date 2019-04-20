@@ -83,6 +83,7 @@ app.use('/AboutUs',require('./controller/AboutUsController'));
 app.use('/Jobs',require('./controller/Jobs'));
 app.use('/OurPatners',require('./controller/OurPatners'));
 app.use('/FundraiserTips',require('./controller/FundraiserTips'));
+app.use('/ContactUs',require('./controller/ContactUs'));
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
 app.use('/donate', require('./controller/donationController'));
 
