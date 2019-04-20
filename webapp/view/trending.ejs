@@ -1,6 +1,6 @@
 
         <div id="trending" class="container">
-                <div class="row mt-5">
+                <div class="row mt-5 mb-3">
                     <h1 class="text-center w-100">Trending Fundraisers</h1>
                     <h6 class="text-center w-100">View the fundraisers that are most active right now!!!</h6>
               </div>
@@ -11,7 +11,7 @@
   <div class="row mx-auto">
         <% if(typeof trendingFundRaisers != 'undefined') {  %>
         <% trendingFundRaisers.forEach(function(fr){ %>
-          <div class="col-md-3 ">
+          <div class="col-md-3">
             <div class="card card-custom bg-white border-white border-0">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.image%>);"></div>
               <div class="card-custom-avatar">

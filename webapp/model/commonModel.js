@@ -58,7 +58,8 @@ var categorySchema = new Schema({
 //Cause Schema
 var causeSchema = new Schema({
     name : {type: String, required: true},
-    description : {type: String}
+    description : {type: String},
+    image : {type: String}
 });
 var Cause = mongoose.model('Cause', causeSchema);
 
