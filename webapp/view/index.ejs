@@ -15,6 +15,7 @@
  </section> -->
 
     <div class="container-fluid">
+
         <div id="carousel-example" class="carousel slide carousel-fade" data-ride="carousel">
 
             <ol class="carousel-indicators">
@@ -388,6 +389,10 @@
 <script src="/node_modules/owl.carousel/dist/owl.carousel.min.js"></script>
 <script>
     $(function() {
+        $(document).ready(function(){
+  $('.owl-carousel').owlCarousel();
+});
+
         $("#myCarousel").on("slide.bs.carousel", function(e) {
     var $e = $(e.relatedTarget);
     var idx = $e.index();
