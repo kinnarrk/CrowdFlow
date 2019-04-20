@@ -9,6 +9,7 @@ var causes;
 const Category = model.Category;
 const Donation = model.Donation;
 const objectID = require('mongodb').ObjectID;
+var logger = require('../config/log');
 
 router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
@@ -30,7 +31,9 @@ router.use(function (req, res, next) {
 
 router.get('/:categoryId?', (req, res) => {
     // console.log("param category:" + req.params.categoryId + ":");
-
+    // logger.log('info', 'test message %s', 'my string');
+    logger.info('Test logger message');
+    logger.error('Test error message');
     if(req.params.categoryId == undefined){
 
         fundraiser.aggregate([

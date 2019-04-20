@@ -3,6 +3,13 @@
     <% include ../partials/head %>
 
     <link href="../../view/css/style.css" rel="stylesheet">
+    <style>
+      .card-side {
+          box-shadow : -1px 9px 40px -12px rgba(0,0,0,0.75) !important; 
+          -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75) !important; 
+          -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75) !important; 
+      }
+    </style>
 <body>
 
   <!-- Navigation -->
@@ -17,7 +24,7 @@
       <div class="col-md-3">
 
         <!-- Search Widget -->
-        <div class="card my-3">
+        <div class="card card-side my-3">
           <h5 class="card-header">Categories</h5>
           <div class="card-body">
             <div class="list-group">
@@ -31,7 +38,7 @@
       </div>
 
       <!-- Post Content Column -->
-      <div class="col-md-9 pt-3" style="margin-bottom:80px;">
+      <div class="col-md-9 pt-3">
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
           <!-- Navbar content -->          
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -44,10 +51,12 @@
           </div>
         </nav>
         <br>
-        <div class="row">
+        <div class="container">
+          <div class="card-columns">
+        <!-- <div class="row"> -->
         <% fundraisers.forEach(function(fr){ %>
           <!-- <%= fr._id.id %> -->
-          <div class="col-md-4">
+          <!-- <div class="col-md-4"> -->
             <div class="card card-custom bg-white border-white border-0">
               <div class="card-custom-img" style="background-image: url(/view/images/fundraisers/<%=fr.doc.image%>);"></div>
               <div class="card-custom-avatar">
@@ -85,10 +94,11 @@
                 <a href="#" class="btn btn-outline-primary">Other option</a>                
               </div> -->
             </div>
-          </div>
+          <!-- </div> -->
         <% }); %>
-      </div>
-        
+      <!-- </div> -->
+        </div>
+        </div>
       </div>
       
       

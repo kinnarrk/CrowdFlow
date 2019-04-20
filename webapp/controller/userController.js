@@ -266,8 +266,9 @@ router.post('/update-profile-pic/:id', (req, res) => {
     }, (err, arr) => {
         profileImage.mv("./view/images/users/" + req.params.id + '.png', function (err1) {
             if (err1) {
-                return res.status(500).send(err1);
+                res.redirect('/404');
             }
+
             req.flash(
                 'success_msg',
                 'Profile picture updated successfully'
