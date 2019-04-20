@@ -65,8 +65,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-
-
 //Setup Routes
 app.use('/', require('./controller/appController'));
 app.use('/users', require('./controller/userController'));
@@ -86,6 +84,7 @@ app.use('/FundraiserTips',require('./controller/FundraiserTips'));
 app.use('/ContactUs',require('./controller/ContactUs'));
 app.use('/manageFundraiser', require('./controller/manageFundraiserController'));
 app.use('/donate', require('./controller/donationController'));
+app.use('/withdrawHistory', require('./controller/withdrawHistory'));
 
 
 // start our server

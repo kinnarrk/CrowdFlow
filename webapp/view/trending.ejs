@@ -32,7 +32,7 @@
                     <%   percentage = Math.round((donationArray[i].totalDonations/fr.amount) *100) %>
                 <div class="d-flex justify-content-between">
                     <div><b>$<%= donationArray[i].totalDonations %></b> raised</div>
-                   <% if (percentage < 0) { %>
+                   <% if (percentage < 100) { %>
                     <div><%=percentage%>%</div>
                     <%}else{ %>
                       <%= 100%>%
