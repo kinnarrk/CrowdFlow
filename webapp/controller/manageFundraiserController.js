@@ -14,7 +14,8 @@ const Cause = model.Cause;
 const Comment = model.Comment;
 const Beneficiary = model.Beneficiary;
 const objectID = require('mongodb').ObjectID;
-const moment = require('moment')
+const moment = require('moment');
+var logger = require('../config/log');
 
 const today = moment().startOf('day')
 
@@ -23,7 +24,7 @@ const today = moment().startOf('day')
 router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
         if (err) {
-            console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         causes = arr;
@@ -32,7 +33,7 @@ router.use(function (req, res, next) {
         isDeleted: false
     }, (err, arr) => {
         if (err) {
-            console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         categories = arr;
@@ -108,7 +109,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
             } //sorting the result in descending order with respect to createdDate. _id.createdDate because in group we have pushed created date in group result in id field
         ]).exec(function (err, docs) {
             if (err) {
-                console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
                 res.redirect('/404');
             }
             if (docs.length > 0) {
@@ -125,7 +126,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                     }}
                 ]).exec(function (err2, docs2){    
                     if(err2){
-                        console.log('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
+                        logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
                         res.redirect('/404');
                     }
                     console.log("Log 2: "+ JSON.stringify(docs2));
@@ -150,13 +151,13 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                     ]).exec(function (err3, docs3){
                         // console.log("donations:" + JSON.stringify(docs3));
                         if(err3){
-                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err3, undefined, 2));
+                            logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err3, undefined, 2));
                             res.redirect('/404');
                         } else {
                             if(docs3 != undefined && docs3 != null && docs3.length>0){
-                                console.log("Log 3: "+ JSON.stringify(docs3));
+                                logger.info("Log 3: "+ JSON.stringify(docs3));
                             } else {
-                                console.log("Log 3: 0");
+                                logger.info("Log 3: 0");
                             }
                             Fundraiser.aggregate([
                                 { "$unwind": {
@@ -175,10 +176,10 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                             ]).exec(function (err4, docs4){
                                 // console.log("donations:" + JSON.stringify(docs4));
                                 if(err4){
-                                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err4, undefined, 2));
+                                    logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err4, undefined, 2));
                                     res.redirect('/404');
                                 } else {
-                                    console.log("Log 4: "+ JSON.stringify(docs4));
+                                    logger.info("Log 4: "+ JSON.stringify(docs4));
                                     Fundraiser.aggregate([
                                         // { "$unwind": {
                                         //     "path": "$donations",
@@ -197,10 +198,10 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                                     ]).exec(function (err5, docs5){
                                         // console.log("donations:" + JSON.stringify(docs4));
                                         if(err5){
-                                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err5, undefined, 2));
+                                            logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err5, undefined, 2));
                                             res.redirect('/404');
                                         } else {
-                                            console.log("Log 5: "+ JSON.stringify(docs5));
+                                            logger.info("Log 5: "+ JSON.stringify(docs5));
 
                                             Fundraiser.aggregate([
                                                 { "$unwind": {
@@ -225,10 +226,10 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                                             ]).exec(function (err6, docs6){
                                                 // console.log("donations:" + JSON.stringify(docs4));
                                                 if(err6){
-                                                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err6, undefined, 2));
+                                                    logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err6, undefined, 2));
                                                     res.redirect('/404');
                                                 } else {
-                                                    console.log("Log 6: "+ JSON.stringify(docs6));
+                                                    logger.info("Log 6: "+ JSON.stringify(docs6));
                                                     
                                                     Fundraiser.aggregate([
                                                         { $match: { createdBy: mongoose.Types.ObjectId(req.user._id) }},
@@ -253,10 +254,10 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                                                     ]).exec(function (err7, docs7){
                                                         // console.log("donations:" + JSON.stringify(docs4));
                                                         if(err7){
-                                                            console.log('Error in retrieving fundraisers: ' + JSON.stringify(err7, undefined, 2));
+                                                            logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err7, undefined, 2));
                                                             res.redirect('/404');
                                                         } else {
-                                                            console.log("Log 7: "+ JSON.stringify(docs7));
+                                                            logger.info("Log 7: "+ JSON.stringify(docs7));
                                                             // console.log("Log 4: "+ JSON.stringify(docs4));
                                                             res.render('../view/manage_fundraiser/dashboard', {
                                                                 fundraiser: docs, 
@@ -307,7 +308,7 @@ router.get('/donation/:id', ensureAuthenticated, (req, res) => {
     if (objectID.isValid(req.params.id)) {
         
         Fundraiser.findById(req.params.id).populate('donations.userId').exec((error, array)=> {
-            console.log("ARRRaa="+JSON.stringify(array));
+            logger.info("ARRRaa="+JSON.stringify(array));
             res.render('../view/manage_fundraiser/donationFundraiser', {
                 fundraiser : array
             });

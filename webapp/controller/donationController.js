@@ -13,6 +13,7 @@ const objectID = require('mongodb').ObjectID;
 var paypal = require('paypal-rest-sdk');
 var path = require('path');
 const {ensureAuthenticated } = require('../config/auth');
+var logger = require('../config/log');
 // var logger = require('../config/log');
 
 // var bodyParser = require('body-parser');
@@ -30,14 +31,14 @@ paypal.configure({
 router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
         if(err) {
-            console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         causes = arr;
     });
     Category.find({isDeleted: false}, (err, arr) => {
         if(err) {
-            console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         categories = arr;
@@ -47,7 +48,7 @@ router.use(function (req, res, next) {
 
 // start payment process 
 router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) => {
-    console.log("Inside donate through paypal");
+    // console.log("Inside donate through paypal");
     // console.log("Body:::: " + JSON.stringify(req.body));
     var invoiceId = 'INV000000001';
     var tax = 0.08;
@@ -61,7 +62,7 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
             }
             User.findByIdAndUpdate(req.user._id,{$set: user}, (err,doc)=>{
                 if(err){
-                    console.log('Error in updating user: ' + JSON.stringify(err, undefined, 2));
+                    logger.error('Error in updating user: ' + JSON.stringify(err, undefined, 2));
                     // res.redirect('/404');
                     // return;
                 }
@@ -78,9 +79,9 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                     },
                 }
             ]).exec(function (err, docs){
-                console.log("donations:" + JSON.stringify(docs));
+                // console.log("donations:" + JSON.stringify(docs));
                 if(err){
-                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                    logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
                     res.redirect('/404');
                 }
                 if(docs.length > 0){
@@ -93,10 +94,10 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                 console.log("finalId:" + invoiceId);
                 Fundraiser.findOne({_id: req.params.fundraiserId}).exec(function (err2, docs2) {
                     if(err2){
-                        console.log('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
+                        logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err2, undefined, 2));
                         res.redirect('/404');
                     }
-                    console.log("docs2: " + JSON.stringify(docs2));
+                    // console.log("docs2: " + JSON.stringify(docs2));
                     // create payment object (JSON)
                     var payment = {
                         "intent": "authorize",
@@ -133,7 +134,7 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                         }]
                     };
         
-                    console.log("payment json: " + JSON.stringify(payment));
+                    // console.log("payment json: " + JSON.stringify(payment));
                     // call the create Pay method 
                     createPay( payment )
                         .then( ( transaction ) => {
@@ -148,7 +149,7 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
                             }
                         })
                         .catch( ( err ) => { 
-                            console.log( JSON.stringify(err) ); 
+                            logger.error('Error in payment' + JSON.stringify(err) ); 
                             res.redirect('/donate/err');
                         });
                 });
@@ -156,12 +157,12 @@ router.post('/donatePaypal/:fundraiserId', ensureAuthenticated, ( req , res ) =>
 
             
         } else {
-            console.log("Fundraiser id is not defined");
+            logger.warn("Fundraiser id is not defined");
             res.redirect('/404');
         }
     
     } else {
-        console.log("Amount is not passed in parameter");
+        logger.warn("Amount is not passed in parameter");
         res.redirect('/404');
     }
 });
@@ -175,7 +176,7 @@ router.get('/success' , (req ,res ) => {
 
     paypal.payment.get(req.query.paymentId, function (error, payment) {
         if (error) {
-            console.log(error);
+            logger.error('Error in getting payment details: '+error);
             res.redirect('/404');
         } else {
             // console.log("Get Payment Response");
@@ -198,7 +199,7 @@ router.get('/success' , (req ,res ) => {
                 fr.donations.push(donation);
                 fr.save((err, doc) => {
                     if(!err) {
-                        console.log('Donation added');
+                        logger.info('Donation added');
                         // res.send("Success");    
                         
                             req.flash(
@@ -210,7 +211,7 @@ router.get('/success' , (req ,res ) => {
                         res.redirect('/fundraiser/view_fundraiser/'+payment.transactions[0].item_list.items[0].description+'?donation=success');                    
                     }
                     else {           
-                        console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
+                        logger.error('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
                         res.redirect('/404');
                     }
                 });
@@ -223,7 +224,7 @@ router.get('/success' , (req ,res ) => {
 
 // error page 
 router.get('/err' , (req , res) => {
-    console.log(req.query); 
+    logger.error('Errors in payment: '+ req.query); 
     res.redirect('../view/paypal/err.html');
 });
 
@@ -261,11 +262,11 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         fr.donations.push(donation);
         fr.save((err, doc) => {
             if(!err) {
-                console.log('Donation added');
+                logger.info('Donation added');
                 res.send("Success");
             }
             else {           
-                console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
+                logger.error('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
                 res.send("Fail");
             }
         });

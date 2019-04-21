@@ -14,14 +14,14 @@ var logger = require('../config/log');
 router.use(function (req, res, next) {
     Cause.find({}, (err, arr) => {
         if(err) {
-            console.log('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving causes: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         causes = arr;
     });
     Category.find({isDeleted: false}, (err, arr) => {
         if(err) {
-            console.log('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
+            logger.error('Error in retrieving categories: ' + JSON.stringify(err, undefined, 2));
             res.redirect('/404');
         }
         categories = arr;
@@ -32,8 +32,8 @@ router.use(function (req, res, next) {
 router.get('/:categoryId?', (req, res) => {
     // console.log("param category:" + req.params.categoryId + ":");
     // logger.log('info', 'test message %s', 'my string');
-    logger.info('Test logger message');
-    logger.error('Test error message');
+    // logger.info('Test logger message');
+    // logger.error('Test error message');
     if(req.params.categoryId == undefined){
 
         fundraiser.aggregate([
@@ -56,7 +56,8 @@ router.get('/:categoryId?', (req, res) => {
             { $sort:{"_id.createdDate": -1} }
         ]).exec(function (err, docs){
             if(err){
-                console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                // console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
                 res.redirect('/404');
             }
             // console.log("fundraisers: " + JSON.stringify(docs));                
@@ -92,7 +93,7 @@ router.get('/:categoryId?', (req, res) => {
                 { $sort:{"_id.createdDate": -1} }   //sorting the result in descending order with respect to createdDate. _id.createdDate because in group we have pushed created date in group result in id field
             ]).exec(function (err, docs){    
                 if(err){
-                    console.log('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
+                    logger.error('Error in retrieving fundraisers: ' + JSON.stringify(err, undefined, 2));
                     res.redirect('/404');
                 }
                 // var frs = JSON.stringify(docs);
@@ -125,11 +126,11 @@ router.get('/add_donation/:fundraiserId', (req, res) => {
         fr.donations.push(donation);
         fr.save((err, doc) => {
             if(!err) {
-                console.log('Donation added');
+                // console.log('Donation added');
                 res.send("Success");
             }
             else {           
-                console.log('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
+                logger.error('Error in adding Donation: ' + JSON.stringify(err, undefined, 2));
                 res.send("Fail");
             }
         });
